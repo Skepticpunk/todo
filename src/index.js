@@ -1,31 +1,44 @@
 import "./page.css";
 
 class toDoEntry {
+  constructor( title, desc, date, priority ) {
+    this.#title = title;
+    this.#description = desc;
+    this.#dueDate = date,
+    this.#priority = priority; };
   #title = "Title";
   #description = "Description";
   #dueDate = "1/1/1900";
   #priority = 0;
   #status = 0;
-  getTitle() { this.title };
-  setTitle( newTitle ) { this.title = newTitle };
-  getDesc() { this.description };
-  setDesc( newDesc ) { this.description = newDesc };
-  getDate() { this.dueDate };
-  setDate( newDate ) { this.dueDate = newDate };
-  getPriority() { this.priority };
-  setPriority( newPriority ) { this.priority };
-  getStatus() { this.status };
-  setStatus( newStatus ) { this.status = newStatus }; };
+  getTitle() { return this.#title };
+  setTitle( newTitle ) { this.#title = newTitle };
+  getDesc() { return this.#description };
+  setDesc( newDesc ) { this.#description = newDesc };
+  getDate() { return this.#dueDate };
+  setDate( newDate ) { this.#dueDate = newDate };
+  getPriority() { return this.#priority };
+  setPriority( newPriority ) { this.#priority = newPriority };
+  getStatus() { return this.#status };
+  setStatus( newStatus ) { this.#status = newStatus }; };
 class toDoList {
   #list = [];
-  addEntry( newEntry ) { list.push(newEntry) };
-  delEntry( entry ) { list.splice(entry, 1) };
+  addEntry( newEntry ) { this.#list.push(newEntry) };
+  delEntry( entry ) { this.#list.splice(entry, 1) };
+  getEntry( entry ) { return this.#list[ entry ] };
   moveEntry( entry, position ) {
-    targetEntry = this.list[ entry ];
-    list.splice( entry, 1 );
-    list.splice( position - 1, 0, targetEntry ); }; };
-
-const lists = [];
+    targetEntry = this.#list[ entry ];
+    this.#list.splice( entry, 1 );
+    this.#list.splice( position - 1, 0, targetEntry ); }; };
 
 function addList( list ) { lists.push( list ) };
-function delList( list ) { list.splice( list, 1 ) };
+function delList( list ) { lists.splice( list, 1 ) };
+
+const lists = [];
+const list1 = new toDoList;
+const entry1 = new toDoEntry("asdf", "ARE WE WORKING YET????", "4/20/69", 0);
+
+addList( list1 );
+lists[0].addEntry( entry1 );
+console.log(lists[0].getEntry(0).getTitle());
+console.log(lists[0].getEntry(0).getDesc());

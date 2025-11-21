@@ -1,4 +1,13 @@
 body {
-  font: "Oswald";
-  background-color: slategrey;
-}
+  display:               grid;
+  grid-template-columns: 1fr 4fr;
+  height:                100vh;
+  font-family:           "Oswald";
+  background-color:      silver; }
+h1 {
+  margin: 2px 8px; 
+  border-bottom: 1px solid white; }
+#toDoLists {
+  background-color:      antiquewhite; }
+#toDo {
+  background-color:      azure; }
