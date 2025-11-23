@@ -30,13 +30,26 @@ class toDoList {
     targetEntry = this.#list[ entry ];
     this.#list.splice( entry, 1 );
     this.#list.splice( position - 1, 0, targetEntry ); }; };
-
-function addList( list ) { lists.push( list ) };
-function delList( list ) { lists.splice( list, 1 ) };
+class listDisplay {
+  constructor( parentNode ) {
+    this.#parent = parentNode };
+  #parent = undefined;
+  getParent() { return this.#parent };
+  setParent( newParent ) { this.#parent = newParent };
+  addEntry( newEntry ) { this.#parent.append( newEntry ) };
+  delEntry( entry ) { this.#parent[ entry ].remove() };
+  getEntry( entry ) { return this.#parent[ entry ] };
+  moveEntry( entry, position ) {
+    targetEntry = this.#parent[ entry ];
+    this.#parent[ entry ].remove();
+    this.#parent.splice( position - 1, 0, targetEntry ); }; };
 
 const lists = [];
 const list1 = new toDoList;
 const entry1 = new toDoEntry("asdf", "ARE WE WORKING YET????", "4/20/69", 0);
+
+function addList( list ) { lists.push( list ) };
+function delList( list ) { lists.splice( list, 1 ) };
 
 addList( list1 );
 lists[0].addEntry( entry1 );
