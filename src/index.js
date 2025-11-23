@@ -45,7 +45,9 @@ class listDisplay {
     this.#parent.splice( position - 1, 0, targetEntry ); }; };
 
 const lists = [];
+const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ) )
 const list1 = new toDoList;
+const list1Display = new listDisplay( document.querySelector( "#toDo" ) )
 const entry1 = new toDoEntry("asdf", "ARE WE WORKING YET????", "4/20/69", 0);
 
 function addList( list ) { lists.push( list ) };
