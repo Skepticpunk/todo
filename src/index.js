@@ -45,9 +45,9 @@ class listDisplay {
     this.#parent.splice( position - 1, 0, targetEntry ); }; };
 
 const lists = [];
-const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ) )
+const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ) );
 const list1 = new toDoList;
-const list1Display = new listDisplay( document.querySelector( "#toDo" ) )
+const list1Display = new listDisplay( document.querySelector( "#toDo" ) );
 const entry1 = new toDoEntry("asdf", "ARE WE WORKING YET????", "4/20/69", 0);
 
 function addList( list ) { lists.push( list ) };
@@ -57,3 +57,7 @@ addList( list1 );
 lists[0].addEntry( entry1 );
 console.log(lists[0].getEntry(0).getTitle());
 console.log(lists[0].getEntry(0).getDesc());
+const entryDisplay1 = document.createElement("div");
+entryDisplay1.append(document.createElement("h2"));
+entryDisplay1.childNodes[0].textContent = "hahaha pyenis";
+listsDisplay.addEntry( entryDisplay1 );
