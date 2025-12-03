@@ -5,9 +5,18 @@ body {
   font-family:           "Oswald";
   background-color:      silver; }
 h1 {
-  margin: 2px 8px; 
-  border-bottom: 1px solid white; }
+  margin:                 8px 0 0 0;
+  padding:                0 8px; 
+  border-bottom:          1px solid white; }
+h2 {
+  margin:                 0;
+  padding:                2px 8px; }
 #toDoLists {
   background-color:      antiquewhite; }
+#listsHeader {
+  display:               grid; 
+  grid-template-columns: 4fr minmax(1em, 1fr); }
 #toDo {
   background-color:      azure; }
+#toDoTitle {
+  background-color:      pink; }

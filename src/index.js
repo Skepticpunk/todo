@@ -22,42 +22,56 @@ class toDoEntry {
   getStatus() { return this.#status };
   setStatus( newStatus ) { this.#status = newStatus }; };
 class toDoList {
+  constructor( title ) { this.#title = title };
   #list = [];
+  #title = "";
+  getList() { return this.#list };
   addEntry( newEntry ) { this.#list.push(newEntry) };
   delEntry( entry ) { this.#list.splice(entry, 1) };
   getEntry( entry ) { return this.#list[ entry ] };
   moveEntry( entry, position ) {
     targetEntry = this.#list[ entry ];
     this.#list.splice( entry, 1 );
-    this.#list.splice( position - 1, 0, targetEntry ); }; };
+    this.#list.splice( position - 1, 0, targetEntry ); }; 
+  getTitle() { return this.#title }
+  setTitle( newTitle ) { this.#title = newTitle; }};
 class listDisplay {
-  constructor( parentNode ) {
-    this.#parent = parentNode };
+  constructor( parentNode, headerNode, list ) {
+    this.#parent = parentNode;
+    this.#header = headerNode; 
+    this.#list = list; };
+
   #parent = undefined;
+  #header = undefined;
+  #list = [];
+
+  getList() { return this.#list };
   getParent() { return this.#parent };
   setParent( newParent ) { this.#parent = newParent };
-  addEntry( newEntry ) { this.#parent.append( newEntry ) };
-  delEntry( entry ) { this.#parent[ entry ].remove() };
-  getEntry( entry ) { return this.#parent[ entry ] };
-  moveEntry( entry, position ) {
-    targetEntry = this.#parent[ entry ];
-    this.#parent[ entry ].remove();
-    this.#parent.splice( position - 1, 0, targetEntry ); }; };
+  getHeader() { return this.#header };
+  setHeader( newHeader ) { this.#header = newHeader };
 
-const lists = [];
-const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ) );
-const list1 = new toDoList;
-const list1Display = new listDisplay( document.querySelector( "#toDo" ) );
+  renderList() {
+    this.#parent.textContent = "";
+    this.#header.textContent = "";
+    this.#list.getList().forEach( ( entry ) => {
+      this.#parent.append( entry.getTitle() ); } );
+    this.#header.textContent = this.#list.getTitle() }; };
+
+const toDoLists = new toDoList("Lists");
+const toDoList1 = new toDoList;
+const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ), document.querySelector( "#listsHeader > h1" ), toDoLists );
+const toDoListDisplay = new listDisplay( document.querySelector( "#listEntries" ), document.querySelector( "#toDoTitle" ), toDoList1 );
 const entry1 = new toDoEntry("asdf", "ARE WE WORKING YET????", "4/20/69", 0);
 
-function addList( list ) { lists.push( list ) };
-function delList( list ) { lists.splice( list, 1 ) };
+function addList( list ) { toDoLists.push( list ) };
+function delList( list ) { toDoLists.splice( list, 1 ) };
 
-addList( list1 );
-lists[0].addEntry( entry1 );
-console.log(lists[0].getEntry(0).getTitle());
-console.log(lists[0].getEntry(0).getDesc());
-const entryDisplay1 = document.createElement("div");
-entryDisplay1.append(document.createElement("h2"));
-entryDisplay1.childNodes[0].textContent = "hahaha pyenis";
-listsDisplay.addEntry( entryDisplay1 );
+toDoLists.addEntry( toDoList1 );
+toDoLists.getEntry(0).addEntry( entry1 );
+console.log(toDoLists.getEntry(0).getEntry(0).getTitle());
+console.log(toDoLists.getEntry(0).getEntry(0).getDesc());
+console.log(toDoLists.getEntry(0).getList());
+console.log(toDoLists.getList())
+listsDisplay.renderList();
+toDoListDisplay.renderList();
