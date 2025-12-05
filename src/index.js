@@ -24,7 +24,7 @@ class toDoEntry {
 class toDoList {
   constructor( title ) { this.#title = title };
   #list = [];
-  #title = "";
+  #title = "Unspecified Title";
   getList() { return this.#list };
   addEntry( newEntry ) { this.#list.push(newEntry) };
   delEntry( entry ) { this.#list.splice(entry, 1) };
@@ -34,7 +34,7 @@ class toDoList {
     this.#list.splice( entry, 1 );
     this.#list.splice( position - 1, 0, targetEntry ); }; 
   getTitle() { return this.#title }
-  setTitle( newTitle ) { this.#title = newTitle; }};
+  setTitle( newTitle ) { this.#title = newTitle; } };
 class listDisplay {
   constructor( parentNode, headerNode, list ) {
     this.#parent = parentNode;
@@ -51,16 +51,21 @@ class listDisplay {
   getHeader() { return this.#header };
   setHeader( newHeader ) { this.#header = newHeader };
 
-  renderList() {
+  renderList( listType ) {
     this.#parent.textContent = "";
     this.#header.textContent = this.#list.getTitle();
     this.#list.getList().forEach( ( entry ) => {
-      this.#parent.append( entry.getTitle() ); } ); }; };
+      if ( !type ) {
+        this.#parent.append( entry.getTitle() ); }
+      else if ( listType == entry ) { 
+        entryCell = document.createElement("div");
+        entryCell.id = "#firstCell";
+        this.#parent.append( entryCell ); }; } ); }; };
 
 const toDoLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
 const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ), document.querySelector( "#listsHeader > h1" ), toDoLists );
-const toDoListDisplay = new listDisplay( document.querySelector( "#listEntries" ), document.querySelector( "#toDoTitle" ), toDoList1 );
+const toDoListDisplay = new listDisplay( document.querySelector( "#toDoEntries" ), document.querySelector( "#toDoTitle" ), toDoList1 );
 const entry1 = new toDoEntry("asdf", "ARE WE WORKING YET????", "4/20/69", 0);
 
 function addList( list ) { toDoLists.push( list ) };

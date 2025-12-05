@@ -9,14 +9,22 @@ h1 {
   padding:                0 8px; 
   border-bottom:          1px solid white; }
 h2 {
-  margin:                 0;
-  padding:                2px 8px; }
+  margin:                 8px 0 0 0;}
 #listList {
   background-color:      antiquewhite; }
 #listsHeader {
   display:               grid; 
   grid-template-columns: 4fr minmax(1em, 1fr); }
+#listsHeader > button {
+  margin: 8px 0 0 0;}
+#toDoLists {
+  font-size: 24;
+  padding: 0 8px; }
 #toDo {
   background-color:      azure; }
 #toDoTitle {
   background-color:      pink; }
+#toDoEntries {
+  font-size: 24;
+  padding: 0 8px; 
+  border-bottom: 8px outset silver;}
