@@ -53,10 +53,9 @@ class listDisplay {
 
   renderList() {
     this.#parent.textContent = "";
-    this.#header.textContent = "";
+    this.#header.textContent = this.#list.getTitle();
     this.#list.getList().forEach( ( entry ) => {
-      this.#parent.append( entry.getTitle() ); } );
-    this.#header.textContent = this.#list.getTitle() }; };
+      this.#parent.append( entry.getTitle() ); } ); }; };
 
 const toDoLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
