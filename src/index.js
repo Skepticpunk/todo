@@ -59,7 +59,7 @@ class listDisplay {
     this.#header.textContent = this.#list.getTitle() }; };
 
 const toDoLists = new toDoList("Lists");
-const toDoList1 = new toDoList;
+const toDoList1 = new toDoList("List 1");
 const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ), document.querySelector( "#listsHeader > h1" ), toDoLists );
 const toDoListDisplay = new listDisplay( document.querySelector( "#listEntries" ), document.querySelector( "#toDoTitle" ), toDoList1 );
 const entry1 = new toDoEntry("asdf", "ARE WE WORKING YET????", "4/20/69", 0);
