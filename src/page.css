@@ -16,15 +16,26 @@ h2 {
   display:               grid; 
   grid-template-columns: 4fr minmax(1em, 1fr); }
 #listsHeader > button {
-  margin: 8px 0 0 0;}
+  margin:                8px 0 0 0;}
 #toDoLists {
-  font-size: 24;
-  padding: 0 8px; }
+  font-size:             24;
+  padding:               0 8px; }
 #toDo {
   background-color:      azure; }
+#toDoHeader {
+  display:               grid; 
+  grid-template-columns: 10fr minmax(1em, 1fr); }
+#toDoHeader > button {
+  margin:                8px 0 0 0;}
 #toDoTitle {
   background-color:      pink; }
 #toDoEntries {
-  font-size: 24;
-  padding: 0 8px; 
-  border-bottom: 8px outset silver;}
+  font-size:             24;
+  padding:               0 8px; 
+  border-bottom:         8px outset silver; }
+#entry {
+  display:               flex; }
+#entry > div {
+  flex:                  1 }
+#cellTitle {
+  flex:                  3 }
