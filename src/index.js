@@ -42,23 +42,28 @@ class toDoList {
   setTitle( newTitle ) { this.#title = newTitle; }
 };
 class listDisplay {
-  constructor( parentNode, headerNode, list ) {
+  constructor( parentNode, headerNode, listDisplayNode, list ) {
     this.#parent = parentNode;
-    this.#header = headerNode; 
+    this.#header = headerNode;
+    this.#listDisplay = listDisplayNode;
     this.#list = list; };
 
   #parent = undefined;
   #header = undefined;
+  #listDisplay = undefined;
   #list = [];
+  #addButton = document.querySelector( this.#parent + " > button " )
 
   getList() { return this.#list };
+  getDisplayNode() { return this.#listDisplay}
+  setDisplayNode( newListDisplay ) { this.#listDisplay = newListDisplay };
   getParent() { return this.#parent };
   setParent( newParent ) { this.#parent = newParent };
   getHeader() { return this.#header };
   setHeader( newHeader ) { this.#header = newHeader };
 
-  renderList( listType ) {
-    this.#parent.textContent = "";
+  renderList() {
+    this.#listDisplay.textContent = "";
     this.#header.textContent = this.#list.getTitle();
     this.#list.getList().forEach( ( entry ) => {
      if ( entry instanceof toDoEntry ) { 
@@ -69,6 +74,8 @@ class listDisplay {
         const cellAdded = document.createElement("div");
         const cellDue = document.createElement("div");
         const cellStatus = document.createElement("div");
+        const cellRemoveButton = document.createElement("button");
+        const expDesc = document.querySelector("#toDoDesc");
         entryCell.id = "entry"; 
         cellTitle.id = "cellTitle";
         cellTitle.textContent = entry.getTitle();
@@ -83,23 +90,28 @@ class listDisplay {
         entryCell.append( cellAdded );
         entryCell.append( cellDue );
         entryCell.append( cellStatus );
-        this.#parent.append( entryCell ); }
+        entryCell.append( cellRemoveButton );
+        cellRemoveButton.textContent = "-";
+        entryCell.addEventListener("mouseover", () => { expDesc.textContent = entry.getDesc() } )
+        entryCell.addEventListener("mouseout", () => { expDesc.textContent = "" } )
+        cellRemoveButton.addEventListener( "click",  () => { expDesc.textContent = ""; entryCell.remove() } )
+        this.#listDisplay.append( entryCell ); }
       else {
-        this.#parent.append( entry.getTitle() ); };
+        this.#listDisplay.append( entry.getTitle() ); };
     } );
   };
 };
 
-const toDoLists = new toDoList("Lists");
+const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
-const listsDisplay = new listDisplay( document.querySelector( "#toDoLists" ), document.querySelector( "#listsHeader > h1" ), toDoLists );
-const toDoListDisplay = new listDisplay( document.querySelector( "#toDoEntries" ), document.querySelector( "#toDoTitle" ), toDoList1 );
-const entry1 = new toDoEntry(0, "asdf", "ARE WE WORKING YET????", "4/20/69", "3/14/15", 0);
+const projectsDisplay = new listDisplay( document.querySelector( "#projectList" ), document.querySelector( "#projectHeader > h1" ), document.querySelector( "#projects" ), projectLists );
+const toDoListDisplay = new listDisplay( document.querySelector( "#toDo" ), document.querySelector( "#toDoTitle" ), document.querySelector( "#toDoEntries" ), toDoList1 );
+const entry1 = new toDoEntry(0, "Debug Entry", "Lorem Ipsum Dolor Sit Amet blah blah blah here's more words I LOVE BEIJING TIANANMEN", "4/20/69", "3/14/15", 0);
 
-function addList( list ) { toDoLists.push( list ) };
-function delList( list ) { toDoLists.splice( list, 1 ) };
+function addList( list ) { projectLists.push( list ) };
+function delList( list ) { projectLists.splice( list, 1 ) };
 
-toDoLists.addEntry( toDoList1 );
-toDoLists.getEntry(0).addEntry( entry1 );
-listsDisplay.renderList();
+projectLists.addEntry( toDoList1 );
+projectLists.getEntry(0).addEntry( entry1 );
+projectsDisplay.renderList();
 toDoListDisplay.renderList();
