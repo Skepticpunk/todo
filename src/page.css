@@ -36,8 +36,7 @@ h2 {
   padding:               0 0 0 8px; 
   border-bottom:         8px outset silver; }
 #entry {
-  flex:                  0 0 48px;
-
+  flex:                  0 0 1.25em;
   display:               flex; 
   height:                1.5em; }
 #entry > div {
