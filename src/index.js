@@ -133,6 +133,45 @@ class listDisplay {
       };
   }
 };
+class entryDisplay {
+  #elementType = "div";
+  #entry = undefined;
+  #entryCell = document.createElement(this.#elementType);
+  #cellPriority = document.createElement(this.elementType);
+  #cellTitle = document.createElement(this.elementType);
+  #cellDesc = document.createElement(this.elementType);
+  #cellAdded = document.createElement(this.elementType);
+  #cellDue = document.createElement(this.elementType);
+  #cellStatus = document.createElement(this.elementType);
+  #cellRemoveButton = document.createElement("button");
+  #expDesc = document.querySelector("#toDoDesc");
+  constructor( entry, elementType ) {
+    this.#elementType = elementType;
+    this.#entry = entry;
+    this.#entryCell.id = "entry";
+    this.#cellTitle.id = "cellTitle";
+    this.#cellTitle.textContent = this.#entry.getTitle();
+    this.#cellPriority.textContent = this.#entry.getPriority();
+    this.#cellDesc.textContent = this.#entry.getDesc();
+    this.#cellAdded.textContent = this.#entry.getAdded();
+    this.#cellDue.textContent = this.#entry.getDue();
+    this.#cellStatus.textContent = this.#entry.getStatus();
+  };
+  renderEntry() {
+    this.#entryCell.append(this.#cellPriority);
+    this.#entryCell.append(this.#cellTitle);
+    this.#entryCell.append(this.#cellDesc);
+    this.#entryCell.append(this.#cellAdded);
+    this.#entryCell.append(this.#cellDue);
+    this.#entryCell.append(this.#cellStatus);
+    this.#entryCell.append(this.#cellRemoveButton);
+    this.#cellRemoveButton.textContent = "-";
+    this.#entryCell.addEventListener("mouseover", () => { expDesc.textContent = entry.getDesc() });
+    this.#entryCell.addEventListener("mouseout", () => { expDesc.textContent = "" });
+    this.#cellRemoveButton.addEventListener("click", () => { expDesc.textContent = ""; entryCell.remove() });
+    this.#listDisplay.append(entryCell);
+  }
+}
 
 const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
