@@ -1,6 +1,13 @@
 import "./page.css";
 
 class toDoEntry {
+  #priority = 0;
+  #title = "Title";
+  #description = "Description";
+  #dateAdded = "1/1/1900";
+  #dueDate = "12/31/2099";
+  #status = 0;
+
   constructor(priority, title, description, dateAdded, dueDate) {
     this.#priority = priority;
     this.#title = title;
@@ -8,12 +15,7 @@ class toDoEntry {
     this.#dateAdded = dateAdded;
     this.#dueDate = dueDate;
   };
-  #priority = 0;
-  #title = "Title";
-  #description = "Description";
-  #dateAdded = "1/1/1900";
-  #dueDate = "12/31/2099";
-  #status = 0;
+  
   getTitle() { return this.#title };
   setTitle(newTitle) { this.#title = newTitle };
   getDesc() { return this.#description };
@@ -44,18 +46,18 @@ class toDoList {
   setTitle(newTitle) { this.#title = newTitle; }
 };
 class listDisplay {
+  #parent = undefined;
+  #header = undefined;
+  #listDisplay = undefined;
+  #list = [];
+  #addButton = document.querySelector(this.#parent + " > button ")
+
   constructor(parentNode, headerNode, listDisplayNode, list) {
     this.#parent = parentNode;
     this.#header = headerNode;
     this.#listDisplay = listDisplayNode;
     this.#list = list;
   };
-
-  #parent = undefined;
-  #header = undefined;
-  #listDisplay = undefined;
-  #list = [];
-  #addButton = document.querySelector(this.#parent + " > button ")
 
   getList() { return this.#list };
   getDisplayNode() { return this.#listDisplay }
@@ -105,32 +107,29 @@ class listDisplay {
       };
     });
   };
-  addEntry( entry ) {
+  addEntry() {
     this.#header.textContent = "";
-      if (entry instanceof toDoEntry) {
-        const entryCell = document.createElement("input");
-        const cellPriority = document.createElement("input");
-        const cellTitle = document.createElement("input");
-        const cellDesc = document.createElement("input");
-        const cellAdded = document.createElement("input");
-        const cellDue = document.createElement("input");
-        const cellStatus = document.createElement("input");
-        entryCell.id = "entry";
-        cellTitle.id = "cellTitle";
-        entryCell.append(cellPriority);
-        entryCell.append(cellTitle);
-        entryCell.append(cellDesc);
-        entryCell.append(cellAdded);
-        entryCell.append(cellDue);
-        entryCell.append(cellStatus);
-        this.#header.append(entryCell)
-        this.#addButton.removeEventListener("click")
-        this.#addButton.addEventListener("click", () => {
-          entryCell.forEach( ( field ) => {
-            //add toDoEntry object with each attribute here
-          })
-        } );
-      };
+    const entryCell = document.createElement("input");
+    const cellPriority = document.createElement("input");
+    const cellTitle = document.createElement("input");
+    const cellDesc = document.createElement("input");
+    const cellAdded = document.createElement("input");
+    const cellDue = document.createElement("input");
+    const cellStatus = document.createElement("input");
+    entryCell.id = "entry";
+    cellTitle.id = "cellTitle";
+    entryCell.append(cellPriority);
+    entryCell.append(cellTitle);
+    entryCell.append(cellDesc);
+    entryCell.append(cellAdded);
+    entryCell.append(cellDue);
+    entryCell.append(cellStatus);
+    this.#header.append(entryCell)
+    this.#addButton.removeEventListener("click")
+    this.#addButton.addEventListener("click", () => {
+      newEntry = new toDoEntry(cellPriority.textContent, cellTitle.textContent, cellDesc.textContent, cellAdded.textContent, cellDue.textContent);
+      this.#list.push(newEntry)
+    } );
   }
 };
 class entryDisplay {
@@ -144,10 +143,13 @@ class entryDisplay {
   #cellDue = document.createElement(this.elementType);
   #cellStatus = document.createElement(this.elementType);
   #cellRemoveButton = document.createElement("button");
+  #entryDisplayNode = undefined;
   #expDesc = document.querySelector("#toDoDesc");
-  constructor( entry, elementType ) {
+
+  constructor( parentNode, entryDisplayNode, entry, elementType ) {
     this.#elementType = elementType;
     this.#entry = entry;
+    this.#entryDisplayNode = entryDisplayNode;
     this.#entryCell.id = "entry";
     this.#cellTitle.id = "cellTitle";
     this.#cellTitle.textContent = this.#entry.getTitle();
@@ -169,7 +171,7 @@ class entryDisplay {
     this.#entryCell.addEventListener("mouseover", () => { expDesc.textContent = entry.getDesc() });
     this.#entryCell.addEventListener("mouseout", () => { expDesc.textContent = "" });
     this.#cellRemoveButton.addEventListener("click", () => { expDesc.textContent = ""; entryCell.remove() });
-    this.#listDisplay.append(entryCell);
+    this.#entryDisplayNode.append(entryCell);
   }
 }
 
