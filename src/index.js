@@ -159,7 +159,8 @@ class entryDisplay {
     this.#cellDue.textContent = this.#entry.getDue();
     this.#cellStatus.textContent = this.#entry.getStatus();
   };
-  renderEntry() {
+  render() {
+    this.#entryCell.textContent = "";
     this.#entryCell.append(this.#cellPriority);
     this.#entryCell.append(this.#cellTitle);
     this.#entryCell.append(this.#cellDesc);
