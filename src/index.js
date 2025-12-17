@@ -29,6 +29,16 @@ class toDoEntry {
   getStatus() { return this.#status };
   setStatus(newStatus) { this.#status = newStatus };
 };
+class entryDisplay {
+  constructor(elementType, ...newElements) {
+    elements = []
+    for (let i = 0; i <= (arguments.length() - 1); i++){
+      elements.push(document.createElement(elementType));
+      if (i != 0) {elements[0].append(elements[i])};
+      eval("this.#" + arguments[i] + " = elements[i]");
+    };
+  };
+};
 class toDoList {
   constructor(title) { this.#title = title };
   #list = [];
@@ -66,7 +76,19 @@ class listDisplay {
   setParent(newParent) { this.#parent = newParent };
   getHeader() { return this.#header };
   setHeader(newHeader) { this.#header = newHeader };
-
+  
+  addEntry() {
+    this.#header.textContent = "";
+    elements = new entryDisplay("input", "entryCell", "cellPriority", "cellTitle", "cellDesc", "cellAdded", "cellDue");
+    elements.entryCell.id = "entry";
+    elements.cellTitle.id = "entryTitle";
+    this.#header.append(entryCell)
+    this.#addButton.removeEventListener("click")
+    this.#addButton.addEventListener("click", () => {
+      newEntry = new toDoEntry(cellPriority.textContent, cellTitle.textContent, cellDesc.textContent, cellAdded.textContent, cellDue.textContent);
+      this.#list.push(newEntry)
+    });
+  };
   renderList() {
     this.#listDisplay.textContent = "";
     this.#header.textContent = this.#list.getTitle();
@@ -82,7 +104,7 @@ class listDisplay {
         const cellRemoveButton = document.createElement("button");
         const expDesc = document.querySelector("#toDoDesc");
         entryCell.id = "entry";
-        cellTitle.id = "cellTitle";
+        cellTitle.id = "entryTitle";
         cellTitle.textContent = entry.getTitle();
         cellPriority.textContent = entry.getPriority();
         cellDesc.textContent = entry.getDesc();
@@ -107,31 +129,8 @@ class listDisplay {
       };
     });
   };
-  addEntry() {
-    this.#header.textContent = "";
-    const entryCell = document.createElement("input");
-    const cellPriority = document.createElement("input");
-    const cellTitle = document.createElement("input");
-    const cellDesc = document.createElement("input");
-    const cellAdded = document.createElement("input");
-    const cellDue = document.createElement("input");
-    const cellStatus = document.createElement("input");
-    entryCell.id = "entry";
-    cellTitle.id = "cellTitle";
-    entryCell.append(cellPriority);
-    entryCell.append(cellTitle);
-    entryCell.append(cellDesc);
-    entryCell.append(cellAdded);
-    entryCell.append(cellDue);
-    entryCell.append(cellStatus);
-    this.#header.append(entryCell)
-    this.#addButton.removeEventListener("click")
-    this.#addButton.addEventListener("click", () => {
-      newEntry = new toDoEntry(cellPriority.textContent, cellTitle.textContent, cellDesc.textContent, cellAdded.textContent, cellDue.textContent);
-      this.#list.push(newEntry)
-    } );
-  }
 };
+
 
 const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
