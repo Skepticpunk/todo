@@ -35,7 +35,7 @@ class entryDisplay {
     for (let i = 0; i <= (arguments.length() - 1); i++){
       elements.push(document.createElement(elementType));
       if (i != 0) {elements[0].append(elements[i])};
-      eval("this.#" + arguments[i] + " = elements[i]");
+      eval("this." + arguments[i] + " = elements[i]");
     };
   };
 };
@@ -60,13 +60,17 @@ class listDisplay {
   #header = undefined;
   #listDisplay = undefined;
   #list = [];
-  #addButton = document.querySelector(this.#parent + " > button ")
+  #addButton = undefined;
 
   constructor(parentNode, headerNode, listDisplayNode, list) {
     this.#parent = parentNode;
     this.#header = headerNode;
     this.#listDisplay = listDisplayNode;
     this.#list = list;
+    console.log(this.#parent.id)
+    this.#addButton = document.querySelector("#projectHeader > button ");
+    console.log(this.#addButton)
+    this.#addButton.addEventListener("click")
   };
 
   getList() { return this.#list };
@@ -79,13 +83,13 @@ class listDisplay {
   
   addEntry() {
     this.#header.textContent = "";
-    elements = new entryDisplay("input", "entryCell", "cellPriority", "cellTitle", "cellDesc", "cellAdded", "cellDue");
-    elements.entryCell.id = "entry";
-    elements.cellTitle.id = "entryTitle";
+    entry = new entryDisplay("input", "entryCell", "cellPriority", "cellTitle", "cellDesc", "cellAdded", "cellDue");
+    entry.entryCell.id = "entry";
+    entry.cellTitle.id = "entryTitle";
     this.#header.append(entryCell)
     this.#addButton.removeEventListener("click")
     this.#addButton.addEventListener("click", () => {
-      newEntry = new toDoEntry(cellPriority.textContent, cellTitle.textContent, cellDesc.textContent, cellAdded.textContent, cellDue.textContent);
+      newEntry = new toDoEntry(entry.cellPriority.textContent, entry.cellTitle.textContent, entry.cellDesc.textContent, entry.cellAdded.textContent, entry.cellDue.textContent);
       this.#list.push(newEntry)
     });
   };
