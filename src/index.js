@@ -8,6 +8,19 @@ class toDoEntry {
   #dueDate = "12/31/2099";
   #status = 0;
 
+  get title() { return this.#title };
+  set title(newTitle) { this.#title = newTitle };
+  get desc() { return this.#description };
+  set desc(newDesc) { this.#description = newDesc };
+  get added() { return this.#dateAdded; }
+  set added(newAdded) { this.#dateAdded = newAdded }
+  get due() { return this.#dueDate };
+  set due(newDue) { this.#dueDate = newDue };
+  get priority() { return this.#priority };
+  set priority(newPriority) { this.#priority = newPriority };
+  get status() { return this.#status };
+  set status(newStatus) { this.#status = newStatus };
+  
   constructor(priority, title, description, dateAdded, dueDate) {
     this.#priority = priority;
     this.#title = title;
@@ -15,35 +28,17 @@ class toDoEntry {
     this.#dateAdded = dateAdded;
     this.#dueDate = dueDate;
   };
-  
-  getTitle() { return this.#title };
-  setTitle(newTitle) { this.#title = newTitle };
-  getDesc() { return this.#description };
-  setDesc(newDesc) { this.#description = newDesc };
-  getAdded() { return this.#dateAdded; }
-  setAdded(newAdded) { this.#dateAdded = newAdded }
-  getDue() { return this.#dueDate };
-  setDue(newDue) { this.#dueDate = newDue };
-  getPriority() { return this.#priority };
-  setPriority(newPriority) { this.#priority = newPriority };
-  getStatus() { return this.#status };
-  setStatus(newStatus) { this.#status = newStatus };
 };
 class entryDisplay {
-  constructor(elementType, ...newElements) {
+  constructor(elementType, entryContainer, entryElements) {
     elements = []
-    for (let i = 0; i <= (arguments.length() - 1); i++){
-      elements.push(document.createElement(elementType));
-      if (i != 0) {elements[0].append(elements[i])};
-      eval("this." + arguments[i] + " = elements[i]");
-    };
+    entryElements.forEach(elements.append(elements[i]));
+    eval("this." + arguments[i] + " = elements[i]");
   };
 };
 class toDoList {
-  constructor(title) { this.#title = title };
   #list = [];
   #title = "Unspecified Title";
-  getList() { return this.#list };
   addEntry(newEntry) { this.#list.push(newEntry) };
   delEntry(entry) { this.#list.splice(entry, 1) };
   getEntry(entry) { return this.#list[entry] };
@@ -52,8 +47,12 @@ class toDoList {
     this.#list.splice(entry, 1);
     this.#list.splice(position - 1, 0, targetEntry);
   };
-  getTitle() { return this.#title }
-  setTitle(newTitle) { this.#title = newTitle; }
+
+  get list() { return this.#list };
+  get title() { return this.#title }
+  set title(newTitle) { this.#title = newTitle; }
+
+  constructor(title) { this.#title = title };
 };
 class listDisplay {
   #parent = undefined;
@@ -62,30 +61,19 @@ class listDisplay {
   #list = [];
   #addButton = undefined;
 
-  constructor(parentNode, headerNode, listDisplayNode, list) {
-    this.#parent = parentNode;
-    this.#header = headerNode;
-    this.#listDisplay = listDisplayNode;
-    this.#list = list;
-    console.log(this.#parent.id)
-    this.#addButton = document.querySelector("#projectHeader > button ");
-    console.log(this.#addButton)
-    this.#addButton.addEventListener("click")
-  };
-
-  getList() { return this.#list };
-  getDisplayNode() { return this.#listDisplay }
-  setDisplayNode(newListDisplay) { this.#listDisplay = newListDisplay };
-  getParent() { return this.#parent };
-  setParent(newParent) { this.#parent = newParent };
-  getHeader() { return this.#header };
-  setHeader(newHeader) { this.#header = newHeader };
+  get list() { return this.#list };
+  get displayNode() { return this.#listDisplay }
+  set displayNode(newListDisplay) { this.#listDisplay = newListDisplay };
+  get parent() { return this.#parent };
+  set parent(newParent) { this.#parent = newParent };
+  get header() { return this.#header };
+  set header(newHeader) { this.#header = newHeader };
   
   addEntry() {
-    this.#header.textContent = "";
     entry = new entryDisplay("input", "entryCell", "cellPriority", "cellTitle", "cellDesc", "cellAdded", "cellDue");
     entry.entryCell.id = "entry";
     entry.cellTitle.id = "entryTitle";
+    this.#header.textContent = "";
     this.#header.append(entryCell)
     this.#addButton.removeEventListener("click")
     this.#addButton.addEventListener("click", () => {
@@ -109,12 +97,12 @@ class listDisplay {
         const expDesc = document.querySelector("#toDoDesc");
         entryCell.id = "entry";
         cellTitle.id = "entryTitle";
-        cellTitle.textContent = entry.getTitle();
-        cellPriority.textContent = entry.getPriority();
-        cellDesc.textContent = entry.getDesc();
-        cellAdded.textContent = entry.getAdded();
-        cellDue.textContent = entry.getDue();
-        cellStatus.textContent = entry.getStatus();
+        cellTitle.textContent = entry.title;
+        cellPriority.textContent = entry.priority;
+        cellDesc.textContent = entry.desc;
+        cellAdded.textContent = entry.added;
+        cellDue.textContent = entry.due;
+        cellStatus.textContent = entry.status;
         entryCell.append(cellPriority);
         entryCell.append(cellTitle);
         entryCell.append(cellDesc);
@@ -133,8 +121,18 @@ class listDisplay {
       };
     });
   };
-};
 
+  constructor(parentNode, headerNode, listDisplayNode, list) {
+    this.#parent = parentNode;
+    this.#header = headerNode;
+    this.#listDisplay = listDisplayNode;
+    this.#list = list;
+    console.log(this.#parent.id)
+    this.#addButton = document.querySelector("#projectHeader > button ");
+    console.log(this.#addButton)
+    this.#addButton.addEventListener("click", () => {false})
+  };
+};
 
 const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
