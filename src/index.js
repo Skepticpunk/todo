@@ -39,28 +39,48 @@ class toDoEntry {
   };
 };
 class entryDisplay {
+  #elements = [];
+
+  #cellPriority;
+  #cellTitle;
+  #cellDesc;
+  #cellAdded;
+  #cellDue;
+  #cellStatus;
+
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
   #expDesc = document.querySelector("toDoDesc");
 
-  get removeButton() { return this.#cellRemoveButton };
+  get cellPriority() {return this.#cellPriority};
+  get cellTitle() {return this.#cellTitle};
+  get cellDesc() {return this.#cellDesc};
+  get cellAdded() {return this.#cellAdded}
+  get cellDue() {return this.#cellDue};
+  get cellStatus() {return this.#cellStatus};
+  get removeButton() {return this.#cellRemoveButton};
 
   constructor(entry) {
-    // group and assign common elements
-    elements = ["cellPriority", "cellTitle", "cellDesc", "cellAdded", "cellDue", "cellStatus"]
-    elements.map((element, i) => {
-      // store the name, replace with element we want to make
-      const elemName = element
-      const newElement = document.createElement("div")
-      element = newElement
-      // store local index...
-      const localIndex = i
-      // then do things we want to do with each element in the list
-      newElement.textContent = entry.attributes[i]
-      entryCell.append(newElement)
-      eval("this.#" + elemName + " = elements[" + localIndex + "]")
-      eval("get " + elemName + "() { return this.#" + elemName + " }")
-    })
+    for(i = 0; i < 6; i++){
+      this.#elements.push(document.createElement("div"))
+      this.#entryCell.append(elements[i])
+    };
+    this.#cellPriority = this.#elements[0];
+    this.#cellTitle = this.#elements[1];
+    this.#cellDesc = this.#elements[2];
+    this.#cellAdded = this.#elements[3];
+    this.#cellDue = this.#elements[4];
+    this.#cellStatus = this.#elements[5];
+    this.#cellPriority.textContent = entry.priority;
+    this.#cellTitle.textContent = entry.title;
+    this.#cellDesc.textContent = entry.desc;
+    this.#cellAdded.textContent = entry.added;
+    this.#cellDue.textContent = entry.due;
+    this.#cellStatus.textContent = entry.status;
+    cellRemoveButton.textContent = "-";
+    entryCell.addEventListener("mouseover", () => { this.#expDesc.textContent = entry.desc })
+    entryCell.addEventListener("mouseout", () => { this.#expDesc.textContent = "" })
+    cellRemoveButton.addEventListener("click", () => { this.#expDesc.textContent = ""; entryCell.remove() })
   };
 };
 class toDoList {
