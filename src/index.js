@@ -60,10 +60,18 @@ class entryDisplay {
   get cellStatus() {return this.#cellStatus};
   get removeButton() {return this.#cellRemoveButton};
 
+  render() {
+    this.#entryCell.textContent = "";
+    this.#elements.forEach((element) => {
+      console.log(element);
+      this.#entryCell.append(element);
+    });
+  }
+
   constructor(entry) {
-    for(i = 0; i < 6; i++){
+    console.log(entry);
+    for(let i = 0; i < 6; i++){
       this.#elements.push(document.createElement("div"))
-      this.#entryCell.append(elements[i])
     };
     this.#cellPriority = this.#elements[0];
     this.#cellTitle = this.#elements[1];
@@ -77,10 +85,10 @@ class entryDisplay {
     this.#cellAdded.textContent = entry.added;
     this.#cellDue.textContent = entry.due;
     this.#cellStatus.textContent = entry.status;
-    cellRemoveButton.textContent = "-";
-    entryCell.addEventListener("mouseover", () => { this.#expDesc.textContent = entry.desc })
-    entryCell.addEventListener("mouseout", () => { this.#expDesc.textContent = "" })
-    cellRemoveButton.addEventListener("click", () => { this.#expDesc.textContent = ""; entryCell.remove() })
+    this.#cellRemoveButton.textContent = "-";
+    this.#entryCell.addEventListener("mouseover", () => { this.#expDesc.textContent = entry.desc })
+    this.#entryCell.addEventListener("mouseout", () => { this.#expDesc.textContent = "" })
+    this.#cellRemoveButton.addEventListener("click", () => { this.#expDesc.textContent = ""; entryCell.remove() })
   };
 };
 class toDoList {
@@ -140,40 +148,14 @@ class listDisplay {
       this.#list.push(newEntry)
     });
   };
-  renderList() {
+  render() {
     this.#listDisplay.textContent = "";
     this.#header.textContent = this.#list.Title;
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
-        const entryCell = document.createElement("div");
-        const cellPriority = document.createElement("div");
-        const cellTitle = document.createElement("div");
-        const cellDesc = document.createElement("div");
-        const cellAdded = document.createElement("div");
-        const cellDue = document.createElement("div");
-        const cellStatus = document.createElement("div");
-        const cellRemoveButton = document.createElement("button");
-        const expDesc = document.querySelector("#toDoDesc");
-        entryCell.id = "entry";
-        cellTitle.id = "entryTitle";
-        cellTitle.textContent = entry.title;
-        cellPriority.textContent = entry.priority;
-        cellDesc.textContent = entry.desc;
-        cellAdded.textContent = entry.added;
-        cellDue.textContent = entry.due;
-        cellStatus.textContent = entry.status;
-        entryCell.append(cellPriority);
-        entryCell.append(cellTitle);
-        entryCell.append(cellDesc);
-        entryCell.append(cellAdded);
-        entryCell.append(cellDue);
-        entryCell.append(cellStatus);
-        entryCell.append(cellRemoveButton);
-        cellRemoveButton.textContent = "-";
-        entryCell.addEventListener("mouseover", () => { expDesc.textContent = entry.desc })
-        entryCell.addEventListener("mouseout", () => { expDesc.textContent = "" })
-        cellRemoveButton.addEventListener("click", () => { expDesc.textContent = ""; entryCell.remove() })
-        this.#listDisplay.append(entryCell);
+       const newEntry = new entryDisplay(entry)
+       this.#listDisplay.append(newEntry.entryCell)
+       newEntry.render()
       }
       else {
         this.#listDisplay.append(entry.title);
@@ -186,9 +168,7 @@ class listDisplay {
     this.#header = headerNode;
     this.#listDisplay = listDisplayNode;
     this.#list = list;
-    console.log(this.#parent.id)
     this.#addButton = document.querySelector("#projectHeader > button ");
-    console.log(this.#addButton)
     this.#addButton.addEventListener("click", () => {false})
   };
 };
@@ -218,5 +198,5 @@ function delList(list) { projectLists.splice(list, 1) };
 
 projectLists.addEntry(toDoList1);
 projectLists.getEntry(0).addEntry(entry1);
-projectsDisplay.renderList();
-toDoListDisplay.renderList();
+projectsDisplay.render();
+toDoListDisplay.render();
