@@ -42,15 +42,24 @@ class entryDisplay {
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
   #expDesc = document.querySelector("toDoDesc");
+
+  get removeButton() { return this.#cellRemoveButton };
+
   constructor(entry) {
     // group and assign common elements
     elements = ["cellPriority", "cellTitle", "cellDesc", "cellAdded", "cellDue", "cellStatus"]
     elements.map((element, i) => {
-      const elemName = element[i]
+      // store the name, replace with element we want to make
+      const elemName = element
       const newElement = document.createElement("div")
+      element = newElement
+      // store local index...
+      const localIndex = i
+      // then do things we want to do with each element in the list
       newElement.textContent = entry.attributes[i]
       entryCell.append(newElement)
-      eval()
+      eval("this.#" + elemName + " = elements[" + localIndex + "]")
+      eval("get " + elemName + "() { return this.#" + elemName + " }")
     })
   };
 };
