@@ -50,8 +50,9 @@ class entryDisplay {
 
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
-  #expDesc = document.querySelector("toDoDesc");
+  #expDesc = document.querySelector("#toDoDesc");
 
+  get entryCell() {return this.#entryCell}
   get cellPriority() {return this.#cellPriority};
   get cellTitle() {return this.#cellTitle};
   get cellDesc() {return this.#cellDesc};
@@ -65,7 +66,8 @@ class entryDisplay {
     this.#elements.forEach((element) => {
       console.log(element);
       this.#entryCell.append(element);
-    });
+    })
+    this.#entryCell.append(this.#cellRemoveButton);
   }
 
   constructor(entry) {
@@ -79,6 +81,8 @@ class entryDisplay {
     this.#cellAdded = this.#elements[3];
     this.#cellDue = this.#elements[4];
     this.#cellStatus = this.#elements[5];
+    this.#entryCell.id = "entry";
+    this.#cellTitle.id = "entryTitle";
     this.#cellPriority.textContent = entry.priority;
     this.#cellTitle.textContent = entry.title;
     this.#cellDesc.textContent = entry.desc;
@@ -88,7 +92,7 @@ class entryDisplay {
     this.#cellRemoveButton.textContent = "-";
     this.#entryCell.addEventListener("mouseover", () => { this.#expDesc.textContent = entry.desc })
     this.#entryCell.addEventListener("mouseout", () => { this.#expDesc.textContent = "" })
-    this.#cellRemoveButton.addEventListener("click", () => { this.#expDesc.textContent = ""; entryCell.remove() })
+    this.#cellRemoveButton.addEventListener("click", () => { this.#expDesc.textContent = ""; this.#entryCell.remove() })
   };
 };
 class toDoList {
@@ -104,8 +108,8 @@ class toDoList {
   };
 
   get list() { return this.#list };
-  get title() { return this.#title }
-  set title(newTitle) { this.#title = newTitle; }
+  get title() { return this.#title };
+  set title(newTitle) { this.#title = newTitle; };
 
   constructor(title) { this.#title = title };
 };
@@ -154,6 +158,7 @@ class listDisplay {
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
        const newEntry = new entryDisplay(entry)
+       console.log(newEntry)
        this.#listDisplay.append(newEntry.entryCell)
        newEntry.render()
       }
