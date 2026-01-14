@@ -64,14 +64,12 @@ class entryDisplay {
   render() {
     this.#entryCell.textContent = "";
     this.#elements.forEach((element) => {
-      console.log(element);
       this.#entryCell.append(element);
     })
     this.#entryCell.append(this.#cellRemoveButton);
   }
 
   constructor(entry) {
-    console.log(entry);
     for(let i = 0; i < 6; i++){
       this.#elements.push(document.createElement("div"))
     };
@@ -121,7 +119,7 @@ class listDisplay {
   #addButton = undefined;
 
   get list() { return this.#list };
-  get displayNode() { return this.#listDisplay }
+  get displayNode() { return this.#listDisplay };
   set displayNode(newListDisplay) { this.#listDisplay = newListDisplay };
   get parent() { return this.#parent };
   set parent(newParent) { this.#parent = newParent };
@@ -129,36 +127,32 @@ class listDisplay {
   set header(newHeader) { this.#header = newHeader };
   
   addEntry() {
-    entry = new entryDisplay(
-      "input",
-      "entryCell",
-      "cellPriority",
-      "cellTitle",
-      "cellDesc",
-      "cellAdded",
-      "cellDue");
-    entry.entryCell.id = "entry";
-    entry.cellTitle.id = "entryTitle";
+    const newEntry = new toDoEntry();
+    const input = new entryDisplay(newEntry);
+    console.log(this.#header);
     this.#header.textContent = "";
-    this.#header.append(entryCell)
-    this.#addButton.removeEventListener("click")
+    this.#header.append(input.entryCell);
+    this.#header.backgroundColor = "silver";
+    this.#addButton.removeEventListener("click", this.addEntry)
     this.#addButton.addEventListener("click", () => {
-      newEntry = new toDoEntry(
-        entry.cellPriority.textContent,
-        entry.cellTitle.textContent,
-        entry.cellDesc.textContent,
-        entry.cellAdded.textContent,
-        entry.cellDue.textContent);
-      this.#list.push(newEntry)
+      newEntry.priority = input.cellPriority.textContent,
+      newEntry.title = input.cellTitle.textContent,
+      newEntry.desc = input.cellDesc.textContent,
+      newEntry.added = input.cellAdded.textContent,
+      newEntry.due = input.cellDue.textContent;
+      this.#list.push(newEntry);
+      this.render();
     });
+    this.#addButton.textContent = "Submit";
   };
   render() {
     this.#listDisplay.textContent = "";
-    this.#header.textContent = this.#list.Title;
+    this.#header.textContent = this.#list.title;
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
        const newEntry = new entryDisplay(entry)
        console.log(newEntry)
+       console.log(this.addEntry)
        this.#listDisplay.append(newEntry.entryCell)
        newEntry.render()
       }
@@ -173,8 +167,8 @@ class listDisplay {
     this.#header = headerNode;
     this.#listDisplay = listDisplayNode;
     this.#list = list;
-    this.#addButton = document.querySelector("#projectHeader > button ");
-    this.#addButton.addEventListener("click", () => {false})
+    this.#addButton = document.querySelector("#todoHeader > button ");
+    this.#addButton.addEventListener("click", this.addEntry)
   };
 };
 
