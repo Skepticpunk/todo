@@ -112,11 +112,11 @@ class toDoList {
   constructor(title) { this.#title = title };
 };
 class listDisplay {
-  #parent = undefined;
-  #header = undefined;
-  #listDisplay = undefined;
+  #parent;
+  #header;
+  #listDisplay;
   #list = [];
-  #addButton = undefined;
+  #addButton;
 
   get list() { return this.#list };
   get displayNode() { return this.#listDisplay };
@@ -126,10 +126,11 @@ class listDisplay {
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
   
-  addEntry() {
+  addEntry = () => {
     const newEntry = new toDoEntry();
     const input = new entryDisplay(newEntry);
-    console.log(this.#header);
+    console.log(this);
+    console.log(this.#header)
     this.#header.textContent = "";
     this.#header.append(input.entryCell);
     this.#header.backgroundColor = "silver";
@@ -151,8 +152,6 @@ class listDisplay {
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
        const newEntry = new entryDisplay(entry)
-       console.log(newEntry)
-       console.log(this.addEntry)
        this.#listDisplay.append(newEntry.entryCell)
        newEntry.render()
       }
@@ -162,13 +161,14 @@ class listDisplay {
     });
   };
 
-  constructor(parentNode, headerNode, listDisplayNode, list) {
+  constructor(parentNode, headerNode, buttonNode, listDisplayNode, list) {
     this.#parent = parentNode;
     this.#header = headerNode;
     this.#listDisplay = listDisplayNode;
     this.#list = list;
-    this.#addButton = document.querySelector("#todoHeader > button ");
+    this.#addButton = buttonNode;
     this.#addButton.addEventListener("click", this.addEntry)
+    console.log(this.#addButton.id)
   };
 };
 
@@ -177,11 +177,13 @@ const toDoList1 = new toDoList("List 1");
 const projectsDisplay = new listDisplay(
   document.querySelector("#projectList"), 
   document.querySelector("#projectHeader > h1"), 
+  document.querySelector("#projectHeader > button"),
   document.querySelector("#projects"), 
   projectLists);
 const toDoListDisplay = new listDisplay(
   document.querySelector("#toDo"), 
   document.querySelector("#toDoTitle"), 
+  document.querySelector("#toDoButton"),
   document.querySelector("#toDoEntries"), 
   toDoList1);
 const entry1 = new toDoEntry(
