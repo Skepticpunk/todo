@@ -50,7 +50,7 @@ class entryDisplay {
 
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
-  #expDesc = document.querySelector("#toDoDesc");
+  #subPanel = document.createElement("div");
 
   get entryCell() {return this.#entryCell}
   get cellPriority() {return this.#cellPriority};
@@ -69,7 +69,7 @@ class entryDisplay {
     this.#entryCell.append(this.#cellRemoveButton);
   }
 
-  constructor(entry) {
+  constructor(entry, subPanel) {
     for(let i = 0; i < 6; i++){
       this.#elements.push(document.createElement("div"))
     };
@@ -90,9 +90,63 @@ class entryDisplay {
       this.#cellStatus.textContent = entry.status;
       this.#cellRemoveButton.textContent = "-";
     };
-    this.#entryCell.addEventListener("mouseover", () => { this.#expDesc.textContent = entry.desc })
-    this.#entryCell.addEventListener("mouseout", () => { this.#expDesc.textContent = "" })
-    this.#cellRemoveButton.addEventListener("click", () => { this.#expDesc.textContent = ""; this.#entryCell.remove() })
+    this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = entry.desc })
+    this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" })
+    this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#entryCell.remove() })
+  };
+};
+class submitForm {
+  #elements = [];
+
+  #cellPriority;
+  #cellTitle;
+  #cellDesc;
+  #cellAdded;
+  #cellDue;
+  #cellStatus;
+
+  #entryCell = document.createElement("div");
+  #cellSubmitButton = document.createElement("button");
+
+  get entryCell() {return this.#entryCell}
+  get cellPriority() {return this.#cellPriority};
+  get cellTitle() {return this.#cellTitle};
+  get cellDesc() {return this.#cellDesc};
+  get cellAdded() {return this.#cellAdded}
+  get cellDue() {return this.#cellDue};
+  get cellStatus() {return this.#cellStatus};
+  get submitButton() {return this.#cellSubmitButton};
+
+  render() {
+    this.#entryCell.textContent = "";
+    this.#elements.forEach((element) => {
+      this.#entryCell.append(element);
+    })
+    this.#entryCell.append(this.#cellSubmitButton);
+  }
+
+  constructor(entry) {
+    for(let i = 0; i < 6; i++){
+      this.#elements.push(document.createElement("input"))
+    };
+    this.#cellPriority = this.#elements[0];
+    this.#cellTitle = this.#elements[1];
+    this.#cellDesc = this.#elements[2];
+    this.#cellAdded = this.#elements[3];
+    this.#cellDue = this.#elements[4];
+    this.#cellStatus = this.#elements[5];
+    this.#entryCell.id = "entry";
+    this.#cellTitle.id = "entryTitle";
+    if(entry) {
+      this.#cellPriority.textContent = entry.priority;
+      this.#cellTitle.textContent = entry.title;
+      this.#cellDesc.textContent = entry.desc;
+      this.#cellAdded.textContent = entry.added;
+      this.#cellDue.textContent = entry.due;
+      this.#cellStatus.textContent = entry.status;
+      this.#cellSubmitButton.textContent = "Submit";
+    };
+    this.#cellSubmitButton.addEventListener("click", this.#entryCell.remove() )
   };
 };
 class toDoList {
@@ -118,31 +172,46 @@ class listDisplay {
   #header;
   #listDisplay;
   #list = [];
+  #subPanel;
   #addButton;
-  #newEntry;
-  #newEntryDisplay;
 
   get list() { return this.#list };
   get displayNode() { return this.#listDisplay };
   set displayNode(newListDisplay) { this.#listDisplay = newListDisplay };
+  get headerId() { return this.#header.id };
+  set headerId(newId) { this.#header.id = newId };
   get parent() { return this.#parent };
   set parent(newParent) { this.#parent = newParent };
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
   
-  createNewEntryPrompt = () => {
-    this.#newEntry = new toDoEntry();
-    this.#newEntryDisplay = new entryDisplay(this.#newEntry);
-    this.#newEntryDisplay.id = "newEntry";
-    console.log(this.#newEntryDisplay);
-    console.log(this.#newEntryDisplay.id);
+  addEntry = () => {
+    const input = new entryDisplay();
+    input.id = "newEntry";
+    console.log(input);
+    console.log(input.id);
     this.#header.textContent = "";
-    this.#header.append(this.#newEntryDisplay.entryCell);
+    this.#header.append(input.entryCell);
     this.#header.backgroundColor = "silver";
-    this.#addButton.removeEventListener("click", this.createNewEntryPrompt);
+    this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.submitEntry);
     this.#addButton.textContent = "Submit";
   };
+  submitEntry = () => {
+    const newEntry = new toDoEntry();
+    const input = document.querySelector("#newEntry");
+    console.log(input);
+    newEntry.priority = input.cellPriority.textContent,
+    newEntry.title = input.cellTitle.textContent,
+    newEntry.desc = input.cellDesc.textContent,
+    newEntry.added = input.cellAdded.textContent,
+    newEntry.due = input.cellDue.textContent;
+    this.#list.addEntry(newEntry);
+    this.#addButton.removeEventListener("click", this.submitEntry);
+    this.#addButton.addEventListener("click", this.addEntry);
+    this.#addButton.textContent = "+";
+    this.render();
+}
 render() {
     this.#listDisplay.textContent = "";
     this.#header.textContent = this.#list.title;
@@ -158,32 +227,22 @@ render() {
     });
   };
 
-  constructor(parentNode, headerNode, buttonNode, listDisplayNode, list) {
+  constructor(parentNode, list) {
     this.#parent = parentNode;
-    this.#header = headerNode;
-    this.#listDisplay = listDisplayNode;
+    this.#header = document.createElement("div");
+    this.#addButton = document.createElement("button");
+    this.#listDisplay = document.createElement("div");
     this.#list = list;
-    this.#addButton = buttonNode;
-    this.#addButton.addEventListener("click", this.createNewEntryPrompt)
+    this.#subPanel = document.createElement("div");
+    this.#addButton.addEventListener("click", this.addEntry)
     console.log(this.#addButton.id)
-    this.render()
   };
 };
 
 const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
-const projectsDisplay = new listDisplay(
-  document.querySelector("#projectList"), 
-  document.querySelector("#projectHeader > h1"), 
-  document.querySelector("#projectHeader > button"),
-  document.querySelector("#projects"), 
-  projectLists);
-const toDoListDisplay = new listDisplay(
-  document.querySelector("#toDo"), 
-  document.querySelector("#toDoTitle"), 
-  document.querySelector("#toDoButton"),
-  document.querySelector("#toDoEntries"), 
-  toDoList1);
+const projectsDisplay = new listDisplay(document.querySelector("#projectList"), projectLists);
+const toDoListDisplay = new listDisplay(document.querySelector("#toDo"), toDoList1);
 const entry1 = new toDoEntry(
   0,
   "Debug Entry",
