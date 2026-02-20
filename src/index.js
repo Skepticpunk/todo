@@ -227,10 +227,11 @@ render() {
     });
   };
 
-  constructor(parentNode, list) {
+  constructor(parentNode, tagHeader, list) {
     this.#parent = parentNode;
     this.#header = document.createElement("div");
     this.#addButton = document.createElement("button");
+    this.#addButton.id = tagHeader + "AddButton"
     this.#listDisplay = document.createElement("div");
     this.#list = list;
     this.#subPanel = document.createElement("div");
@@ -241,8 +242,8 @@ render() {
 
 const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
-const projectsDisplay = new listDisplay(document.querySelector("#projectList"), projectLists);
-const toDoListDisplay = new listDisplay(document.querySelector("#toDo"), toDoList1);
+const projectsDisplay = new listDisplay(document.querySelector("#projectList"), "project", projectLists);
+const toDoListDisplay = new listDisplay(document.querySelector("#toDo"), "toDoList", toDoList1);
 const entry1 = new toDoEntry(
   0,
   "Debug Entry",
