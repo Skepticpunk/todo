@@ -34,16 +34,17 @@ h2 {
   font-size:             24;
   padding:               0 0 0 8px; 
   border-bottom:         8px outset silver; }
-#entry {
+.entry {
+  margin:                0 8px;
   flex:                  0 0 1.25em;
   display:               flex; 
   height:                1.5em; }
-#entry > div {
+.entry > div {
   flex:                  1;
   overflow:              hidden;
   text-overflow:         ellipsis; }
-#entry > button {
+.entry > button {
   flex:                  0 0 48px;
   margin:                0; }
-#entryTitle {
+.entryTitle {
   flex:                  3 }

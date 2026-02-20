@@ -49,8 +49,8 @@ class entryDisplay {
     this.#cellAdded = this.#elements[3];
     this.#cellDue = this.#elements[4];
     this.#cellStatus = this.#elements[5];
-    this.#entryCell.id = "entry";
-    this.#cellTitle.id = "entryTitle";
+    this.#entryCell.classList.add("entry");
+    this.#cellTitle.classList.add("entryTitle");
     if(entry) {
       this.#cellPriority.textContent = entry.priority;
       this.#cellTitle.textContent = entry.title;
@@ -114,18 +114,18 @@ class toDoList {
 class listDisplay {
   constructor(parentNode, tagHeader, list) {
     this.#parent = parentNode;
+    this.#tagHeader = tagHeader;
     this.#header = document.createElement("h1");
-    this.#header.id = tagHeader + "Header";
+    this.#header.id = this.#tagHeader + "Header";
     this.#addButton = document.createElement("button");
-    this.#addButton.id = tagHeader + "AddButton"
+    this.#addButton.id = this.#tagHeader + "AddButton"
     this.#listDisplay = document.createElement("div");
     this.#list = list;
-    console.log(this.#list)
     this.#subPanel = document.createElement("div");
     this.#addButton.addEventListener("click", this.addEntry)
-    console.log(this.#addButton.id)
   };
   #parent;
+  #tagHeader;
   #header;
   #listDisplay;
   #list = [];
@@ -181,6 +181,7 @@ class listDisplay {
       if (entry instanceof toDoEntry) {
         //make new to-do entry, then append it
         const newEntry = new entryDisplay(entry)
+        newEntry.id = this.#tagHeader + "Entry";
         this.#listDisplay.append(newEntry.entryCell)
         newEntry.render()
       }
