@@ -114,7 +114,7 @@ class toDoList {
 class listDisplay {
   constructor(parentNode, tagHeader, list) {
     this.#parent = parentNode;
-    this.#header = document.createElement("div");
+    this.#header = document.createElement("h1");
     this.#header.id = tagHeader + "Header";
     this.#addButton = document.createElement("button");
     this.#addButton.id = tagHeader + "AddButton"
@@ -179,9 +179,10 @@ class listDisplay {
     // build the new list
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
-       const newEntry = new entryDisplay(entry)
-       this.#listDisplay.append(newEntry.entryCell)
-       newEntry.render()
+        //make new to-do entry, then append it
+        const newEntry = new entryDisplay(entry)
+        this.#listDisplay.append(newEntry.entryCell)
+        newEntry.render()
       }
       else {
         this.#listDisplay.append(entry.title);

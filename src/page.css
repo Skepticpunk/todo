@@ -22,13 +22,12 @@ h2 {
   padding:               0 8px; }
 #toDo {
   background-color:      azure; }
-#toDoHeader {
+#toDoListHeader {
   display:               grid; 
-  grid-template-columns: 10fr minmax(1em, 48px); }
-#toDoHeader > button {
-  margin:                8px 0 0 0;}
-#toDoTitle {
+  grid-template-columns: 10fr minmax(1em, 48px);
   background-color:      pink; }
+#toDoListHeader > button {
+  margin:                8px 0 0 0;}
 #toDoEntries {
   display:               flex;
   flex-direction:        column;
