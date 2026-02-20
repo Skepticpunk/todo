@@ -1,6 +1,13 @@
 import "./page.css";
 
-class toDoEntry {
+class toDoEntry {  
+  constructor(priority, title, description, added, due) {
+    this.#priority = priority;
+    this.#title = title;
+    this.#description = description;
+    this.#added = added;
+    this.#due = due;
+  };
   #priority = 0;
   #title = "Title";
   #description = "Description";
@@ -29,16 +36,34 @@ class toDoEntry {
   get status() { return this.#status };
   set status(newStatus) { this.#status = newStatus };
   get attributes() { return this.#attributes };
-  
-  constructor(priority, title, description, added, due) {
-    this.#priority = priority;
-    this.#title = title;
-    this.#description = description;
-    this.#added = added;
-    this.#due = due;
-  };
+
 };
 class entryDisplay {
+  constructor(entry, subPanel) {
+    for(let i = 0; i < 6; i++){
+      this.#elements.push(document.createElement("div"))
+    };
+    this.#cellPriority = this.#elements[0];
+    this.#cellTitle = this.#elements[1];
+    this.#cellDesc = this.#elements[2];
+    this.#cellAdded = this.#elements[3];
+    this.#cellDue = this.#elements[4];
+    this.#cellStatus = this.#elements[5];
+    this.#entryCell.id = "entry";
+    this.#cellTitle.id = "entryTitle";
+    if(entry) {
+      this.#cellPriority.textContent = entry.priority;
+      this.#cellTitle.textContent = entry.title;
+      this.#cellDesc.textContent = entry.desc;
+      this.#cellAdded.textContent = entry.added;
+      this.#cellDue.textContent = entry.due;
+      this.#cellStatus.textContent = entry.status;
+      this.#cellRemoveButton.textContent = "-";
+    };
+    this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = entry.desc })
+    this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" })
+    this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#entryCell.remove() })
+  };
   #elements = [];
 
   #cellPriority;
@@ -68,32 +93,103 @@ class entryDisplay {
     })
     this.#entryCell.append(this.#cellRemoveButton);
   }
-
-  constructor(entry, subPanel) {
-    for(let i = 0; i < 6; i++){
-      this.#elements.push(document.createElement("div"))
-    };
-    this.#cellPriority = this.#elements[0];
-    this.#cellTitle = this.#elements[1];
-    this.#cellDesc = this.#elements[2];
-    this.#cellAdded = this.#elements[3];
-    this.#cellDue = this.#elements[4];
-    this.#cellStatus = this.#elements[5];
-    this.#entryCell.id = "entry";
-    this.#cellTitle.id = "entryTitle";
-    if(entry) {
-      this.#cellPriority.textContent = entry.priority;
-      this.#cellTitle.textContent = entry.title;
-      this.#cellDesc.textContent = entry.desc;
-      this.#cellAdded.textContent = entry.added;
-      this.#cellDue.textContent = entry.due;
-      this.#cellStatus.textContent = entry.status;
-      this.#cellRemoveButton.textContent = "-";
-    };
-    this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = entry.desc })
-    this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" })
-    this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#entryCell.remove() })
+};
+class toDoList {
+  constructor(title) { this.#title = title };
+  #list = [];
+  #title = "Unspecified Title";
+  addEntry(newEntry) { this.#list.push(newEntry) };
+  delEntry(entry) { this.#list.splice(entry, 1) };
+  getEntry(entry) { return this.#list[entry] };
+  moveEntry(entry, position) {
+    targetEntry = this.#list[entry];
+    this.#list.splice(entry, 1);
+    this.#list.splice(position - 1, 0, targetEntry);
   };
+
+  get list() { return this.#list };
+  get title() { return this.#title };
+  set title(newTitle) { this.#title = newTitle; };
+};
+class listDisplay {
+  constructor(parentNode, tagHeader, list) {
+    this.#parent = parentNode;
+    this.#header = document.createElement("div");
+    this.#header.id = tagHeader + "Header";
+    this.#addButton = document.createElement("button");
+    this.#addButton.id = tagHeader + "AddButton"
+    this.#listDisplay = document.createElement("div");
+    this.#list = list;
+    console.log(this.#list)
+    this.#subPanel = document.createElement("div");
+    this.#addButton.addEventListener("click", this.addEntry)
+    console.log(this.#addButton.id)
+  };
+  #parent;
+  #header;
+  #listDisplay;
+  #list = [];
+  #subPanel;
+  #addButton;
+
+  get list() { return this.#list };
+  get displayNode() { return this.#listDisplay };
+  set displayNode(newListDisplay) { this.#listDisplay = newListDisplay };
+  get headerId() { return this.#header.id };
+  set headerId(newId) { this.#header.id = newId };
+  get parent() { return this.#parent };
+  set parent(newParent) { this.#parent = newParent };
+  get header() { return this.#header };
+  set header(newHeader) { this.#header = newHeader };
+  
+  addEntry = () => {
+    const input = new entryDisplay();
+    input.id = "newEntry";
+    console.log(input);
+    console.log(input.id);
+    this.#header.textContent = "";
+    this.#header.append(input.entryCell);
+    this.#header.backgroundColor = "silver";
+    this.#addButton.removeEventListener("click", this.addEntry);
+    this.#addButton.addEventListener("click", this.submitEntry);
+    this.#addButton.textContent = "Submit";
+  };
+  submitEntry = () => {
+    const newEntry = new toDoEntry();
+    const input = document.querySelector("#newEntry");
+    console.log(input);
+    newEntry.priority = input.cellPriority.textContent,
+    newEntry.title = input.cellTitle.textContent,
+    newEntry.desc = input.cellDesc.textContent,
+    newEntry.added = input.cellAdded.textContent,
+    newEntry.due = input.cellDue.textContent;
+    this.#list.addEntry(newEntry);
+    this.#addButton.removeEventListener("click", this.submitEntry);
+    this.#addButton.addEventListener("click", this.addEntry);
+    this.#addButton.textContent = "+";
+    this.render();
+};
+  render() {
+    // clear the display state
+    this.#parent.textContent = "";
+    // put the header and list up
+    this.#parent.append(this.#header)
+    this.#header.textContent = this.#list.title;
+    this.#parent.append(this.#listDisplay)
+    // build the new list
+    this.#list.list.forEach((entry) => {
+      if (entry instanceof toDoEntry) {
+       const newEntry = new entryDisplay(entry)
+       this.#listDisplay.append(newEntry.entryCell)
+       newEntry.render()
+      }
+      else {
+        this.#listDisplay.append(entry.title);
+      };
+    });
+  };
+
+
 };
 class submitForm {
   #elements = [];
@@ -147,96 +243,6 @@ class submitForm {
       this.#cellSubmitButton.textContent = "Submit";
     };
     this.#cellSubmitButton.addEventListener("click", this.#entryCell.remove() )
-  };
-};
-class toDoList {
-  #list = [];
-  #title = "Unspecified Title";
-  addEntry(newEntry) { this.#list.push(newEntry) };
-  delEntry(entry) { this.#list.splice(entry, 1) };
-  getEntry(entry) { return this.#list[entry] };
-  moveEntry(entry, position) {
-    targetEntry = this.#list[entry];
-    this.#list.splice(entry, 1);
-    this.#list.splice(position - 1, 0, targetEntry);
-  };
-
-  get list() { return this.#list };
-  get title() { return this.#title };
-  set title(newTitle) { this.#title = newTitle; };
-
-  constructor(title) { this.#title = title };
-};
-class listDisplay {
-  #parent;
-  #header;
-  #listDisplay;
-  #list = [];
-  #subPanel;
-  #addButton;
-
-  get list() { return this.#list };
-  get displayNode() { return this.#listDisplay };
-  set displayNode(newListDisplay) { this.#listDisplay = newListDisplay };
-  get headerId() { return this.#header.id };
-  set headerId(newId) { this.#header.id = newId };
-  get parent() { return this.#parent };
-  set parent(newParent) { this.#parent = newParent };
-  get header() { return this.#header };
-  set header(newHeader) { this.#header = newHeader };
-  
-  addEntry = () => {
-    const input = new entryDisplay();
-    input.id = "newEntry";
-    console.log(input);
-    console.log(input.id);
-    this.#header.textContent = "";
-    this.#header.append(input.entryCell);
-    this.#header.backgroundColor = "silver";
-    this.#addButton.removeEventListener("click", this.addEntry);
-    this.#addButton.addEventListener("click", this.submitEntry);
-    this.#addButton.textContent = "Submit";
-  };
-  submitEntry = () => {
-    const newEntry = new toDoEntry();
-    const input = document.querySelector("#newEntry");
-    console.log(input);
-    newEntry.priority = input.cellPriority.textContent,
-    newEntry.title = input.cellTitle.textContent,
-    newEntry.desc = input.cellDesc.textContent,
-    newEntry.added = input.cellAdded.textContent,
-    newEntry.due = input.cellDue.textContent;
-    this.#list.addEntry(newEntry);
-    this.#addButton.removeEventListener("click", this.submitEntry);
-    this.#addButton.addEventListener("click", this.addEntry);
-    this.#addButton.textContent = "+";
-    this.render();
-}
-render() {
-    this.#listDisplay.textContent = "";
-    this.#header.textContent = this.#list.title;
-    this.#list.list.forEach((entry) => {
-      if (entry instanceof toDoEntry) {
-       const newEntry = new entryDisplay(entry)
-       this.#listDisplay.append(newEntry.entryCell)
-       newEntry.render()
-      }
-      else {
-        this.#listDisplay.append(entry.title);
-      };
-    });
-  };
-
-  constructor(parentNode, tagHeader, list) {
-    this.#parent = parentNode;
-    this.#header = document.createElement("div");
-    this.#addButton = document.createElement("button");
-    this.#addButton.id = tagHeader + "AddButton"
-    this.#listDisplay = document.createElement("div");
-    this.#list = list;
-    this.#subPanel = document.createElement("div");
-    this.#addButton.addEventListener("click", this.addEntry)
-    console.log(this.#addButton.id)
   };
 };
 
