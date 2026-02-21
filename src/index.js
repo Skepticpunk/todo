@@ -96,8 +96,14 @@ class entryDisplay {
 };
 class toDoList {
   constructor(title) { this.#title = title };
+
   #list = [];
   #title = "Unspecified Title";
+
+  get list() { return this.#list };
+  get title() { return this.#title };
+  set title(newTitle) { this.#title = newTitle; };
+
   addEntry(newEntry) { this.#list.push(newEntry) };
   delEntry(entry) { this.#list.splice(entry, 1) };
   getEntry(entry) { return this.#list[entry] };
@@ -106,23 +112,19 @@ class toDoList {
     this.#list.splice(entry, 1);
     this.#list.splice(position - 1, 0, targetEntry);
   };
-
-  get list() { return this.#list };
-  get title() { return this.#title };
-  set title(newTitle) { this.#title = newTitle; };
 };
 class listDisplay {
-  constructor(parentNode, tagHeader, list) {
+  constructor(parentNode, tagHeader, subPanel, list) {
     this.#parent = parentNode;
-    this.#tagHeader = tagHeader;
     this.#header = document.createElement("h1");
-    this.#header.id = this.#tagHeader + "Header";
-    this.#addButton = document.createElement("button");
-    this.#addButton.id = this.#tagHeader + "AddButton";
     this.#listDisplay = document.createElement("div");
-    this.#listDisplay.id = this.#tagHeader + "ListDisplay";
+    this.#addButton = document.createElement("button");
+    this.#subPanel = subPanel;
+    this.#tagHeader = tagHeader;
     this.#list = list;
-    this.#subPanel = document.createElement("div");
+    this.#header.id = this.#tagHeader + "Header";
+    this.#addButton.id = this.#tagHeader + "AddButton";
+    this.#listDisplay.id = this.#tagHeader + "ListDisplay";
     this.#addButton.addEventListener("click", this.addEntry)
   };
   #parent;
@@ -180,19 +182,20 @@ class listDisplay {
     // build the new list
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
-        //make new to-do entry, then append it
+        //make new to-do entry, then append itB
         const newEntry = new entryDisplay(entry)
         newEntry.id = this.#tagHeader + "Entry";
         this.#listDisplay.append(newEntry.entryCell)
         newEntry.render()
       }
       else {
-        this.#listDisplay.append(entry.title);
+        //make new list entry, put the entry title in the entry, then append it
+        const newEntry = document.createElement("div");
+        newEntry.textContent = entry.title
+        this.#listDisplay.append(newEntry);
       };
     });
   };
-
-
 };
 class submitForm {
   #elements = [];
@@ -251,8 +254,9 @@ class submitForm {
 
 const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
-const projectsDisplay = new listDisplay(document.querySelector("#projectList"), "project", projectLists);
-const toDoListDisplay = new listDisplay(document.querySelector("#toDo"), "toDoList", toDoList1);
+const toDoList2 = new toDoList("List 2");
+const projectsDisplay = new listDisplay(document.querySelector("#projectList"), "project", document.querySelector("#toDo"), projectLists);
+const toDoListDisplay = new listDisplay(document.querySelector("#toDo"), "toDoList", document.querySelector("#toDoDesc"), toDoList1);
 const entry1 = new toDoEntry(
   0,
   "Debug Entry",
@@ -260,11 +264,20 @@ const entry1 = new toDoEntry(
   "4/20/69",
   "3/14/15",
   0);
+const entry2 = new toDoEntry(
+  0,
+  "fuckfuckfuckf",
+  "AGGA",
+  "Literally 1984",
+  "Feb 30",
+  0);
 
 function addList(list) { projectLists.push(list) };
 function delList(list) { projectLists.splice(list, 1) };
 
 projectLists.addEntry(toDoList1);
+projectLists.addEntry(toDoList2);
 projectLists.getEntry(0).addEntry(entry1);
+projectLists.getEntry(1).addEntry(entry2);
 projectsDisplay.render();
 toDoListDisplay.render();
