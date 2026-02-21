@@ -118,8 +118,9 @@ class listDisplay {
     this.#header = document.createElement("h1");
     this.#header.id = this.#tagHeader + "Header";
     this.#addButton = document.createElement("button");
-    this.#addButton.id = this.#tagHeader + "AddButton"
+    this.#addButton.id = this.#tagHeader + "AddButton";
     this.#listDisplay = document.createElement("div");
+    this.#listDisplay.id = this.#tagHeader + "ListDisplay";
     this.#list = list;
     this.#subPanel = document.createElement("div");
     this.#addButton.addEventListener("click", this.addEntry)
