@@ -60,6 +60,9 @@ class entryDisplay {
       this.#cellStatus.textContent = entry.status;
       this.#cellRemoveButton.textContent = "-";
     };
+    this.#subPanel = subPanel;
+    console.log(subPanel);
+    console.log(this.#subPanel);
     this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = entry.desc })
     this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" })
     this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#entryCell.remove() })
@@ -72,10 +75,10 @@ class entryDisplay {
   #cellAdded;
   #cellDue;
   #cellStatus;
+  #subPanel;
 
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
-  #subPanel = document.createElement("div");
 
   get entryCell() {return this.#entryCell}
   get cellPriority() {return this.#cellPriority};
@@ -171,7 +174,11 @@ class listDisplay {
     this.#addButton.addEventListener("click", this.addEntry);
     this.#addButton.textContent = "+";
     this.render();
-};
+  };
+  changeList = (list) => {
+    this.#list = list;
+    this.render()
+  };
   render() {
     // clear the display state
     this.#parent.textContent = "";
@@ -183,7 +190,7 @@ class listDisplay {
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
         //make new to-do entry, then append itB
-        const newEntry = new entryDisplay(entry)
+        const newEntry = new entryDisplay(entry, this.#subPanel)
         newEntry.id = this.#tagHeader + "Entry";
         this.#listDisplay.append(newEntry.entryCell)
         newEntry.render()
@@ -256,7 +263,7 @@ const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
 const toDoList2 = new toDoList("List 2");
 const projectsDisplay = new listDisplay(document.querySelector("#projectList"), "project", document.querySelector("#toDo"), projectLists);
-const toDoListDisplay = new listDisplay(document.querySelector("#toDo"), "toDoList", document.querySelector("#toDoDesc"), toDoList1);
+const toDoListDisplay = new listDisplay(document.querySelector("#toDoEntries"), "toDoList", document.querySelector("#toDoDesc"), toDoList1);
 const entry1 = new toDoEntry(
   0,
   "Debug Entry",

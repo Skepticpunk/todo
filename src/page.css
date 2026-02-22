@@ -28,11 +28,10 @@ h2 {
   background-color:      pink; }
 #toDoListHeader > button {
   margin:                8px 0 0 0;}
-#toDoEntries {
+#toDoListListDisplay {
   display:               flex;
   flex-direction:        column;
   font-size:             24;
-  padding:               0 0 0 8px; 
   border-bottom:         8px outset silver; }
 .entry {
   margin:                0 8px;
