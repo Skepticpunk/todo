@@ -6,8 +6,20 @@ import { listDisplay } from "./list-display.js"
 const projectLists = new toDoList("Lists");
 const toDoList1 = new toDoList("List 1");
 const toDoList2 = new toDoList("List 2");
-const projectsDisplay = new listDisplay(document.querySelector("#projectList"), "project", document.querySelector("#toDo"), projectLists);
-const toDoListDisplay = new listDisplay(document.querySelector("#toDoEntries"), "toDoList", document.querySelector("#toDoDesc"), toDoList1);
+projectLists.addEntry(toDoList1);
+projectLists.addEntry(toDoList2);
+projectLists.getEntry(0).addEntry(entry1);
+projectLists.getEntry(1).addEntry(entry2);
+
+const projectsDisplay = new listDisplay(document.querySelector("#projectList"));
+projectsDisplay.tagHeader = "project"; 
+projectsDisplay.subPanel = document.querySelector("#toDo");
+projectsDisplay.list = projectLists;
+const toDoListDisplay = new listDisplay(document.querySelector("#toDoEntries"))
+toDoListDisplay.tagHeader = "toDoList";
+toDoListDisplay.subPanel = document.querySelector("#toDoDesc");
+toDoListDisplay.list = toDoList1;
+
 const entry1 = new toDoEntry(
   0,
   "Debug Entry",
@@ -23,12 +35,5 @@ const entry2 = new toDoEntry(
   "Feb 30",
   0);
 
-function addList(list) { projectLists.push(list) };
-function delList(list) { projectLists.splice(list, 1) };
-
-projectLists.addEntry(toDoList1);
-projectLists.addEntry(toDoList2);
-projectLists.getEntry(0).addEntry(entry1);
-projectLists.getEntry(1).addEntry(entry2);
 projectsDisplay.render();
 toDoListDisplay.render();

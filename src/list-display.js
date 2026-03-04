@@ -1,17 +1,12 @@
-import { entryDisplay } from "./entry-display";
+import { entryDisplay } from "./entry-display"
+import { toDoEntry } from "./entry";
 
 class listDisplay {
-  constructor(parentNode, tagHeader, subPanel, list) {
+  constructor(parentNode) {
     this.#parent = parentNode;
     this.#header = document.createElement("h1");
     this.#listDisplay = document.createElement("div");
     this.#addButton = document.createElement("button");
-    this.#subPanel = subPanel;
-    this.#tagHeader = tagHeader;
-    this.#list = list;
-    this.#header.id = this.#tagHeader + "Header";
-    this.#addButton.id = this.#tagHeader + "AddButton";
-    this.#listDisplay.id = this.#tagHeader + "ListDisplay";
     this.#addButton.addEventListener("click", this.addEntry)
   };
   #parent;
@@ -22,15 +17,21 @@ class listDisplay {
   #subPanel;
   #addButton;
 
-  get list() { return this.#list };
-  get displayNode() { return this.#listDisplay };
-  set displayNode(newListDisplay) { this.#listDisplay = newListDisplay };
-  get headerId() { return this.#header.id };
-  set headerId(newId) { this.#header.id = newId };
   get parent() { return this.#parent };
   set parent(newParent) { this.#parent = newParent };
+  get tagHeader() { return this.#tagHeader };
+  set tagHeader(newTagHeader) { 
+    this.#tagHeader = newTagHeader
+    this.#header.id = this.#tagHeader + "Header";
+    this.#addButton.id = this.#tagHeader + "AddButton";
+    this.#listDisplay.id = this.#tagHeader + "ListDisplay";
+  };
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
+  get list() { return this.#list };
+  set list(list) { this.#list = list; this.render() };
+  get subPanel() { return this.#subPanel };
+  set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   
   addEntry = () => {
     const input = new entryDisplay();
@@ -58,10 +59,6 @@ class listDisplay {
     this.#addButton.addEventListener("click", this.addEntry);
     this.#addButton.textContent = "+";
     this.render();
-  };
-  changeList = (list) => {
-    this.#list = list;
-    this.render()
   };
   render() {
     // clear the display state
