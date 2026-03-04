@@ -8,8 +8,6 @@ const toDoList1 = new toDoList("List 1");
 const toDoList2 = new toDoList("List 2");
 projectLists.addEntry(toDoList1);
 projectLists.addEntry(toDoList2);
-projectLists.getEntry(0).addEntry(entry1);
-projectLists.getEntry(1).addEntry(entry2);
 
 const projectsDisplay = new listDisplay(document.querySelector("#projectList"));
 projectsDisplay.tagHeader = "project"; 
@@ -34,6 +32,9 @@ const entry2 = new toDoEntry(
   "Literally 1984",
   "Feb 30",
   0);
+
+projectLists.getEntry(0).addEntry(entry1);
+projectLists.getEntry(1).addEntry(entry2);
 
 projectsDisplay.render();
 toDoListDisplay.render();
