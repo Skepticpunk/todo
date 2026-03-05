@@ -1,5 +1,6 @@
 class entryDisplay {
   constructor(entry, subPanel) {
+    // listify elements so we can just do stuff with the list
     for(let i = 0; i < 6; i++){
       this.#elements.push(document.createElement("div"))
     };
