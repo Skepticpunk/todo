@@ -37,10 +37,10 @@ class listDisplay {
     // clear the display state
     this.#parent.textContent = "";
     // put the header and list up
-    this.#parent.append(this.#header)
+    this.#parent.append(this.#header);
     this.#header.textContent = this.#list.title;
-    this.#header.append(this.#addButton)
-    this.#parent.append(this.#listDisplay)
+    this.#header.append(this.#addButton);
+    this.#parent.append(this.#listDisplay);
     // build the new list
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
@@ -51,9 +51,7 @@ class listDisplay {
         newEntry.render()
       }
       else {
-        //make new list entry, put the entry title in the entry, then append it
-        console.log(this.#list);
-        console.log(entry);
+        // make new list entry, put the entry title in the entry, then append it
         const newEntry = document.createElement("div");
         newEntry.textContent = entry.title
         this.#listDisplay.append(newEntry);

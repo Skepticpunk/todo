@@ -9,15 +9,6 @@ const toDoList2 = new toDoList("List 2");
 projectLists.addEntry(toDoList1);
 projectLists.addEntry(toDoList2);
 
-const projectsDisplay = new listDisplay(document.querySelector("#projectList"));
-projectsDisplay.tagHeader = "project"; 
-projectsDisplay.subPanel = document.querySelector("#toDo");
-projectsDisplay.list = projectLists;
-const toDoListDisplay = new listDisplay(document.querySelector("#toDoEntries"))
-toDoListDisplay.tagHeader = "toDoList";
-toDoListDisplay.subPanel = document.querySelector("#toDoDesc");
-toDoListDisplay.list = toDoList1;
-
 const entry1 = new toDoEntry(
   0,
   "Debug Entry",
@@ -32,9 +23,14 @@ const entry2 = new toDoEntry(
   "Literally 1984",
   "Feb 30",
   0);
-
 projectLists.getEntry(0).addEntry(entry1);
 projectLists.getEntry(1).addEntry(entry2);
 
-projectsDisplay.render();
-toDoListDisplay.render();
+const projectsDisplay = new listDisplay(document.querySelector("#projectList"));
+projectsDisplay.tagHeader = "project"; 
+projectsDisplay.subPanel = document.querySelector("#toDo");
+projectsDisplay.list = projectLists;
+const toDoListDisplay = new listDisplay(document.querySelector("#toDoEntries"))
+toDoListDisplay.tagHeader = "toDoList";
+toDoListDisplay.subPanel = document.querySelector("#toDoDesc");
+toDoListDisplay.list = toDoList1;

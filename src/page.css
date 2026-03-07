@@ -8,6 +8,8 @@ h1 {
   margin:                 8px 0 0 0;
   padding:                0 8px; 
   border-bottom:          1px solid white; }
+h1 > button {
+  margin:                4px;}
 h2 {
   margin:                 8px 0 0 0;}
 #projectList {
@@ -15,8 +17,7 @@ h2 {
 #projectHeader {
   display:               grid; 
   grid-template-columns: 4fr minmax(1em, 48px); }
-#projectHeader > button {
-  margin:                8px 0 0 0;}
+
 #projects {
   font-size:             24;
   padding:               0 8px; }
@@ -26,8 +27,6 @@ h2 {
   display:               grid; 
   grid-template-columns: 10fr minmax(1em, 48px);
   background-color:      pink; }
-#toDoListHeader > button {
-  margin:                8px 0 0 0;}
 #toDoListListDisplay {
   display:               flex;
   flex-direction:        column;
