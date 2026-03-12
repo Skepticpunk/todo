@@ -33,6 +33,29 @@ class listDisplay {
   get subPanel() { return this.#subPanel };
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   
+  newEntryDialog() {
+    // clear the header
+    this.#header.textContent = "";
+    // create elements for dialog
+    let newPriority = document.createElement("input")
+    let newTitle = document.createElement("input")
+    let newDesc = document.createElement("input")
+    let newAdded = document.createElement("input")
+    let newDue = document.createElement("input")
+    let newStatus = document.createElement("input")
+    // append elements
+    this.#header.append(newPriority)
+    this.#header.append(newTitle)
+    this.#header.append(newDesc)
+    this.#header.append(newAdded)
+    this.#header.append(newDue)
+    this.#header.append(newStatus)
+    this.#header.append(this.#addButton)
+    // change button to "add" and add append function
+    // todo: change fake "addEntry" function to something real
+    this.#addButton.textContent = "add"
+    this.#addButton.addEventListener("click", addEntry(entry))
+  }
   render() {
     // clear the display state
     this.#parent.textContent = "";

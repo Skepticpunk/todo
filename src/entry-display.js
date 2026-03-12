@@ -12,15 +12,13 @@ class entryDisplay {
     this.#cellStatus = this.#elements[5];
     this.#entryCell.classList.add("entry");
     this.#cellTitle.classList.add("entryTitle");
-    if(entry) {
-      this.#cellPriority.textContent = entry.priority;
-      this.#cellTitle.textContent = entry.title;
-      this.#cellDesc.textContent = entry.desc;
-      this.#cellAdded.textContent = entry.added;
-      this.#cellDue.textContent = entry.due;
-      this.#cellStatus.textContent = entry.status;
-      this.#cellRemoveButton.textContent = "-";
-    };
+    this.#cellPriority.textContent = entry.priority;
+    this.#cellTitle.textContent = entry.title;
+    this.#cellDesc.textContent = entry.desc;
+    this.#cellAdded.textContent = entry.added;
+    this.#cellDue.textContent = entry.due;
+    this.#cellStatus.textContent = entry.status;
+    this.#cellRemoveButton.textContent = "-";
     this.#subPanel = subPanel;
     console.log(subPanel);
     console.log(this.#subPanel);
