@@ -79,6 +79,7 @@ class listDisplay {
   render() {                                                       
     // clear the display state                                     
     this.#parent.textContent = "";
+    this.#listDisplay.textContent = "";
     // put the header and list up
     this.#parent.append(this.#header);
     this.#header.textContent = this.#list.title;

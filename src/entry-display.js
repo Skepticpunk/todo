@@ -20,8 +20,6 @@ class entryDisplay {
     this.#cellStatus.textContent = entry.status;
     this.#cellRemoveButton.textContent = "-";
     this.#subPanel = subPanel;
-    console.log(subPanel);
-    console.log(this.#subPanel);
     this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = entry.desc })
     this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" })
     this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#entryCell.remove() })
