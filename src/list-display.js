@@ -7,6 +7,7 @@ class listDisplay {
     this.#header = document.createElement("h1");
     this.#listDisplay = document.createElement("div");
     this.#addButton = document.createElement("button");
+    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#list = [];
   };
   #parent;
@@ -16,6 +17,14 @@ class listDisplay {
   #list;
   #subPanel;
   #addButton;
+  #newEntryDialog = {
+    priority: document.createElement("input"),
+    title: document.createElement("input"),
+    desc: document.createElement("input"),
+    added: document.createElement("input"),
+    due: document.createElement("input"),
+    status: document.createElement("input")
+  };
 
   get parent() { return this.#parent };
   set parent(newParent) { this.#parent = newParent };
@@ -33,36 +42,48 @@ class listDisplay {
   get subPanel() { return this.#subPanel };
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   
-  newEntryDialog() {
+  renderNewEntryDialog = () => {
     // clear the header
     this.#header.textContent = "";
-    // create elements for dialog
-    let newPriority = document.createElement("input")
-    let newTitle = document.createElement("input")
-    let newDesc = document.createElement("input")
-    let newAdded = document.createElement("input")
-    let newDue = document.createElement("input")
-    let newStatus = document.createElement("input")
     // append elements
-    this.#header.append(newPriority)
-    this.#header.append(newTitle)
-    this.#header.append(newDesc)
-    this.#header.append(newAdded)
-    this.#header.append(newDue)
-    this.#header.append(newStatus)
-    this.#header.append(this.#addButton)
+    this.#header.append(this.#newEntryDialog.priority);
+    this.#header.append(this.#newEntryDialog.title);
+    this.#header.append(this.#newEntryDialog.desc);
+    this.#header.append(this.#newEntryDialog.added);
+    this.#header.append(this.#newEntryDialog.due);
+    this.#header.append(this.#newEntryDialog.status);
+    this.#header.append(this.#addButton);
     // change button to "add" and add append function
     // todo: change fake "addEntry" function to something real
-    this.#addButton.textContent = "add"
-    this.#addButton.addEventListener("click", addEntry(entry))
+    this.#addButton.textContent = "submit";
+    this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
+    this.#addButton.addEventListener("click", this.addEntry);
   }
-  render() {
-    // clear the display state
+  addEntry = () => {
+    // make a new entry
+    const newEntry = new toDoEntry();
+    // add all the data from the dialog
+    newEntry.priority = this.#newEntryDialog.priority.value;
+    newEntry.title = this.#newEntryDialog.title.value; 
+    newEntry.desc = this.#newEntryDialog.desc.value;
+    newEntry.added = this.#newEntryDialog.added.value;
+    newEntry.due = this.#newEntryDialog.due.value;
+    newEntry.status  = this.#newEntryDialog.status.value;
+    // add new entry to list
+    this.#list.addEntry(newEntry);
+    this.#addButton.textContent = "add";
+    this.#addButton.removeEventListener("click", this.addEntry);
+    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+    this.render();
+  }                                                                
+  render() {                                                       
+    // clear the display state                                     
     this.#parent.textContent = "";
     // put the header and list up
     this.#parent.append(this.#header);
     this.#header.textContent = this.#list.title;
     this.#header.append(this.#addButton);
+    this.#addButton.textContent = "add";
     this.#parent.append(this.#listDisplay);
     // build the new list
     this.#list.list.forEach((entry) => {
