@@ -9,6 +9,7 @@ class listDisplay {
     this.#addButton = document.createElement("button");
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#list = [];
+    this.#newEntryDialog.container.id = "newEntryDialog"
   };
   #parent;
   #tagHeader;
@@ -18,6 +19,7 @@ class listDisplay {
   #subPanel;
   #addButton;
   #newEntryDialog = {
+    container: document.createElement("div"),
     priority: document.createElement("input"),
     title: document.createElement("input"),
     desc: document.createElement("input"),
@@ -34,6 +36,7 @@ class listDisplay {
     this.#header.id = this.#tagHeader + "Header";
     this.#addButton.id = this.#tagHeader + "AddButton";
     this.#listDisplay.id = this.#tagHeader + "ListDisplay";
+    this.#newEntryDialog.container.id = this.#tagHeader + "NewEntryDialog"
   };
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
@@ -46,12 +49,13 @@ class listDisplay {
     // clear the header
     this.#header.textContent = "";
     // append elements
-    this.#header.append(this.#newEntryDialog.priority);
-    this.#header.append(this.#newEntryDialog.title);
-    this.#header.append(this.#newEntryDialog.desc);
-    this.#header.append(this.#newEntryDialog.added);
-    this.#header.append(this.#newEntryDialog.due);
-    this.#header.append(this.#newEntryDialog.status);
+    this.#header.append(this.#newEntryDialog.container);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.priority);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.desc);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.added);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.due);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.status);
     this.#header.append(this.#addButton);
     // change button to "add" and add append function
     // todo: change fake "addEntry" function to something real
