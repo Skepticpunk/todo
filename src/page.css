@@ -3,7 +3,7 @@ body {
   grid-template-columns: 1fr 4fr;
   height:                100vh;
   font-family:           "Oswald";
-  background-color:      silver; }
+  background-color:      burlywood; }
 h1 {
   margin:                 4px 0 0 0;
   padding:                0 6px; 
@@ -12,6 +12,8 @@ h1 > button {
   margin:                4px;}
 h2 {
   margin:                 8px 0 0 0;}
+input {
+  min-width: 0; }
 #projectList {
   background-color:      antiquewhite; }
 #projectHeader {
@@ -30,7 +32,7 @@ h2 {
 }
 #toDoListHeader {
   display:               grid; 
-  grid-template-columns: 10fr minmax(1em, 48px);
+  grid-template-columns: 10fr 78px;
   background-color:      pink; }
 #toDoListNewEntryDialog {
   display:               grid; 
