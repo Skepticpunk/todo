@@ -45,6 +45,7 @@ class listDisplay {
   get subPanel() { return this.#subPanel };
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   
+  
   renderNewEntryDialog = () => {
     // clear the header
     this.#header.textContent = "";
@@ -58,7 +59,6 @@ class listDisplay {
     this.#newEntryDialog.container.append(this.#newEntryDialog.status);
     this.#header.append(this.#addButton);
     // change button to "add" and add append function
-    // todo: change fake "addEntry" function to something real
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
     this.#addButton.addEventListener("click", this.addEntry);
@@ -100,9 +100,11 @@ class listDisplay {
         newEntry.render()
       }
       else {
-        // make new list entry, put the entry title in the entry, then append it
+        // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const newEntry = document.createElement("div");
         newEntry.textContent = entry.title
+        // todo: add actual list-changing functionality
+        this.newEntry.addEventListener("click", () => { toDoList.changeList(newList) })
         this.#listDisplay.append(newEntry);
       };
     });

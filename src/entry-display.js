@@ -1,5 +1,5 @@
 class entryDisplay {
-  constructor(entry, subPanel) {
+  constructor(entry, subPanel, subPanelContent, showSubPanel) {
     // listify elements so we can just do stuff with the list
     for(let i = 0; i < 6; i++){
       this.#elements.push(document.createElement("div"))
@@ -20,8 +20,19 @@ class entryDisplay {
     this.#cellStatus.textContent = entry.status;
     this.#cellRemoveButton.textContent = "-";
     this.#subPanel = subPanel;
-    this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = entry.desc })
-    this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" })
+    if(subPanelContent){
+      this.#subPanelContent = subPanelContent;
+    }
+    switch(showSubPanel) {
+      case 1:
+        this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = subPanelContent });
+        this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" });  
+        break;
+      case 2:
+        this.#entryCell.addEventListener("click", () => { this.#subPanel.textContent = subPanelContent })
+        break;
+    }
+
     this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#entryCell.remove() })
   };
   #elements = [];
@@ -33,6 +44,7 @@ class entryDisplay {
   #cellDue;
   #cellStatus;
   #subPanel;
+  #subPanelContent = entry.desc;
 
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
