@@ -32,7 +32,6 @@ class entryDisplay {
         this.#entryCell.addEventListener("click", () => { this.#subPanel.textContent = subPanelContent })
         break;
     }
-
     this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#entryCell.remove() })
   };
   #elements = [];
@@ -44,7 +43,7 @@ class entryDisplay {
   #cellDue;
   #cellStatus;
   #subPanel;
-  #subPanelContent = entry.desc;
+  #subPanelContent;
 
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");

@@ -94,7 +94,7 @@ class listDisplay {
     this.#list.list.forEach((entry) => {
       if (entry instanceof toDoEntry) {
         //make new to-do entry, then append it
-        const newEntry = new entryDisplay(entry, this.#subPanel)
+        const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1)
         newEntry.id = this.#tagHeader + "Entry";
         this.#listDisplay.append(newEntry.entryCell)
         newEntry.render()
@@ -103,8 +103,8 @@ class listDisplay {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const newEntry = document.createElement("div");
         newEntry.textContent = entry.title
-        // todo: add actual list-changing functionality
-        this.newEntry.addEventListener("click", () => { toDoList.changeList(newList) })
+        // get list from the entry, then switch the current list with it
+        newEntry.addEventListener("click", () => { this.#list = entry.list; console.log(this); console.log(this.#list, " + ", entry.list)})
         this.#listDisplay.append(newEntry);
       };
     });
