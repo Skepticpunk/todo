@@ -9,6 +9,7 @@ class listDisplay {
     this.#addButton = document.createElement("button");
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#list = [];
+    this.#childList = "";
     this.#newEntryDialog.container.id = "newEntryDialog"
   };
   #parent;
@@ -16,6 +17,7 @@ class listDisplay {
   #header;
   #listDisplay;
   #list;
+  #childList;
   #subPanel;
   #addButton;
   #newEntryDialog = {
@@ -41,9 +43,11 @@ class listDisplay {
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
   get list() { return this.#list };
-  set list(list) { this.#list = list; console.log("rendering list for " + this.#tagHeader); this.render() };
+  set list(newList) { this.#list = newList; console.log("rendering list for " + this.#tagHeader); this.render() };
   get subPanel() { return this.#subPanel };
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
+  get childList() { return this.#childList };
+  set childList(newchildList) { this.#childList = newchildList };
   
   
   renderNewEntryDialog = () => {
@@ -103,8 +107,8 @@ class listDisplay {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const newEntry = document.createElement("div");
         newEntry.textContent = entry.title
-        // get list from the entry, then switch the current list with it
-        newEntry.addEventListener("click", () => { this.#list = entry.list; console.log(this); console.log(this.#list, " + ", entry.list)})
+        // get list from the entry, then switch the subpanel's current list with it
+        newEntry.addEventListener("click", () => { console.log(this.#childList); this.#childList.list = entry.list;})
         this.#listDisplay.append(newEntry);
       };
     });

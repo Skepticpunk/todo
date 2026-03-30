@@ -34,3 +34,4 @@ const toDoListDisplay = new listDisplay(document.querySelector("#toDoEntries"))
 toDoListDisplay.tagHeader = "toDoList";
 toDoListDisplay.subPanel = document.querySelector("#toDoDesc");
 toDoListDisplay.list = toDoList1;
+projectsDisplay.childList = toDoListDisplay;
