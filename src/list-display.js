@@ -95,23 +95,24 @@ class listDisplay {
     this.#addButton.textContent = "add";
     this.#parent.append(this.#listDisplay);
     // build the new list
-    this.#list.list.forEach((entry) => {
-      if (entry instanceof toDoEntry) {
-        //make new to-do entry, then append it
-        const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1)
-        newEntry.id = this.#tagHeader + "Entry";
-        this.#listDisplay.append(newEntry.entryCell)
-        newEntry.render()
-      }
-      else {
+    if (this.#list.list) {
+      this.#list.list.forEach((entry) => {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const newEntry = document.createElement("div");
         newEntry.textContent = entry.title
         // get list from the entry, then switch the subpanel's current list with it
         newEntry.addEventListener("click", () => { console.log(this.#childList); this.#childList.list = entry.list;})
         this.#listDisplay.append(newEntry);
-      };
-    });
+      });
+    } else {
+      this.#list.forEach((entry) => {
+        //make new to-do entry, then append it
+        const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1)
+        newEntry.id = this.#tagHeader + "Entry";
+        this.#listDisplay.append(newEntry.entryCell)
+        newEntry.render()
+      });
+    };
   };
 };
 
