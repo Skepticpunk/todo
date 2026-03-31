@@ -84,7 +84,7 @@ class listDisplay {
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.render();
   }                                                                
-  render() {                                                       
+  render() {
     // clear the display state                                     
     this.#parent.textContent = "";
     this.#listDisplay.textContent = "";
@@ -99,9 +99,16 @@ class listDisplay {
       this.#list.list.forEach((entry) => {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const newEntry = document.createElement("div");
-        newEntry.textContent = entry.title
+        newEntry.textContent = entry.title;
         // get list from the entry, then switch the subpanel's current list with it
-        newEntry.addEventListener("click", () => { console.log(this.#childList); this.#childList.list = entry.list;})
+        newEntry.addEventListener("click", () => {
+          console.log(this.#childList.list)
+          console.log(this.#childList.list.title)
+          console.log(entry)
+          // this is really hacky but it'll work until I actually figure out what the fuck data I'm throwing around
+          this.#childList.list = entry.list;
+          this.#childList.header.textContent = entry.title; 
+        });
         this.#listDisplay.append(newEntry);
       });
     } else {
