@@ -1,5 +1,6 @@
 import { entryDisplay } from "./entry-display"
 import { toDoEntry } from "./entry";
+import { toDoList } from "./list";
 
 class listDisplay {
   constructor(parentNode) {
@@ -95,28 +96,26 @@ class listDisplay {
     this.#addButton.textContent = "add";
     this.#parent.append(this.#listDisplay);
     // build the new list
-    if (this.#list.list) {
+    if ((typeof this.#list) == toDoList) {
       this.#list.list.forEach((entry) => {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
-        const newEntry = document.createElement("div");
+        const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1)
+        newEntry.id = this.#tagHeader + "Entry";
+        this.#listDisplay.append(newEntry.entryCell)
         newEntry.textContent = entry.title;
         // get list from the entry, then switch the subpanel's current list with it
         newEntry.addEventListener("click", () => {
           console.log(this.#childList.list)
-          console.log(this.#childList.list.title)
           console.log(entry)
-          // this is really hacky but it'll work until I actually figure out what the fuck data I'm throwing around
-          this.#childList.list = entry.list;
-          this.#childList.header.textContent = entry.title; 
+          this.#childList.list = entry;
         });
         this.#listDisplay.append(newEntry);
       });
     } else {
       this.#list.forEach((entry) => {
         //make new to-do entry, then append it
-        const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1)
-        newEntry.id = this.#tagHeader + "Entry";
-        this.#listDisplay.append(newEntry.entryCell)
+        newEntry = document.createElement("div")
+        newEntry.textContent = entry.title;
         newEntry.render()
       });
     };
