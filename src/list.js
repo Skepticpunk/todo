@@ -15,7 +15,7 @@ class toDoList {
   set title(newTitle) { this.#title = newTitle; };
 
   addEntry(newEntry) { this.#list.push(newEntry) };
-  delEntry(entry) { this.#list.splice(entry, 1) };
+  delEntry(entry) { console.log("deleting entry: " + entry); this.#list.splice(entry, 1) };
   getEntry(entry) { return this.#list[entry] };
   moveEntry(entry, position) {
     targetEntry = this.#list[entry];
