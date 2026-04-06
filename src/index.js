@@ -3,9 +3,9 @@ import { toDoList } from "./list.js";
 import { toDoEntry } from "./entry.js";
 import { listDisplay } from "./list-display.js"
 
-const projectLists = new toDoList("Lists");
-const toDoList1 = new toDoList("List 1");
-const toDoList2 = new toDoList("List 2");
+const projectLists = new toDoList("Lists", 0);
+const toDoList1 = new toDoList("List 1", 1);
+const toDoList2 = new toDoList("List 2", 1);
 projectLists.addEntry(toDoList1);
 projectLists.addEntry(toDoList2);
 

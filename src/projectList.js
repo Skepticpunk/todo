@@ -1,16 +1,10 @@
-class toDoList {
-  constructor(title, listType) {
-    this.#title = title;
-    this.#listType = listType;
-  };
+class projectList {
+  constructor(title) { this.#title = title };
 
   #list = [];
-  #listType;
-  #title = "New Todo List";
+  #title = "New Project List";
 
   get list() { return this.#list };
-  set listType(newListType) { this.#listType = newListType };
-  get listType() { return this.#listType };
   get title() { return this.#title };
   set title(newTitle) { this.#title = newTitle; };
 
