@@ -1,5 +1,5 @@
 class entryDisplay {
-  constructor(entry, subPanel, subPanelContent, showSubPanel, removeFromListArgumentFromParentDoNotDoThisItsBad) {
+  constructor(entry, subPanel, subPanelContent, showSubPanel, parentList, entryIndex) {
     // listify elements so we can just do stuff with the list
     for(let i = 0; i < 6; i++){
       this.#elements.push(document.createElement("div"))
@@ -32,8 +32,13 @@ class entryDisplay {
         this.#entryCell.addEventListener("click", () => { this.#subPanel.textContent = subPanelContent })
         break;
     }
-    this.#removeFromListArgumentFromParentDoNotDoThisItsBad = removeFromListArgumentFromParentDoNotDoThisItsBad;
-    this.#cellRemoveButton.addEventListener("click", () => { this.#subPanel.textContent = ""; this.#removeFromListArgumentFromParentDoNotDoThisItsBad; this.#entryCell.remove() })
+    this.#parentList = parentList;
+    this.#cellRemoveButton.addEventListener("click", () => {
+      console.log("removing todo");
+      console.log(this.#parentList);
+      this.#subPanel.textContent = "";
+      this.#parentList.delEntry(entryIndex);
+      this.#entryCell.remove() })
   };
   #elements = [];
   #removeFromListArgumentFromParentDoNotDoThisItsBad;
@@ -46,6 +51,7 @@ class entryDisplay {
   #cellStatus;
   #subPanel;
   #subPanelContent;
+  #parentList;
 
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");

@@ -112,8 +112,8 @@ class listDisplay {
     } else {
       this.#list.list.forEach((entry, index) => {
         //make new to-do entry, then append it
-        const removeToDoEntry = () => { console.log("removing todo"); this.#list.delEntry(index) }
-        const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, removeToDoEntry);
+        console.log("rendering entry");
+        const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);
         this.#listDisplay.append(newEntry.entryCell);
         newEntry.render();
       });
