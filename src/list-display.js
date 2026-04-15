@@ -8,7 +8,6 @@ class listDisplay {
     this.#header = document.createElement("h1");
     this.#listDisplay = document.createElement("div");
     this.#addButton = document.createElement("button");
-    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#list = [];
     this.#childList = "";
     this.#newEntryDialog.container.id = "newEntryDialog"
@@ -52,8 +51,9 @@ class listDisplay {
   
   
   renderNewEntryDialog = () => {
-    // clear the header
+    // clear the header and dialog
     this.#header.textContent = "";
+    this.#newEntryDialog.container.textContent = "";
     // append elements
     this.#header.append(this.#newEntryDialog.container);
     this.#newEntryDialog.container.append(this.#newEntryDialog.priority);
@@ -63,7 +63,18 @@ class listDisplay {
     this.#newEntryDialog.container.append(this.#newEntryDialog.due);
     this.#newEntryDialog.container.append(this.#newEntryDialog.status);
     this.#header.append(this.#addButton);
-    // change button to "add" and add append function
+    // change button to "submit" and add append function
+    this.#addButton.textContent = "submit";
+    this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
+    this.#addButton.addEventListener("click", this.addEntry);
+  }
+  renderNewListDialog = () => {
+    // same shit as above but instead of appending all the fields we just append the one for the title
+    this.#header.textContent = "";
+    this.#newEntryDialog.textContent = "";
+    this.#header.append(this.#newEntryDialog.container);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
+    this.#header.append(this.#addButton);
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
     this.#addButton.addEventListener("click", this.addEntry);
@@ -84,7 +95,7 @@ class listDisplay {
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.render();
-  }                                                                
+  }
   render() {
     // clear the display state                                     
     this.#parent.textContent = "";
@@ -98,6 +109,7 @@ class listDisplay {
     // build the new list
     if (this.#list.listType == 0) {
       this.#list.list.forEach((entry) => {
+        this.#addButton.addEventListener("click", this.renderNewListDialog);
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const newEntry = document.createElement("div")
         newEntry.id = this.#tagHeader + "Entry";
@@ -111,6 +123,7 @@ class listDisplay {
       });
     } else {
       this.#list.list.forEach((entry, index) => {
+        this.#addButton.addEventListener("click", this.renderNewEntryDialog);
         //make new to-do entry, then append it
         console.log("rendering entry");
         const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);
