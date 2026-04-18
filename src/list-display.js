@@ -96,6 +96,16 @@ class listDisplay {
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.render();
   }
+  addList = () => {
+    // same as above but for lists
+    const newList = new toDoList();
+    newList.title = this.#newEntryDialog.title.value;
+    this.list.addEntry(newList);
+    this.#addButton.textContent = "add";
+    this.#addButton.removeEventListener("click", this.addList);
+    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+    this.render();
+  }
   render() {
     // clear the display state                                     
     this.#parent.textContent = "";
