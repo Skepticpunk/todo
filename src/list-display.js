@@ -76,8 +76,8 @@ class listDisplay {
     this.#newEntryDialog.container.append(this.#newEntryDialog.title);
     this.#header.append(this.#addButton);
     this.#addButton.textContent = "submit";
-    this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
-    this.#addButton.addEventListener("click", this.addEntry);
+    this.#addButton.removeEventListener("click", this.renderNewListDialog);
+    this.#addButton.addEventListener("click", this.addList);
   }
   addEntry = () => {
     // make a new entry
