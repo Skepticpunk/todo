@@ -34,7 +34,6 @@ class entryDisplay {
     }
     this.#parentList = parentList;
     this.#cellRemoveButton.addEventListener("click", () => {
-      console.log("removing todo");
       console.log(this.#parentList);
       this.#subPanel.textContent = "";
       this.#parentList.delEntry(entryIndex);

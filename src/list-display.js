@@ -118,18 +118,27 @@ class listDisplay {
     this.#parent.append(this.#listDisplay);
     // build the new list
     if (this.#list.listType == 0) {
-      this.#list.list.forEach((entry) => {
+      this.#list.list.forEach((entry, index) => {
         this.#addButton.addEventListener("click", this.renderNewListDialog);
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const newEntry = document.createElement("div")
         newEntry.id = this.#tagHeader + "Entry";
         this.#listDisplay.append(newEntry)
-        newEntry.textContent = entry.title;
-        // get list from the entry, then switch the subpanel's current list with it
+        newEntry.textContent = entry.title
+        
         newEntry.addEventListener("click", () => {
+          // get list from the entry, then switch the subpanel's current list with it
           this.#childList.list = entry;
         });
-        this.#listDisplay.append(newEntry);
+        const removeButton = document.createElement("button")
+        removeButton.textContent = "-"
+        removeButton.addEventListener("click", () => {
+          newEntry.remove;
+          this.#list.delEntry(index)
+          this.render();
+          })
+        this.#listDisplay.append(newEntry)
+        this.#listDisplay.append(removeButton);
       });
     } else {
       this.#list.list.forEach((entry, index) => {
