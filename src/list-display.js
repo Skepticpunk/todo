@@ -103,7 +103,7 @@ class listDisplay {
     this.list.addEntry(newList);
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addList);
-    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+    this.#addButton.addEventListener("click", this.renderNewListDialog);
     this.render();
   }
   render() {
