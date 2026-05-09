@@ -19,17 +19,16 @@ input {
 #projectHeader {
   display:               grid; 
   grid-template-columns: 4fr minmax(1em, 48px); }
-#projects {
+#projectListDisplay {
   font-size:             24;
-  padding:               0 8px; }
+  padding:               4px 0; }
 #toDo {
   display:                grid;
   grid-template-rows:     1fr 1fr;
   background-color:      azure; }
 #toDoEntries {
   display: grid;
-  grid-template-rows: 3.3em auto;
-}
+  grid-template-rows: 3.3em auto; }
 #toDoListHeader {
   display:               grid; 
   grid-template-columns: 10fr 78px;
@@ -44,7 +43,8 @@ input {
   display:               flex;
   flex-direction:        column;
   font-size:             24;
-  border-bottom:         8px outset silver; }
+  padding:               4px 0;
+  border-bottom:         2px outset silver; }
 .entry {
   margin:                0 8px;
   flex:                  0 0 1.25em;
@@ -58,4 +58,4 @@ input {
   flex:                  0 0 48px;
   margin:                0; }
 .entryTitle {
-  flex:                  3 }
+  flex:                  3 };

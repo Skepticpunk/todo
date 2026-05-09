@@ -121,11 +121,11 @@ class listDisplay {
       this.#list.list.forEach((entry, index) => {
         this.#addButton.addEventListener("click", this.renderNewListDialog);
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
-        const newEntry = document.createElement("div")
-        newEntry.id = this.#tagHeader + "Entry";
-        this.#listDisplay.append(newEntry)
-        newEntry.textContent = entry.title
-        
+        const entryContainer = document.createElement("div");
+        const newEntry = document.createElement("div");
+        entryContainer.className = "entry";
+        newEntry.className = this.#tagHeader + "Entry";
+        newEntry.textContent = entry.title;
         newEntry.addEventListener("click", () => {
           // get list from the entry, then switch the subpanel's current list with it
           this.#childList.list = entry;
@@ -137,8 +137,9 @@ class listDisplay {
           this.#list.delEntry(index)
           this.render();
           })
-        this.#listDisplay.append(newEntry)
-        this.#listDisplay.append(removeButton);
+        entryContainer.append(newEntry);
+        entryContainer.append(removeButton);
+        this.#listDisplay.append(entryContainer);
       });
     } else {
       this.#list.list.forEach((entry, index) => {
