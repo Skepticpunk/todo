@@ -11,4 +11,9 @@ class listStorageHandler {
   set list(list) { this.#list = list };
   get list() { return this.#list };
 
+  add = (entry) => {
+    entry = toString(entry)
+    let newList = toString(this.#list)
+    this.#list = JSON.parse(newList + entry)
+  }
 }
