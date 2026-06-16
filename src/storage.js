@@ -1,19 +1,19 @@
 class listStorageHandler {
-  constructor(list) {
+  constructor(storedLists) {
     // if the list exists, load it
-    if(list) {
-       this.#list = list;
+    if(storedLists) {
+       this.#storedLists = storedLists;
     }
   }
 
-  #list = [];
+  #storedLists = [];
   
-  set list(list) { this.#list = list };
-  get list() { return this.#list };
+  set storedLists(storedLists) { this.#storedLists = storedLists };
+  get storedLists() { return this.#storedLists };
 
-  add = (entry) => {
+  addEntry = (entry, list) => {
     entry = toString(entry)
-    let newList = toString(this.#list)
-    this.#list = JSON.parse(newList + entry)
+    newList = this.#storedLists[list]
+    this.#storedLists[list] = JSON.parse(newList + entry)
   }
 }
