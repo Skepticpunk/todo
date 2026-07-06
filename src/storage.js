@@ -12,8 +12,7 @@ class listStorageHandler {
   get storedLists() { return this.#storedLists };
 
   addList = (list) => {
-    newList = this.#storedLists[list]
-    this.#storedLists[list] = JSON.parse(newList + entry)
+    this.#storedLists.push(list)
   }
   loadIndex(storedListIndex) {
     // We want to try loading a main list when the page is loaded
@@ -25,7 +24,7 @@ class listStorageHandler {
     }
     // load each sublist and push it into the stored lists
     this.#storedListIndex.forEach((list) => {
-      this.#storedLists.push(JSON.parse("webStorage." + list))
+      this.#storedLists.push(JSON.parse("webStorage.getItem(\"" + list + "\")"))
     })
   }
 }
