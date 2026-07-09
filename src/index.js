@@ -1,7 +1,8 @@
 import "./page.css";
 import { toDoList } from "./list.js";
 import { toDoEntry } from "./entry.js";
-import { listDisplay } from "./list-display.js"
+import { listDisplay } from "./list-display.js";
+import { storageHandler } from "./storage.js"
 
 const projectLists = new toDoList("Lists", 0);
 const toDoList1 = new toDoList("List 1", 1);

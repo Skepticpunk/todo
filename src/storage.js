@@ -1,4 +1,6 @@
-class listStorageHandler {
+class storageHandler {
+  // takes a stored list index and breaks it down into multiple stored lists
+  // which can then be handled and given to the application
   constructor(storedListIndex) {
     this.loadIndex(storedListIndex)
   }
@@ -7,7 +9,6 @@ class listStorageHandler {
   #storedLists = [];
 
   // the main list needs to have CRUD functions, as do the sublists
-
   set storedLists(storedLists) { this.#storedLists = storedLists };
   get storedLists() { return this.#storedLists };
 
