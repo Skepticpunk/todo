@@ -4,6 +4,7 @@ import { toDoEntry } from "./entry.js";
 import { listDisplay } from "./list-display.js";
 import { storageHandler } from "./storage.js"
 
+const exampleListIndex = { }
 const projectLists = new toDoList("Lists", 0);
 const toDoList1 = new toDoList("List 1", 1);
 const toDoList2 = new toDoList("List 2", 1);
