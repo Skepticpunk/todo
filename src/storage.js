@@ -1,6 +1,5 @@
 class storageHandler {
-  // takes a stored list index and breaks it down into multiple stored lists
-  // which can then be handled and given to the application
+  // pulls stored string from WebStorage and parses it into a list that can be interacted with
   constructor(storedLists) {
     this.loadIndex(storedLists)
   }

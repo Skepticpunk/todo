@@ -4,7 +4,7 @@ import { toDoEntry } from "./entry.js";
 import { listDisplay } from "./list-display.js";
 import { storageHandler } from "./storage.js"
 
-const exampleListIndex = { }
+const storedLists = new storageHandler();
 const projectLists = new toDoList("Lists", 0);
 const toDoList1 = new toDoList("List 1", 1);
 const toDoList2 = new toDoList("List 2", 1);
@@ -27,6 +27,7 @@ const entry2 = new toDoEntry(
   0);
 projectLists.getEntry(0).addEntry(entry1);
 projectLists.getEntry(1).addEntry(entry2);
+
 
 const projectsDisplay = new listDisplay(document.querySelector("#projectList"));
 projectsDisplay.tagHeader = "project"; 
