@@ -118,8 +118,8 @@ class listDisplay {
     this.#parent.append(this.#listDisplay);
     // build the new list
     if (this.#list.listType == 0) {
+      this.#addButton.addEventListener("click", this.renderNewListDialog);
       this.#list.list.forEach((entry, index) => {
-        this.#addButton.addEventListener("click", this.renderNewListDialog);
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const entryContainer = document.createElement("div");
         const newEntry = document.createElement("div");
@@ -142,8 +142,8 @@ class listDisplay {
         this.#listDisplay.append(entryContainer);
       });
     } else {
+      this.#addButton.addEventListener("click", this.renderNewEntryDialog);
       this.#list.list.forEach((entry, index) => {
-        this.#addButton.addEventListener("click", this.renderNewEntryDialog);
         //make new to-do entry, then append it
         console.log("rendering entry");
         const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);

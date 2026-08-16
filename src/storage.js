@@ -1,7 +1,7 @@
 class storageHandler {
   // pulls stored string from WebStorage and parses it into a list that can be interacted with
   constructor(storedLists) {
-    this.loadIndex(storedLists)
+    this.loadIndex(storedLists);
   }
 
   #storedLists = {};
@@ -11,6 +11,9 @@ class storageHandler {
 
   addList = (list) => {
     this.#storedLists.push(list)
+  }
+  addEntry = (entry, list) => {
+    
   }
   loadLists(storedLists) {
     // We want to try loading a main list when the page is loaded

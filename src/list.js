@@ -9,19 +9,22 @@ class toDoList {
   #title = "New Todo List";
 
   get list() { return this.#list };
+  set list(newList) { this.#list = newList };
   set listType(newListType) { this.#listType = newListType };
   get listType() { return this.#listType };
   get title() { return this.#title };
   set title(newTitle) { this.#title = newTitle; };
 
-  addEntry(newEntry) { this.#list.push(newEntry) };
-  delEntry(entry) { console.log("deleting entry: " + entry); this.#list.splice(entry, 1) };
+  addEntry(newEntry) { this.#list.push(newEntry); this.updateStorage(); };
+  delEntry(entry) { console.log("deleting entry: " + entry); this.#list.splice(entry, 1); this.updateStorage(); };
   getEntry(entry) { return this.#list[entry] };
   moveEntry(entry, position) {
     targetEntry = this.#list[entry];
     this.#list.splice(entry, 1);
     this.#list.splice(position - 1, 0, targetEntry);
+    this.updateStorage();
   };
+  updateStorage() { localStorage.setItem(this.#title, JSON.stringify(this.#list)); };
 };
 
 export { toDoList };
