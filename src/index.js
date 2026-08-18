@@ -5,7 +5,11 @@ import { listDisplay } from "./list-display.js";
 import { storageHandler } from "./storage.js"
 
 const projectLists = new toDoList("Lists", 0);
-if (localStorage.getItem("Lists")) { projectLists.list = JSON.parse(localStorage.getItem("Lists"))};
+if (localStorage.getItem("Lists")) {
+  projectLists.list = JSON.parse(localStorage.getItem("Lists"));
+  console.log("loaded main list from storage with contents: " + localStorage.getItem("Lists"));
+  console.log(projectLists.list);
+};
 
 const projectsDisplay = new listDisplay(document.querySelector("#projectList"));
 projectsDisplay.tagHeader = "project"; 

@@ -16,7 +16,11 @@ class toDoList {
   set title(newTitle) { this.#title = newTitle; };
 
   addEntry(newEntry) { this.#list.push(newEntry); this.updateStorage(); };
-  delEntry(entry) { console.log("deleting entry: " + entry); this.#list.splice(entry, 1); this.updateStorage(); };
+  delEntry(entry) {
+    console.log("deleting entry: " + entry); 
+    this.#list.splice(entry, 1); 
+    this.updateStorage(); 
+  };
   getEntry(entry) { return this.#list[entry] };
   moveEntry(entry, position) {
     targetEntry = this.#list[entry];
@@ -24,7 +28,11 @@ class toDoList {
     this.#list.splice(position - 1, 0, targetEntry);
     this.updateStorage();
   };
-  updateStorage() { localStorage.setItem(this.#title, JSON.stringify(this.#list)); };
+  updateStorage() {
+    localStorage.setItem(this.#title, this.#list); 
+    console.log("saved list " + this.#title + " with content " + this.#list);
+    console.log("stringified: " + JSON.stringify(this.#list));
+  };
 };
 
 export { toDoList };
