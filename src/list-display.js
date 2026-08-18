@@ -43,7 +43,7 @@ class listDisplay {
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
   get list() { return this.#list };
-  set list(newList) { this.#list = newList; console.log("rendering list for " + this.#tagHeader); this.render() };
+  set list(newList) { this.#list = newList; console.log("rendering list for " + this.#tagHeader + ": " + this.#list.title); this.render() };
   get subPanel() { return this.#subPanel };
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   get childList() { return this.#childList };
