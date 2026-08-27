@@ -29,9 +29,16 @@ class toDoList {
     this.updateStorage();
   };
   updateStorage() {
-    localStorage.setItem(this.#title, this.#list); 
-    console.log("saved list " + this.#title + " with content " + this.#list);
-    console.log("stringified: " + JSON.stringify(this.#list));
+    let stringifiedList = [];
+    this.#list.forEach((item) => {
+      let newItem = {};
+      newItem.list = item.list;
+      newItem.listType = item.listType;
+      newItem.title = item.title;
+      stringifiedList.push(JSON.stringify(newItem));
+    });
+    localStorage.setItem(this.#title, stringifiedList); 
+    console.log("saved list " + this.#title + " with content " + stringifiedList);
   };
 };
 
