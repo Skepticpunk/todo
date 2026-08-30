@@ -4,7 +4,7 @@ import { toDoEntry } from "./entry.js";
 import { listDisplay } from "./list-display.js";
 import { storageHandler } from "./storage.js"
 
-const projectLists = new toDoList("Lists", 0);
+const projectLists = new toDoList("Lists", 1);
 if (localStorage.getItem("Lists")) {
   projectLists.list = JSON.parse(localStorage.getItem("Lists"));
   console.log("loaded main list from storage with contents: " + localStorage.getItem("Lists"));

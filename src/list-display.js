@@ -43,7 +43,11 @@ class listDisplay {
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
   get list() { return this.#list };
-  set list(newList) { this.#list = newList; console.log("rendering list for " + this.#tagHeader + ": " + this.#list.title); this.render() };
+  set list(newList) {
+    this.#list = newList;
+    console.log("rendering list for " + this.#tagHeader + ": " + this.#list.title); 
+    this.render() 
+  };
   get subPanel() { return this.#subPanel };
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   get childList() { return this.#childList };
@@ -117,7 +121,7 @@ class listDisplay {
     this.#addButton.textContent = "add";
     this.#parent.append(this.#listDisplay);
     // build the new list
-    if (this.#list.listType == 0) {
+    if (this.#list.isToDoList == 1) {
       this.#addButton.addEventListener("click", this.renderNewListDialog);
       this.#list.list.forEach((entry, index) => {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it

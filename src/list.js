@@ -1,17 +1,17 @@
 class toDoList {
-  constructor(title, listType) {
+  constructor(title, isToDoList) {
     this.#title = title;
-    this.#listType = listType;
+    this.#isToDoList = isToDoList;
   };
 
   #list = [];
-  #listType;
+  #isToDoList;
   #title = "New Todo List";
 
   get list() { return this.#list };
   set list(newList) { this.#list = newList };
-  set listType(newListType) { this.#listType = newListType };
-  get listType() { return this.#listType };
+  set isToDoList(newSetting) { this.#isToDoList = newSetting };
+  get isToDoList() { return this.#isToDoList };
   get title() { return this.#title };
   set title(newTitle) { this.#title = newTitle; };
 
@@ -33,7 +33,7 @@ class toDoList {
     this.#list.forEach((item) => {
       let newItem = {};
       newItem.list = item.list;
-      newItem.listType = item.listType;
+      newItem.isToDoList = item.isToDoList;
       newItem.title = item.title;
       stringifiedList.push(JSON.stringify(newItem));
     });
