@@ -35,9 +35,9 @@ class toDoList {
       newItem.list = item.list;
       newItem.isToDoList = item.isToDoList;
       newItem.title = item.title;
-      stringifiedList.push(JSON.stringify(newItem));
+      stringifiedList.push(newItem);
     });
-    localStorage.setItem(this.#title, stringifiedList); 
+    localStorage.setItem(this.#title, JSON.stringify(stringifiedList)); 
     console.log("saved list " + this.#title + " with content " + stringifiedList);
   };
 };
