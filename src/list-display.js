@@ -33,7 +33,7 @@ class listDisplay {
   get parent() { return this.#parent };
   set parent(newParent) { this.#parent = newParent };
   get tagHeader() { return this.#tagHeader };
-  set tagHeader(newTagHeader) { 
+  set tagHeader(newTagHeader) {
     this.#tagHeader = newTagHeader
     this.#header.id = this.#tagHeader + "Header";
     this.#addButton.id = this.#tagHeader + "AddButton";
@@ -45,15 +45,15 @@ class listDisplay {
   get list() { return this.#list };
   set list(newList) {
     this.#list = newList;
-    console.log("rendering list for " + this.#tagHeader + ": " + this.#list.title); 
-    this.render() 
+    console.log("rendering list for " + this.#tagHeader + ": " + this.#list.title);
+    this.render()
   };
   get subPanel() { return this.#subPanel };
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   get childList() { return this.#childList };
   set childList(newchildList) { this.#childList = newchildList };
-  
-  
+
+
   renderNewEntryDialog = () => {
     // clear the header and dialog
     this.#header.textContent = "";
@@ -85,14 +85,7 @@ class listDisplay {
   }
   addEntry = () => {
     // make a new entry
-    const newEntry = new toDoEntry();
-    // add all the data from the dialog
-    newEntry.priority = this.#newEntryDialog.priority.value;
-    newEntry.title = this.#newEntryDialog.title.value; 
-    newEntry.desc = this.#newEntryDialog.desc.value;
-    newEntry.added = this.#newEntryDialog.added.value;
-    newEntry.due = this.#newEntryDialog.due.value;
-    newEntry.status  = this.#newEntryDialog.status.value;
+    const newEntry = new toDoEntry(this.#newEntryDialog.priority.value, this.#newEntryDialog.title.value, this.#newEntryDialog.desc.value, this.#newEntryDialog.added.value, this.#newEntryDialog.due.value, this.#newEntryDialog.status.value);
     // add new entry to list
     this.#list.addEntry(newEntry);
     this.#addButton.textContent = "add";
@@ -140,7 +133,7 @@ class listDisplay {
           newEntry.remove;
           this.#list.delEntry(index)
           this.render();
-          })
+        })
         entryContainer.append(newEntry);
         entryContainer.append(removeButton);
         this.#listDisplay.append(entryContainer);
