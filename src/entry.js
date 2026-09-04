@@ -4,7 +4,15 @@ class toDoEntry {
     this.#title = title;
     this.#description = description;
     this.#added = added;
-    this.#due = due;
+    this.#due = due;  
+    this.#attributes = [
+      this.#priority,
+      this.#title, 
+      this.#description,
+      this.#added,
+      this.#due,
+      this.#status
+    ];
   };
   #priority = 0;
   #title = "Title";
@@ -12,14 +20,7 @@ class toDoEntry {
   #added = "1/1/1900";
   #due = "12/31/2099";
   #status = 0;
-  #attributes = [
-    this.priority,
-    this.#title, 
-    this.#description,
-    this.#added,
-    this.#due,
-    this.#status
-  ]
+  #attributes = [];
 
   get title() { return this.#title };
   set title(newTitle) { this.#title = newTitle; this.updateStorage(); };
@@ -35,7 +36,26 @@ class toDoEntry {
   set status(newStatus) { this.#status = newStatus; this.updateStorage(); };
   get attributes() { return this.#attributes };
 
-  updateStorage() { localStorage.setItem(this.#title, JSON.stringify(this.#attributes)); };
+  updateStorage() {
+    console.log("saving attributes for entry " + this.#title + ":");
+    console.log(this.#attributes);
+    localStorage.setItem(this.#title, JSON.stringify({
+      priority: this.#priority,
+      title: this.#title,
+      description: this.#description,
+      added: this.#added,
+      due: this.#due,
+      status: this.#status
+    }));
+    console.log("saved attributes:")
+    console.log(localStorage.getItem(this.#title));
+    console.log(this.#priority);
+    console.log(this.#title);
+    console.log(this.#description);
+    console.log(this.#added);
+    console.log(this.#due);
+    console.log(this.#status);
+  };
 };
 
 export { toDoEntry };

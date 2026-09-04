@@ -147,6 +147,7 @@ class listDisplay {
       });
     } else {
       this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+      console.log(this.#list);
       this.#list.list.forEach((entry, index) => {
         //make new to-do entry, then append it
         console.log("rendering entry");
