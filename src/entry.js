@@ -1,13 +1,14 @@
-class toDoEntry {  
-  constructor(priority, title, description, added, due) {
+class toDoEntry {
+  constructor(priority, title, description, added, due, status) {
     this.#priority = priority;
     this.#title = title;
     this.#description = description;
     this.#added = added;
-    this.#due = due;  
+    this.#due = due;
+    this.status = status;
     this.#attributes = [
       this.#priority,
-      this.#title, 
+      this.#title,
       this.#description,
       this.#added,
       this.#due,
