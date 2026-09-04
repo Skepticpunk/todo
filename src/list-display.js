@@ -45,7 +45,6 @@ class listDisplay {
   get list() { return this.#list };
   set list(newList) {
     this.#list = newList;
-    console.log("rendering list for " + this.#tagHeader + ": " + this.#list.title);
     this.render()
   };
   get subPanel() { return this.#subPanel };
@@ -140,10 +139,8 @@ class listDisplay {
       });
     } else {
       this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-      console.log(this.#list);
       this.#list.list.forEach((entry, index) => {
         //make new to-do entry, then append it
-        console.log("rendering entry");
         const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);
         this.#listDisplay.append(newEntry.entryCell);
         newEntry.render();

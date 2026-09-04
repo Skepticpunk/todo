@@ -17,8 +17,6 @@ if (localStorage.getItem("Lists")) {
     });
     projectLists.addEntry(newList);
   });
-  console.log("loading complete:");
-  console.log(projectLists.list);
 };
 
 const projectsDisplay = new listDisplay(document.querySelector("#projectList"));

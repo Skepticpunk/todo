@@ -34,7 +34,6 @@ class entryDisplay {
     }
     this.#parentList = parentList;
     this.#cellRemoveButton.addEventListener("click", () => {
-      console.log(this.#parentList);
       this.#subPanel.textContent = "";
       this.#parentList.delEntry(entryIndex);
       this.#entryCell.remove() })

@@ -17,7 +17,6 @@ class toDoList {
 
   addEntry(newEntry) { this.#list.push(newEntry); this.updateStorage(); };
   delEntry(entry) {
-    console.log("deleting entry: " + entry); 
     this.#list.splice(entry, 1); 
     this.updateStorage(); 
   };
@@ -38,7 +37,6 @@ class toDoList {
       stringifiedList.push(newItem);
     });
     localStorage.setItem(this.#title, JSON.stringify(stringifiedList)); 
-    console.log("saved list " + this.#title + " with content " + stringifiedList);
   };
 };
 
