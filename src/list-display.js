@@ -151,7 +151,6 @@ class listDisplay {
           newEntry.remove;
           this.#list.delEntry(index);
           this.render();
-          this.subPanel.render();
         })
         entryContainer.append(newEntry);
         entryContainer.append(removeButton);
