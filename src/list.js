@@ -17,7 +17,8 @@ class toDoList {
 
   addEntry(newEntry) { this.#list.push(newEntry); this.updateStorage(); };
   delEntry(entry) {
-    this.#list.splice(entry, 1); 
+    this.#list.splice(entry, 1);
+    localStorage.removeItem(entry.title);
     this.updateStorage(); 
   };
   getEntry(entry) { return this.#list[entry] };

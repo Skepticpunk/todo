@@ -65,6 +65,18 @@ class listDisplay {
     this.#newEntryDialog.container.append(this.#newEntryDialog.added);
     this.#newEntryDialog.container.append(this.#newEntryDialog.due);
     this.#newEntryDialog.container.append(this.#newEntryDialog.status);
+    this.#newEntryDialog.priority.value = "";
+    this.#newEntryDialog.title.value = "";
+    this.#newEntryDialog.desc.value = "";
+    this.#newEntryDialog.added.value = "";
+    this.#newEntryDialog.due.value = "";
+    this.#newEntryDialog.status.value = "";
+    this.#newEntryDialog.priority.placeholder = "priority";
+    this.#newEntryDialog.title.placeholder = "title";
+    this.#newEntryDialog.desc.placeholder = "description";
+    this.#newEntryDialog.added.placeholder = "added";
+    this.#newEntryDialog.due.placeholder = "due";
+    this.#newEntryDialog.status.placeholder = "status";
     this.#header.append(this.#addButton);
     // change button to "submit" and add append function
     this.#addButton.textContent = "submit";
@@ -84,7 +96,14 @@ class listDisplay {
   }
   addEntry = () => {
     // make a new entry
-    const newEntry = new toDoEntry(this.#newEntryDialog.priority.value, this.#newEntryDialog.title.value, this.#newEntryDialog.desc.value, this.#newEntryDialog.added.value, this.#newEntryDialog.due.value, this.#newEntryDialog.status.value);
+    const newEntry = new toDoEntry(
+      this.#newEntryDialog.priority.value, 
+      this.#newEntryDialog.title.value, 
+      this.#newEntryDialog.desc.value, 
+      this.#newEntryDialog.added.value, 
+      this.#newEntryDialog.due.value, 
+      this.#newEntryDialog.status.value
+    );
     // add new entry to list
     this.#list.addEntry(newEntry);
     this.#addButton.textContent = "add";
@@ -130,8 +149,9 @@ class listDisplay {
         removeButton.textContent = "-"
         removeButton.addEventListener("click", () => {
           newEntry.remove;
-          this.#list.delEntry(index)
+          this.#list.delEntry(index);
           this.render();
+          this.subPanel.render();
         })
         entryContainer.append(newEntry);
         entryContainer.append(removeButton);

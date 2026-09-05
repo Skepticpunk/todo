@@ -10,11 +10,13 @@ if (localStorage.getItem("Lists")) {
   savedProjectLists.forEach((savedList) => {
     const savedListContents = JSON.parse(localStorage.getItem(savedList.title));
     const newList = new toDoList(savedList.title, 0);
-    savedListContents.forEach((entry) => {
-      const savedEntry = JSON.parse(localStorage.getItem(entry.title));
-      const newEntry = new toDoEntry(savedEntry.priority, savedEntry.title, savedEntry.description, savedEntry.added, savedEntry.due, savedEntry.status)
-      newList.addEntry(newEntry);
-    });
+    if (savedListContents != null){
+      savedListContents.forEach((entry) => {
+        const savedEntry = JSON.parse(localStorage.getItem(entry.title));
+        const newEntry = new toDoEntry(savedEntry.priority, savedEntry.title, savedEntry.description, savedEntry.added, savedEntry.due, savedEntry.status)
+        newList.addEntry(newEntry);
+      });
+    };
     projectLists.addEntry(newList);
   });
 };
