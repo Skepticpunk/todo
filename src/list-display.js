@@ -71,11 +71,11 @@ class listDisplay {
     this.#newEntryDialog.added.value = "";
     this.#newEntryDialog.due.value = "";
     this.#newEntryDialog.status.value = "";
-    this.#newEntryDialog.priority.placeholder = "priority";
+    this.#newEntryDialog.priority.placeholder = "task priority";
     this.#newEntryDialog.title.placeholder = "title";
     this.#newEntryDialog.desc.placeholder = "description";
-    this.#newEntryDialog.added.placeholder = "added";
-    this.#newEntryDialog.due.placeholder = "due";
+    this.#newEntryDialog.added.placeholder = "date added";
+    this.#newEntryDialog.due.placeholder = "date due";
     this.#newEntryDialog.status.placeholder = "status";
     this.#header.append(this.#addButton);
     // change button to "submit" and add append function
@@ -89,6 +89,7 @@ class listDisplay {
     this.#newEntryDialog.textContent = "";
     this.#header.append(this.#newEntryDialog.container);
     this.#newEntryDialog.container.append(this.#newEntryDialog.title);
+    this.#newEntryDialog.title.placeholder = "title"
     this.#header.append(this.#addButton);
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewListDialog);
