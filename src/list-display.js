@@ -8,7 +8,7 @@ class listDisplay {
     this.#header = document.createElement("h1");
     this.#listDisplay = document.createElement("div");
     this.#addButton = document.createElement("button");
-    this.#secondaryButton = document.createElement(("button"));
+    this.#cancelButton = document.createElement(("button"));
     this.#list = [];
     this.#childList = "";
     this.#newEntryDialog.container.id = "newEntryDialog"
@@ -21,7 +21,7 @@ class listDisplay {
   #childList;
   #subPanel;
   #addButton;
-  #secondaryButton;
+  #cancelButton;
   #newEntryDialog = {
     container: document.createElement("div"),
     priority: document.createElement("input"),
@@ -79,13 +79,14 @@ class listDisplay {
     this.#newEntryDialog.added.placeholder = "date added";
     this.#newEntryDialog.due.placeholder = "date due";
     this.#newEntryDialog.status.placeholder = "status";
+    this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
     // change button to "submit" and add append function
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
     this.#addButton.addEventListener("click", this.addEntry);
-    this.#secondaryButton.textContent = "cancel";
-    this.#secondaryButton.addEventListener("click", this.cancelEntry);
+    this.#cancelButton.textContent = "cancel";
+    this.#cancelButton.addEventListener("click", this.cancelEntry);
   }
   renderNewListDialog = () => {
     // same shit as above but instead of appending all the fields we just append the one for the title
@@ -94,12 +95,13 @@ class listDisplay {
     this.#header.append(this.#newEntryDialog.container);
     this.#newEntryDialog.container.append(this.#newEntryDialog.title);
     this.#newEntryDialog.title.placeholder = "title"
+    this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewListDialog);
     this.#addButton.addEventListener("click", this.addList);
-    this.#secondaryButton.textContent = "cancel";
-    this.#secondaryButton.addEventListener("click", this.cancelEntry);
+    this.#cancelButton.textContent = "cancel";
+    this.#cancelButton.addEventListener("click", this.cancelList);
   }
   addEntry = () => {
     // make a new entry
@@ -116,18 +118,16 @@ class listDisplay {
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-    this.#secondaryButton.textContent = "edit";
-    this.#secondaryButton.removeEventListener("click", this.cancelEntry);
-    this.#secondaryButton.addEventListener("click", this.editEntry);
+    this.#cancelButton.textContent = "edit";
+    this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
   cancelEntry = () => {
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-    this.#secondaryButton.textContent = "edit";
-    this.#secondaryButton.removeEventListener("click", this.cancelEntry);
-    this.#secondaryButton.addEventListener("click", this.editEntry);
+    this.#cancelButton.textContent = "";
+    this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
   addList = () => {
@@ -138,16 +138,16 @@ class listDisplay {
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addList);
     this.#addButton.addEventListener("click", this.renderNewListDialog);
-    this.#secondaryButton.textContent = "";
-    this.#secondaryButton.removeEventListener("click", this.cancelList);
+    this.#cancelButton.textContent = "";
+    this.#cancelButton.removeEventListener("click", this.cancelList);
     this.render();
   }
   cancelList = () => {
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addList);
     this.#addButton.addEventListener("click", this.renderNewListDialog);
-    this.#secondaryButton.textContent = "";
-    this.#secondaryButton.removeEventListener("click", this.cancelList);
+    this.#cancelButton.textContent = "";
+    this.#cancelButton.removeEventListener("click", this.cancelList);
     this.render();
   }
   render() {
@@ -174,15 +174,15 @@ class listDisplay {
           // get list from the entry, then switch the subpanel's current list with it
           this.#childList.list = entry;
         });
-        const removeButton = document.createElement("button")
-        removeButton.textContent = "-"
-        removeButton.addEventListener("click", () => {
+        const cancelButton = document.createElement("button")
+        cancelButton.textContent = "-"
+        cancelButton.addEventListener("click", () => {
           newEntry.remove;
           this.#list.delEntry(index);
           this.render();
         })
         entryContainer.append(newEntry);
-        entryContainer.append(removeButton);
+        entryContainer.append(cancelButton);
         this.#listDisplay.append(entryContainer);
       });
     } else {
