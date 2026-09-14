@@ -15,11 +15,16 @@ class toDoList {
   get title() { return this.#title };
   set title(newTitle) { this.#title = newTitle; };
 
-  addEntry(newEntry) { this.#list.push(newEntry); this.updateStorage(); };
+  addEntry(newEntry) {
+    if (newEntry.title != "") {
+      this.#list.push(newEntry);
+      this.updateStorage();
+    };
+  };
   delEntry(entry) {
     this.#list.splice(entry, 1);
     localStorage.removeItem(entry.title);
-    this.updateStorage(); 
+    this.updateStorage();
   };
   getEntry(entry) { return this.#list[entry] };
   moveEntry(entry, position) {
@@ -37,7 +42,7 @@ class toDoList {
       newItem.title = item.title;
       stringifiedList.push(newItem);
     });
-    localStorage.setItem(this.#title, JSON.stringify(stringifiedList)); 
+    localStorage.setItem(this.#title, JSON.stringify(stringifiedList));
   };
 };
 

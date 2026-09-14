@@ -18,7 +18,7 @@ input {
   background-color:      antiquewhite; }
 #projectHeader {
   display:               grid; 
-  grid-template-columns: 4fr minmax(1em, 48px); }
+  grid-template-columns: 4fr minmax(0, 48px); }
 #projectListDisplay {
   font-size:             24;
   padding:               4px 0; }

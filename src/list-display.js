@@ -81,6 +81,7 @@ class listDisplay {
     this.#newEntryDialog.status.placeholder = "status";
     this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
+    this.header.style.gridTemplateColumns = "10fr repeat(2, 78px)";
     // change button to "submit" and add append function
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
@@ -94,9 +95,11 @@ class listDisplay {
     this.#newEntryDialog.textContent = "";
     this.#header.append(this.#newEntryDialog.container);
     this.#newEntryDialog.container.append(this.#newEntryDialog.title);
-    this.#newEntryDialog.title.placeholder = "title"
+    this.#newEntryDialog.title.value = "";
+    this.#newEntryDialog.title.placeholder = "title";
     this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
+    this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewListDialog);
     this.#addButton.addEventListener("click", this.addList);
@@ -155,13 +158,14 @@ class listDisplay {
     this.#parent.textContent = "";
     this.#listDisplay.textContent = "";
     // put the header and list up
-    this.#parent.append(this.#header);
     this.#header.textContent = this.#list.title;
-    this.#header.append(this.#addButton);
     this.#addButton.textContent = "add";
+    this.#parent.append(this.#header);
+    this.#header.append(this.#addButton);
     this.#parent.append(this.#listDisplay);
     // build the new list
     if (this.#list.isToDoList == 1) {
+      this.header.style.gridTemplateColumns = "4fr minmax(0, 48px)";
       this.#addButton.addEventListener("click", this.renderNewListDialog);
       this.#list.list.forEach((entry, index) => {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
@@ -174,18 +178,19 @@ class listDisplay {
           // get list from the entry, then switch the subpanel's current list with it
           this.#childList.list = entry;
         });
-        const cancelButton = document.createElement("button")
-        cancelButton.textContent = "-"
-        cancelButton.addEventListener("click", () => {
+        const removeButton = document.createElement("button")
+        removeButton.textContent = "-"
+        removeButton.addEventListener("click", () => {
           newEntry.remove;
           this.#list.delEntry(index);
           this.render();
         })
         entryContainer.append(newEntry);
-        entryContainer.append(cancelButton);
+        entryContainer.append(removeButton);
         this.#listDisplay.append(entryContainer);
       });
     } else {
+      this.header.style.gridTemplateColumns = "4fr minmax(0, 48px)";
       this.#addButton.addEventListener("click", this.renderNewEntryDialog);
       this.#list.list.forEach((entry, index) => {
         //make new to-do entry, then append it
