@@ -31,7 +31,15 @@ class listDisplay {
     due: document.createElement("input"),
     status: document.createElement("input")
   };
-
+  #editEntryDialog = {
+    container: document.createElement("div"),
+    priority: document.createElement("input"),
+    title: document.createElement("input"),
+    desc: document.createElement("input"),
+    added: document.createElement("input"),
+    due: document.createElement("input"),
+    status: document.createElement("input")
+  };
   get parent() { return this.#parent };
   set parent(newParent) { this.#parent = newParent };
   get tagHeader() { return this.#tagHeader };
@@ -53,7 +61,6 @@ class listDisplay {
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   get childList() { return this.#childList };
   set childList(newchildList) { this.#childList = newchildList };
-
 
   renderNewEntryDialog = () => {
     // clear the header and dialog
@@ -89,23 +96,6 @@ class listDisplay {
     this.#cancelButton.textContent = "cancel";
     this.#cancelButton.addEventListener("click", this.cancelEntry);
   }
-  renderNewListDialog = () => {
-    // same shit as above but instead of appending all the fields we just append the one for the title
-    this.#header.textContent = "";
-    this.#newEntryDialog.textContent = "";
-    this.#header.append(this.#newEntryDialog.container);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
-    this.#newEntryDialog.title.value = "";
-    this.#newEntryDialog.title.placeholder = "title";
-    this.#header.append(this.#cancelButton);
-    this.#header.append(this.#addButton);
-    this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
-    this.#addButton.textContent = "submit";
-    this.#addButton.removeEventListener("click", this.renderNewListDialog);
-    this.#addButton.addEventListener("click", this.addList);
-    this.#cancelButton.textContent = "cancel";
-    this.#cancelButton.addEventListener("click", this.cancelList);
-  }
   addEntry = () => {
     // make a new entry
     const newEntry = new toDoEntry(
@@ -133,6 +123,23 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
+  renderNewListDialog = () => {
+    // same shit as above but instead of appending all the fields we just append the one for the title
+    this.#header.textContent = "";
+    this.#newEntryDialog.textContent = "";
+    this.#header.append(this.#newEntryDialog.container);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
+    this.#newEntryDialog.title.value = "";
+    this.#newEntryDialog.title.placeholder = "title";
+    this.#header.append(this.#cancelButton);
+    this.#header.append(this.#addButton);
+    this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
+    this.#addButton.textContent = "submit";
+    this.#addButton.removeEventListener("click", this.renderNewListDialog);
+    this.#addButton.addEventListener("click", this.addList);
+    this.#cancelButton.textContent = "cancel";
+    this.#cancelButton.addEventListener("click", this.cancelList);
+  }
   addList = () => {
     // same as above but for lists
     const newList = new toDoList();
@@ -154,7 +161,7 @@ class listDisplay {
     this.render();
   }
   render() {
-    // clear the display state                                     
+    // clear the display state
     this.#parent.textContent = "";
     this.#listDisplay.textContent = "";
     // put the header and list up
