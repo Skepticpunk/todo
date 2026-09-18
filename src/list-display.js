@@ -123,6 +123,68 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
+  editNewEntryDialog = () => {
+    // clear the header and dialog
+    this.#header.textContent = "";
+    this.#newEntryDialog.container.textContent = "";
+    // append elements
+    this.#header.append(this.#newEntryDialog.container);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.priority);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.desc);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.added);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.due);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.status);
+    this.#newEntryDialog.priority.value = "";
+    this.#newEntryDialog.title.value = "";
+    this.#newEntryDialog.desc.value = "";
+    this.#newEntryDialog.added.value = "";
+    this.#newEntryDialog.due.value = "";
+    this.#newEntryDialog.status.value = "";
+    this.#newEntryDialog.priority.placeholder = "task priority";
+    this.#newEntryDialog.title.placeholder = "title";
+    this.#newEntryDialog.desc.placeholder = "description";
+    this.#newEntryDialog.added.placeholder = "date added";
+    this.#newEntryDialog.due.placeholder = "date due";
+    this.#newEntryDialog.status.placeholder = "status";
+    this.#header.append(this.#cancelButton);
+    this.#header.append(this.#addButton);
+    this.header.style.gridTemplateColumns = "10fr repeat(2, 78px)";
+    // change button to "submit" and add append function
+    this.#addButton.textContent = "submit";
+    this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
+    this.#addButton.addEventListener("click", this.addEntry);
+    this.#cancelButton.textContent = "cancel";
+    this.#cancelButton.addEventListener("click", this.cancelEntry);
+  }
+  editEntry = () => {
+    // make a new entry
+    const newEntry = new toDoEntry(
+      this.#newEntryDialog.priority.value,
+      this.#newEntryDialog.title.value,
+      this.#newEntryDialog.desc.value,
+      this.#newEntryDialog.added.value,
+      this.#newEntryDialog.due.value,
+      this.#newEntryDialog.status.value
+    );
+    // add new entry to list
+    this.#list.addEntry(newEntry);
+    this.#addButton.textContent = "add";
+    this.#addButton.removeEventListener("click", this.addEntry);
+    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+    this.#cancelButton.textContent = "edit";
+    this.#cancelButton.removeEventListener("click", this.cancelEntry);
+    this.render();
+  }
+  cancelEditEntry = () => {
+    this.#addButton.textContent = "add";
+    this.#addButton.removeEventListener("click", this.addEntry);
+    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+    this.#cancelButton.textContent = "";
+    this.#cancelButton.removeEventListener("click", this.cancelEntry);
+    this.render();
+  }
+
   renderNewListDialog = () => {
     // same shit as above but instead of appending all the fields we just append the one for the title
     this.#header.textContent = "";
@@ -186,6 +248,12 @@ class listDisplay {
           this.#childList.list = entry;
         });
         const removeButton = document.createElement("button")
+        editButton.textContent = "ediT"
+        editButton.addEventListener("click", () => {
+          newEntry.remove;
+          this.#list.delEntry(index);
+          this.render();
+        })
         removeButton.textContent = "-"
         removeButton.addEventListener("click", () => {
           newEntry.remove;
