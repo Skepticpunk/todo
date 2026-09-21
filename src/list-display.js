@@ -123,7 +123,7 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
-  editNewEntryDialog = () => {
+  renderEditEntryDialog = () => {
     // clear the header and dialog
     this.#header.textContent = "";
     this.#newEntryDialog.container.textContent = "";
@@ -233,7 +233,7 @@ class listDisplay {
     this.#header.append(this.#addButton);
     this.#parent.append(this.#listDisplay);
     // build the new list
-    if (this.#list.isToDoList == 1) {
+    if (this.#list.isProjectList == 1) {
       this.header.style.gridTemplateColumns = "4fr minmax(0, 48px)";
       this.#addButton.addEventListener("click", this.renderNewListDialog);
       this.#list.list.forEach((entry, index) => {
@@ -271,6 +271,7 @@ class listDisplay {
       this.#list.list.forEach((entry, index) => {
         //make new to-do entry, then append it
         const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);
+        newEntry.editButton.addEventListener("click", this.renderEditEntryDialog);
         this.#listDisplay.append(newEntry.entryCell);
         newEntry.render();
       });

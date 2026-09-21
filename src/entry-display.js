@@ -18,6 +18,7 @@ class entryDisplay {
     this.#cellAdded.textContent = entry.added;
     this.#cellDue.textContent = entry.due;
     this.#cellStatus.textContent = entry.status;
+    this.#cellEditButton.textContent = "edit";
     this.#cellRemoveButton.textContent = "-";
     this.#subPanel = subPanel;
     if(subPanelContent){
@@ -39,7 +40,6 @@ class entryDisplay {
       this.#entryCell.remove() })
   };
   #elements = [];
-  #removeFromListArgumentFromParentDoNotDoThisItsBad;
 
   #cellPriority;
   #cellTitle;
@@ -53,14 +53,16 @@ class entryDisplay {
 
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
+  #cellEditButton = document.createElement("button");
 
-  get entryCell() {return this.#entryCell}
+  get entryCell() {return this.#entryCell};
   get cellPriority() {return this.#cellPriority};
   get cellTitle() {return this.#cellTitle};
   get cellDesc() {return this.#cellDesc};
   get cellAdded() {return this.#cellAdded}
   get cellDue() {return this.#cellDue};
   get cellStatus() {return this.#cellStatus};
+  get editButton() {return this.#cellEditButton};
   get removeButton() {return this.#cellRemoveButton};
 
   render() {
@@ -68,6 +70,7 @@ class entryDisplay {
     this.#elements.forEach((element) => {
       this.#entryCell.append(element);
     })
+    this.#entryCell.append(this.#cellEditButton);
     this.#entryCell.append(this.#cellRemoveButton);
   }
 };
