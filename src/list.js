@@ -21,16 +21,21 @@ class toDoList {
       this.updateStorage();
     };
   };
-  delEntry(entry) {
-    this.#list.splice(entry, 1);
-    localStorage.removeItem(entry.title);
+  delEntry(entryIndex) {
+    this.#list.splice(entryIndex, 1);
+    localStorage.removeItem(this.#list[entryIndex].title);
     this.updateStorage();
   };
-  getEntry(entry) { return this.#list[entry] };
-  moveEntry(entry, position) {
-    targetEntry = this.#list[entry];
-    this.#list.splice(entry, 1);
-    this.#list.splice(position - 1, 0, targetEntry);
+  editEntry(entryIndex, editedEntry) {
+    this.#list.splice(entryIndex, 1);
+    localStorage.removeItem(this.#list[entryIndex].title);
+    this.updateStorage();
+  }
+  getEntry(entryIndex) { return this.#list[entryIndex] };
+  moveEntry(entryIndex, newPosition) {
+    targetEntry = this.#list[entryIndex];
+    this.#list.splice(entryIndex, 1);
+    this.#list.splice(newPosition - 1, 0, targetEntry);
     this.updateStorage();
   };
   updateStorage() {

@@ -248,10 +248,10 @@ class listDisplay {
           this.#childList.list = entry;
         });
         const removeButton = document.createElement("button")
-        editButton.textContent = "ediT"
+        const editButton = document.createElement("button")
+        editButton.textContent = "edit"
         editButton.addEventListener("click", () => {
-          newEntry.remove;
-          this.#list.delEntry(index);
+          this.#list.editEntry(index);
           this.render();
         })
         removeButton.textContent = "-"
@@ -261,6 +261,7 @@ class listDisplay {
           this.render();
         })
         entryContainer.append(newEntry);
+        entryContainer.append(editButton)
         entryContainer.append(removeButton);
         this.#listDisplay.append(entryContainer);
       });
