@@ -126,38 +126,38 @@ class listDisplay {
   renderEditEntryDialog = () => {
     // clear the header and dialog
     this.#header.textContent = "";
-    this.#newEntryDialog.container.textContent = "";
+    this.#editEntryDialog.container.textContent = "";
     // append elements
-    this.#header.append(this.#newEntryDialog.container);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.priority);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.desc);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.added);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.due);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.status);
-    this.#newEntryDialog.priority.value = "";
-    this.#newEntryDialog.title.value = "";
-    this.#newEntryDialog.desc.value = "";
-    this.#newEntryDialog.added.value = "";
-    this.#newEntryDialog.due.value = "";
-    this.#newEntryDialog.status.value = "";
-    this.#newEntryDialog.priority.placeholder = "task priority";
-    this.#newEntryDialog.title.placeholder = "title";
-    this.#newEntryDialog.desc.placeholder = "description";
-    this.#newEntryDialog.added.placeholder = "date added";
-    this.#newEntryDialog.due.placeholder = "date due";
-    this.#newEntryDialog.status.placeholder = "status";
+    this.#header.append(this.#editEntryDialog.container);
+    this.#editEntryDialog.container.append(this.#editEntryDialog.priority);
+    this.#editEntryDialog.container.append(this.#editEntryDialog.title);
+    this.#editEntryDialog.container.append(this.#editEntryDialog.desc);
+    this.#editEntryDialog.container.append(this.#editEntryDialog.added);
+    this.#editEntryDialog.container.append(this.#editEntryDialog.due);
+    this.#editEntryDialog.container.append(this.#editEntryDialog.status);
+    this.#editEntryDialog.priority.value = "";
+    this.#editEntryDialog.title.value = "";
+    this.#editEntryDialog.desc.value = "";
+    this.#editEntryDialog.added.value = "";
+    this.#editEntryDialog.due.value = "";
+    this.#editEntryDialog.status.value = "";
+    this.#editEntryDialog.priority.placeholder = "task priority";
+    this.#editEntryDialog.title.placeholder = "title";
+    this.#editEntryDialog.desc.placeholder = "description";
+    this.#editEntryDialog.added.placeholder = "date added";
+    this.#editEntryDialog.due.placeholder = "date due";
+    this.#editEntryDialog.status.placeholder = "status";
     this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
     this.header.style.gridTemplateColumns = "10fr repeat(2, 78px)";
     // change button to "submit" and add append function
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
-    this.#addButton.addEventListener("click", this.addEntry);
+    this.#addButton.addEventListener("click", this.updateEntry);
     this.#cancelButton.textContent = "cancel";
-    this.#cancelButton.addEventListener("click", this.cancelEntry);
+    this.#cancelButton.addEventListener("click", this.cancelUpdateEntry);
   }
-  editEntry = () => {
+  updateEntry = (entryIndex) => {
     // make a new entry
     const newEntry = new toDoEntry(
       this.#newEntryDialog.priority.value,
@@ -167,7 +167,7 @@ class listDisplay {
       this.#newEntryDialog.due.value,
       this.#newEntryDialog.status.value
     );
-    // add new entry to list
+    // swap out old entry for new one
     this.#list.addEntry(newEntry);
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addEntry);
@@ -176,7 +176,7 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
-  cancelEditEntry = () => {
+  cancelUpdateEntry = () => {
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
@@ -251,7 +251,7 @@ class listDisplay {
         const editButton = document.createElement("button")
         editButton.textContent = "edit"
         editButton.addEventListener("click", () => {
-          this.#list.editEntry(index);
+          this.#list.updateEntry(index);
           this.render();
         })
         removeButton.textContent = "-"

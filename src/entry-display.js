@@ -1,7 +1,7 @@
 class entryDisplay {
   constructor(entry, subPanel, subPanelContent, showSubPanel, parentList, entryIndex) {
     // listify elements so we can just do stuff with the list
-    for(let i = 0; i < 6; i++){
+    for (let i = 0; i < 6; i++) {
       this.#elements.push(document.createElement("div"))
     };
     this.#cellPriority = this.#elements[0];
@@ -21,13 +21,13 @@ class entryDisplay {
     this.#cellEditButton.textContent = "edit";
     this.#cellRemoveButton.textContent = "-";
     this.#subPanel = subPanel;
-    if(subPanelContent){
+    if (subPanelContent) {
       this.#subPanelContent = subPanelContent;
     }
-    switch(showSubPanel) {
+    switch (showSubPanel) {
       case 1:
         this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = subPanelContent });
-        this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" });  
+        this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" });
         break;
       case 2:
         this.#entryCell.addEventListener("click", () => { this.#subPanel.textContent = subPanelContent })
@@ -37,7 +37,8 @@ class entryDisplay {
     this.#cellRemoveButton.addEventListener("click", () => {
       this.#subPanel.textContent = "";
       this.#parentList.delEntry(entryIndex);
-      this.#entryCell.remove() })
+      this.#entryCell.remove()
+    })
   };
   #elements = [];
 
@@ -55,15 +56,15 @@ class entryDisplay {
   #cellRemoveButton = document.createElement("button");
   #cellEditButton = document.createElement("button");
 
-  get entryCell() {return this.#entryCell};
-  get cellPriority() {return this.#cellPriority};
-  get cellTitle() {return this.#cellTitle};
-  get cellDesc() {return this.#cellDesc};
-  get cellAdded() {return this.#cellAdded}
-  get cellDue() {return this.#cellDue};
-  get cellStatus() {return this.#cellStatus};
-  get editButton() {return this.#cellEditButton};
-  get removeButton() {return this.#cellRemoveButton};
+  get entryCell() { return this.#entryCell };
+  get cellPriority() { return this.#cellPriority };
+  get cellTitle() { return this.#cellTitle };
+  get cellDesc() { return this.#cellDesc };
+  get cellAdded() { return this.#cellAdded }
+  get cellDue() { return this.#cellDue };
+  get cellStatus() { return this.#cellStatus };
+  get editButton() { return this.#cellEditButton };
+  get removeButton() { return this.#cellRemoveButton };
 
   render() {
     this.#entryCell.textContent = "";
@@ -72,6 +73,9 @@ class entryDisplay {
     })
     this.#entryCell.append(this.#cellEditButton);
     this.#entryCell.append(this.#cellRemoveButton);
+  }
+  renderEditDialog() {
+
   }
 };
 export { entryDisplay };
