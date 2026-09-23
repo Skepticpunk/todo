@@ -123,9 +123,8 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
-  renderEditEntryDialog = () => {
-    // clear the header and dialog
-    this.#header.textContent = "";
+  renderEditEntryDialog = (entry, index) => {
+    // clear the entry
     this.#editEntryDialog.container.textContent = "";
     // append elements
     this.#header.append(this.#editEntryDialog.container);
@@ -135,30 +134,29 @@ class listDisplay {
     this.#editEntryDialog.container.append(this.#editEntryDialog.added);
     this.#editEntryDialog.container.append(this.#editEntryDialog.due);
     this.#editEntryDialog.container.append(this.#editEntryDialog.status);
-    this.#editEntryDialog.priority.value = "";
-    this.#editEntryDialog.title.value = "";
-    this.#editEntryDialog.desc.value = "";
-    this.#editEntryDialog.added.value = "";
-    this.#editEntryDialog.due.value = "";
-    this.#editEntryDialog.status.value = "";
+    this.#editEntryDialog.priority.value = entry.priority;
+    this.#editEntryDialog.title.value = entry.title;
+    this.#editEntryDialog.desc.value = entry.desc;
+    this.#editEntryDialog.added.value = entry.added;
+     this.#editEntryDialog.due.value = entry.due;
+    this.#editEntryDialog.status.value = entry.status;
     this.#editEntryDialog.priority.placeholder = "task priority";
     this.#editEntryDialog.title.placeholder = "title";
     this.#editEntryDialog.desc.placeholder = "description";
     this.#editEntryDialog.added.placeholder = "date added";
     this.#editEntryDialog.due.placeholder = "date due";
     this.#editEntryDialog.status.placeholder = "status";
-    this.#header.append(this.#cancelButton);
-    this.#header.append(this.#addButton);
+    updateButton = document.createElement("button")
+    this.#header.append(updateButton);
     this.header.style.gridTemplateColumns = "10fr repeat(2, 78px)";
-    // change button to "submit" and add append function
-    this.#addButton.textContent = "submit";
-    this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
+    // add button text and function
+    update.textContent = "update";
     this.#addButton.addEventListener("click", this.updateEntry);
     this.#cancelButton.textContent = "cancel";
     this.#cancelButton.addEventListener("click", this.cancelUpdateEntry);
   }
   updateEntry = (entryIndex) => {
-    // make a new entry
+    // grab the new entry from the dialog
     const newEntry = new toDoEntry(
       this.#newEntryDialog.priority.value,
       this.#newEntryDialog.title.value,
