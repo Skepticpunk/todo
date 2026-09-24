@@ -123,66 +123,6 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
-  renderEditEntryDialog = (entry, index) => {
-    // clear the entry
-    this.#editEntryDialog.container.textContent = "";
-    // append elements
-    this.#header.append(this.#editEntryDialog.container);
-    this.#editEntryDialog.container.append(this.#editEntryDialog.priority);
-    this.#editEntryDialog.container.append(this.#editEntryDialog.title);
-    this.#editEntryDialog.container.append(this.#editEntryDialog.desc);
-    this.#editEntryDialog.container.append(this.#editEntryDialog.added);
-    this.#editEntryDialog.container.append(this.#editEntryDialog.due);
-    this.#editEntryDialog.container.append(this.#editEntryDialog.status);
-    this.#editEntryDialog.priority.value = entry.priority;
-    this.#editEntryDialog.title.value = entry.title;
-    this.#editEntryDialog.desc.value = entry.desc;
-    this.#editEntryDialog.added.value = entry.added;
-     this.#editEntryDialog.due.value = entry.due;
-    this.#editEntryDialog.status.value = entry.status;
-    this.#editEntryDialog.priority.placeholder = "task priority";
-    this.#editEntryDialog.title.placeholder = "title";
-    this.#editEntryDialog.desc.placeholder = "description";
-    this.#editEntryDialog.added.placeholder = "date added";
-    this.#editEntryDialog.due.placeholder = "date due";
-    this.#editEntryDialog.status.placeholder = "status";
-    updateButton = document.createElement("button")
-    this.#header.append(updateButton);
-    this.header.style.gridTemplateColumns = "10fr repeat(2, 78px)";
-    // add button text and function
-    update.textContent = "update";
-    this.#addButton.addEventListener("click", this.updateEntry);
-    this.#cancelButton.textContent = "cancel";
-    this.#cancelButton.addEventListener("click", this.cancelUpdateEntry);
-  }
-  updateEntry = (entryIndex) => {
-    // grab the new entry from the dialog
-    const newEntry = new toDoEntry(
-      this.#newEntryDialog.priority.value,
-      this.#newEntryDialog.title.value,
-      this.#newEntryDialog.desc.value,
-      this.#newEntryDialog.added.value,
-      this.#newEntryDialog.due.value,
-      this.#newEntryDialog.status.value
-    );
-    // swap out old entry for new one
-    this.#list.addEntry(newEntry);
-    this.#addButton.textContent = "add";
-    this.#addButton.removeEventListener("click", this.addEntry);
-    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-    this.#cancelButton.textContent = "edit";
-    this.#cancelButton.removeEventListener("click", this.cancelEntry);
-    this.render();
-  }
-  cancelUpdateEntry = () => {
-    this.#addButton.textContent = "add";
-    this.#addButton.removeEventListener("click", this.addEntry);
-    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-    this.#cancelButton.textContent = "";
-    this.#cancelButton.removeEventListener("click", this.cancelEntry);
-    this.render();
-  }
-
   renderNewListDialog = () => {
     // same shit as above but instead of appending all the fields we just append the one for the title
     this.#header.textContent = "";
@@ -269,7 +209,6 @@ class listDisplay {
       this.#list.list.forEach((entry, index) => {
         //make new to-do entry, then append it
         const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);
-        newEntry.editButton.addEventListener("click", this.renderEditEntryDialog);
         this.#listDisplay.append(newEntry.entryCell);
         newEntry.render();
       });

@@ -43,14 +43,9 @@ class entryDisplay {
     }
     this.#parentList = parentList;
     // add button functions
-    this.#cancelButton.addEventListener("click", this.render);
-    this.#editButton.addEventListener("click", () => {
-      this.renderEditDialog();
-    })
-    this.#updateButton.addEventListener("click", () => {
-      this.updateEntry();
-      this.render()
-    })
+    this.#cancelButton.addEventListener("click", () => { this.render() });
+    this.#editButton.addEventListener("click", () => { this.renderEditDialog(); })
+    this.#updateButton.addEventListener("click", () => { this.updateEntry(); })
     this.#cellRemoveButton.addEventListener("click", () => {
       this.#subPanel.textContent = "";
       this.#parentList.delEntry(entryIndex);
@@ -80,13 +75,12 @@ class entryDisplay {
     due: document.createElement("input"),
     status: document.createElement("input")
   };
-
   #entryCell = document.createElement("div");
   #cellRemoveButton = document.createElement("button");
   #cancelButton = document.createElement("button");
   #editButton = document.createElement("button");
   #updateButton = document.createElement("button");
-
+  // getters
   get entryCell() { return this.#entryCell };
   get cellPriority() { return this.#cellPriority };
   get cellTitle() { return this.#cellTitle };
@@ -98,7 +92,7 @@ class entryDisplay {
   get removeButton() { return this.#cellRemoveButton };
   get editButton() { return this.#editButton };
   get updateButton() { return this.#updateButton };
-
+  // functions
   render() {
     // clear display state
     this.#entryCell.textContent = "";
@@ -116,27 +110,30 @@ class entryDisplay {
     this.#entryCell.append(this.#editButton);
     this.#entryCell.append(this.#cellRemoveButton);
   }
-  renderEditDialog(newEntry) {
+  renderEditDialog() {
     // clear the entry
     this.#entryCell.textContent = "";
-    // append and set up elements
+    // append elements
     this.#entryCell.append(this.#editDialog.priority);
     this.#entryCell.append(this.#editDialog.title);
     this.#entryCell.append(this.#editDialog.desc);
     this.#entryCell.append(this.#editDialog.added);
     this.#entryCell.append(this.#editDialog.due);
     this.#entryCell.append(this.#editDialog.status);
+    // add current contents of entry as default values for fields
+    this.#editDialog.priority.value = this.#entry.priority;
+    this.#editDialog.title.value = this.#entry.title;
+    this.#editDialog.desc.value = this.#entry.desc;
+    this.#editDialog.added.value = this.#entry.added;
+    this.#editDialog.due.value = this.#entry.due;
+    this.#editDialog.status.value = this.#entry.status;
+    this.#entryCell.append(this.#cancelButton);
     this.#entryCell.append(this.#updateButton);
-    this.#entryCell.priority.value = newEntry.priority;
-    this.#entryCell.title.value = newEntry.title;
-    this.#entryCell.desc.value = newEntry.desc;
-    this.#entryCell.added.value = newEntry.added;
-    this.#entryCell.due.value = newEntry.due;
-    this.#entryCell.status.value = newEntry.status;
   }
   updateEntry() {
+    // small code block, self-explanatory
     this.#entry.priority = this.#editDialog.priority.value;
-    this.#entry.value = this.#editDialog.title.value;
+    this.#entry.title = this.#editDialog.title.value;
     this.#entry.desc = this.#editDialog.desc.value;
     this.#entry.added = this.#editDialog.added.value;
     this.#entry.due = this.#editDialog.due.value;
