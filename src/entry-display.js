@@ -13,6 +13,21 @@ class entryDisplay {
     this.#cellAdded = this.#elements[3];
     this.#cellDue = this.#elements[4];
     this.#cellStatus = this.#elements[5];
+    // create other elements
+    this.#editDialog = {
+      container: document.createElement("div"),
+      priority: document.createElement("input"),
+      title: document.createElement("input"),
+      desc: document.createElement("input"),
+      added: document.createElement("input"),
+      due: document.createElement("input"),
+      status: document.createElement("input")
+    };
+    this.#entryCell = document.createElement("div");
+    this.#cellRemoveButton = document.createElement("button");
+    this.#cancelButton = document.createElement("button");
+    this.#editButton = document.createElement("button");
+    this.#updateButton = document.createElement("button");
     // edit attributes
     this.#entryCell.classList.add("entry");
     this.#cellTitle.classList.add("entryTitle");
@@ -33,11 +48,11 @@ class entryDisplay {
       this.#subPanelContent = subPanelContent;
     }
     switch (showSubPanel) { // which sub-panel type are we showing?
-      case 1: // to-do description
+      case 1: // to-do description, for to-do entry
         this.#entryCell.addEventListener("mouseover", () => { this.#subPanel.textContent = subPanelContent });
         this.#entryCell.addEventListener("mouseout", () => { this.#subPanel.textContent = "" });
         break;
-      case 2: // to-do list
+      case 2: // to-do list, for list entry
         this.#entryCell.addEventListener("click", () => { this.#subPanel.textContent = subPanelContent })
         break;
     }
@@ -65,21 +80,12 @@ class entryDisplay {
   #subPanel;
   #subPanelContent;
   #parentList;
-
-  #editDialog = {
-    container: document.createElement("div"),
-    priority: document.createElement("input"),
-    title: document.createElement("input"),
-    desc: document.createElement("input"),
-    added: document.createElement("input"),
-    due: document.createElement("input"),
-    status: document.createElement("input")
-  };
-  #entryCell = document.createElement("div");
-  #cellRemoveButton = document.createElement("button");
-  #cancelButton = document.createElement("button");
-  #editButton = document.createElement("button");
-  #updateButton = document.createElement("button");
+  #editDialog;
+  #entryCell;
+  #cellRemoveButton;
+  #cancelButton;
+  #editButton;
+  #updateButton;
   // getters
   get entryCell() { return this.#entryCell };
   get cellPriority() { return this.#cellPriority };

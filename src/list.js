@@ -9,11 +9,11 @@ class toDoList {
   #title = "New Todo List";
 
   get list() { return this.#list };
-  set list(newList) { this.#list = newList };
+  set list(newList) { this.#list = newList; this.updateStorage(); };
   set isProjectList(newSetting) { this.#isProjectList = newSetting };
   get isProjectList() { return this.#isProjectList };
   get title() { return this.#title };
-  set title(newTitle) { this.#title = newTitle; };
+  set title(newTitle) { this.#title = newTitle; this.updateStorage();};
 
   addEntry(newEntry) {
     if (newEntry.title != "") {

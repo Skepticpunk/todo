@@ -4,15 +4,36 @@ import { toDoList } from "./list";
 
 class listDisplay {
   constructor(parentNode) {
+    // create elements for object
     this.#parent = parentNode;
     this.#header = document.createElement("h1");
     this.#listDisplay = document.createElement("div");
     this.#addButton = document.createElement("button");
-    this.#cancelButton = document.createElement(("button"));
+    this.#editButton = document.createElement("button");
+    this.#cancelButton = document.createElement("button");
+    this.#newEntryDialog = {
+      container: document.createElement("div"),
+      priority: document.createElement("input"),
+      title: document.createElement("input"),
+      desc: document.createElement("input"),
+      added: document.createElement("input"),
+      due: document.createElement("input"),
+      status: document.createElement("input")
+    };
+    this.#editTitleDialog = {
+      container: document.createElement("div"),
+      title: document.createElement("input"),
+    };
+    // edit attributes
+    this.#addButton.textContent = "+";
+    this.#editButton.textContent = "edit";
+    this.#cancelButton.textContent = "cancel";
+    // set other variables
     this.#list = [];
     this.#childList = "";
     this.#newEntryDialog.container.id = "newEntryDialog"
   };
+  // dummy entries for elements to be filled by constructor
   #parent;
   #tagHeader;
   #header;
@@ -21,25 +42,11 @@ class listDisplay {
   #childList;
   #subPanel;
   #addButton;
+  #editButton;
   #cancelButton;
-  #newEntryDialog = {
-    container: document.createElement("div"),
-    priority: document.createElement("input"),
-    title: document.createElement("input"),
-    desc: document.createElement("input"),
-    added: document.createElement("input"),
-    due: document.createElement("input"),
-    status: document.createElement("input")
-  };
-  #editEntryDialog = {
-    container: document.createElement("div"),
-    priority: document.createElement("input"),
-    title: document.createElement("input"),
-    desc: document.createElement("input"),
-    added: document.createElement("input"),
-    due: document.createElement("input"),
-    status: document.createElement("input")
-  };
+  #newEntryDialog;
+  #editTitleDialog;
+  // getters/setters
   get parent() { return this.#parent };
   set parent(newParent) { this.#parent = newParent };
   get tagHeader() { return this.#tagHeader };
@@ -61,7 +68,7 @@ class listDisplay {
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   get childList() { return this.#childList };
   set childList(newchildList) { this.#childList = newchildList };
-
+  // functions
   renderNewEntryDialog = () => {
     // clear the header and dialog
     this.#header.textContent = "";
@@ -93,7 +100,6 @@ class listDisplay {
     this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
     this.#addButton.addEventListener("click", this.addEntry);
-    this.#cancelButton.textContent = "cancel";
     this.#cancelButton.addEventListener("click", this.cancelEntry);
   }
   addEntry = () => {
@@ -124,7 +130,7 @@ class listDisplay {
     this.render();
   }
   renderNewListDialog = () => {
-    // same shit as above but instead of appending all the fields we just append the one for the title
+    // same as with rendering entries, just with one element instead of six
     this.#header.textContent = "";
     this.#newEntryDialog.textContent = "";
     this.#header.append(this.#newEntryDialog.container);
@@ -145,7 +151,7 @@ class listDisplay {
     const newList = new toDoList();
     newList.title = this.#newEntryDialog.title.value;
     this.list.addEntry(newList);
-    this.#addButton.textContent = "add";
+    this.#addButton.textContent = "+";
     this.#addButton.removeEventListener("click", this.addList);
     this.#addButton.addEventListener("click", this.renderNewListDialog);
     this.#cancelButton.textContent = "";
@@ -160,6 +166,33 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelList);
     this.render();
   }
+  renderEditTitleDialog = () => {
+    // similar to above, but rendering inputs instead of divs
+    this.#header.textContent = "";
+    this.#editTitleDialog.textContent = "";
+    this.#header.append(this.#editTitleDialog.container);
+    this.#editTitleDialog.container.append(this.#editTitleDialog.title);
+    this.#editTitleDialog.title.value = this.#list.title;
+    this.#editTitleDialog.title.placeholder = "new title";
+    this.#header.append(this.#cancelButton);
+    this.#header.append(this.#addButton);
+    this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
+    this.#addButton.textContent = "save";
+    this.#addButton.removeEventListener("click", this.renderNewListDialog);
+    this.#addButton.addEventListener("click", this.updateListTitle);
+    this.#cancelButton.addEventListener("click", this.cancelListTitleUpdate);
+  }
+  updateListTitle = () => {
+   this.#list.title = this.#editTitleDialog.title.value;
+   this.cancelListTitleUpdate();
+  }
+  cancelListTitleUpdate = () => {
+    this.#addButton.textContent = "+";
+    this.#addButton.removeEventListener("click", this.updateListTitle);
+    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+    this.#cancelButton.removeEventListener("click", this.cancelListTitleUpdate);
+    this.render();
+  }
   render() {
     // clear the display state
     this.#parent.textContent = "";
@@ -168,11 +201,11 @@ class listDisplay {
     this.#header.textContent = this.#list.title;
     this.#addButton.textContent = "add";
     this.#parent.append(this.#header);
-    this.#header.append(this.#addButton);
     this.#parent.append(this.#listDisplay);
     // build the new list
     if (this.#list.isProjectList == 1) {
-      this.header.style.gridTemplateColumns = "4fr minmax(0, 48px)";
+      this.#header.append(this.#addButton);
+      this.#header.style.gridTemplateColumns = "4fr minmax(0, 48px)";
       this.#addButton.addEventListener("click", this.renderNewListDialog);
       this.#list.list.forEach((entry, index) => {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
@@ -182,16 +215,10 @@ class listDisplay {
         newEntry.className = this.#tagHeader + "Entry";
         newEntry.textContent = entry.title;
         newEntry.addEventListener("click", () => {
-          // get list from the entry, then switch the subpanel's current list with it
+          // swap subpanel's current list with one from entry
           this.#childList.list = entry;
         });
         const removeButton = document.createElement("button")
-        const editButton = document.createElement("button")
-        editButton.textContent = "edit"
-        editButton.addEventListener("click", () => {
-          this.#list.updateEntry(index);
-          this.render();
-        })
         removeButton.textContent = "-"
         removeButton.addEventListener("click", () => {
           newEntry.remove;
@@ -199,15 +226,17 @@ class listDisplay {
           this.render();
         })
         entryContainer.append(newEntry);
-        entryContainer.append(editButton)
         entryContainer.append(removeButton);
         this.#listDisplay.append(entryContainer);
       });
-    } else {
-      this.header.style.gridTemplateColumns = "4fr minmax(0, 48px)";
+    } else { // this is a to-do list
+      this.header.style.gridTemplateColumns = "4fr repeat(2, minmax(0, 48px))";
       this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+      this.#editButton.addEventListener("click", this.renderEditTitleDialog);
+      this.#header.append(this.#editButton);
+      this.#header.append(this.#addButton);
       this.#list.list.forEach((entry, index) => {
-        //make new to-do entry, then append it
+        // make new to-do entry, then append it
         const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);
         this.#listDisplay.append(newEntry.entryCell);
         newEntry.render();
