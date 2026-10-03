@@ -168,6 +168,7 @@ class listDisplay {
   }
   renderEditTitleDialog = () => {
     // similar to above, but rendering inputs instead of divs
+    alert(this.#header.textContent);
     this.#header.textContent = "";
     this.#editTitleDialog.textContent = "";
     this.#header.append(this.#editTitleDialog.container);
@@ -183,8 +184,8 @@ class listDisplay {
     this.#cancelButton.addEventListener("click", this.cancelListTitleUpdate);
   }
   updateListTitle = () => {
-   this.#list.title = this.#editTitleDialog.title.value;
-   this.cancelListTitleUpdate();
+    this.#list.title = this.#editTitleDialog.title.value;
+    this.cancelListTitleUpdate();
   }
   cancelListTitleUpdate = () => {
     this.#addButton.textContent = "+";
@@ -217,6 +218,9 @@ class listDisplay {
         newEntry.addEventListener("click", () => {
           // swap subpanel's current list with one from entry
           this.#childList.list = entry;
+          this.#childList.#editButton.addEventListener("click", () => {
+            this.#childList.renderEditTitleDialog();
+          });
         });
         const removeButton = document.createElement("button")
         removeButton.textContent = "-"
@@ -232,7 +236,6 @@ class listDisplay {
     } else { // this is a to-do list
       this.header.style.gridTemplateColumns = "4fr repeat(2, minmax(0, 48px))";
       this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-      this.#editButton.addEventListener("click", this.renderEditTitleDialog);
       this.#header.append(this.#editButton);
       this.#header.append(this.#addButton);
       this.#list.list.forEach((entry, index) => {
