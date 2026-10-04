@@ -1,4 +1,6 @@
 import "./page.css";
+// custom color scheme
+import "./themes/dark.css";
 import { toDoList } from "./list.js";
 import { toDoEntry } from "./entry.js";
 import { listDisplay } from "./list-display.js";

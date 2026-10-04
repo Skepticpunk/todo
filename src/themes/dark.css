@@ -1,0 +1,11 @@
+/* default dark colorscheme */
+body {
+  --fg:                  #d0d0d0;
+  --fg1:                 white;
+  --bg-1:                #101010;
+  --bg:                  #202020;
+  --bg1:                 #303030;
+  --bg2:                 #404040;
+  --bg3:                 #606060;
+  --border:              #808080;
+}

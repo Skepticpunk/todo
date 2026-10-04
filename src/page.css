@@ -3,11 +3,21 @@ body {
   grid-template-columns: 1fr 4fr;
   height:                100vh;
   font-family:           "Oswald";
-  background-color:      burlywood; }
+  /* default color scheme, check out ./themes/ for list of predefined schemes or to make your own */
+  --fg:                  black;
+  --fg1:                 #202020;
+  --bg-1:                burlywood;
+  --bg:                  white;
+  --bg1:                 antiquewhite;
+  --bg2:                 azure;
+  --bg3:                 pink;
+  --border:              silver;
+  color:                 var(--fg);
+  background-color:      var(--bg-1); }
 h1 {
   margin:                 4px 0 0 0;
-  padding:                0 6px; 
-  border-bottom:          1px solid white; }
+  padding:                0 6px;
+  background-color:       var(--bg1); }
 h1 > button {
   margin:                4px;}
 h2 {
@@ -15,7 +25,7 @@ h2 {
 input {
   min-width: 0; }
 #projectList {
-  background-color:      antiquewhite; }
+  background-color:      var(--bg); }
 #projectHeader {
   display:               grid; 
   grid-template-columns: 4fr minmax(0, 48px); }
@@ -25,26 +35,32 @@ input {
 #toDo {
   display:                grid;
   grid-template-rows:     1fr 1fr;
-  background-color:      azure; }
+  background-color:       var(--bg1); }
 #toDoEntries {
   display: grid;
   grid-template-rows: 3.3em auto; }
 #toDoListHeader {
   display:               grid; 
   grid-template-columns: 10fr 78px;
-  background-color:      pink; }
+  color:                 var(--fg1);
+  background-color:      var(--bg3); }
 #toDoListNewEntryDialog {
   display:               grid; 
   grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
-  padding: 6px 0;
-  background-color:      pink; }
+  gap:                   4px;
+  padding:               6px 0;
+  background-color:      var(--bg3); }
+#toDoListEditTitleDialog {
+  display:               grid;
+  padding:               6px 0;
+  background-color:     var(--bg3);
+}
 #toDoListListDisplay {
   display:               flex;
   flex-direction:        column;
   font-size:             24;
   padding:               4px 0;
-  border-bottom:         2px outset silver; }
+  border-bottom:         2px outset var(--border); }
 .entry {
   margin:                0 8px;
   flex:                  0 0 1.25em;

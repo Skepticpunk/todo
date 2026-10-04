@@ -1,0 +1,11 @@
+/* default light colorscheme */
+body {
+  --fg:                  black;
+  --fg1:                 #202020;
+  --bg-1:                burlywood;
+  --bg:                  white;
+  --bg1:                 antiquewhite;
+  --bg2:                 azure;
+  --bg3:                 pink;
+  --border:              silver;
+}

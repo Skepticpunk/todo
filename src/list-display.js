@@ -10,6 +10,7 @@ class listDisplay {
     this.#listDisplay = document.createElement("div");
     this.#addButton = document.createElement("button");
     this.#editButton = document.createElement("button");
+    this.#saveButton = document.createElement("button");
     this.#cancelButton = document.createElement("button");
     this.#newEntryDialog = {
       container: document.createElement("div"),
@@ -27,11 +28,13 @@ class listDisplay {
     // edit attributes
     this.#addButton.textContent = "+";
     this.#editButton.textContent = "edit";
-    this.#cancelButton.textContent = "cancel";
+    this.#saveButton.textContent = "O";
+    this.#cancelButton.textContent = "X";
     // set other variables
     this.#list = [];
     this.#childList = "";
     this.#newEntryDialog.container.id = "newEntryDialog"
+    this.#editTitleDialog.container.id = "editTitleDialog"
   };
   // dummy entries for elements to be filled by constructor
   #parent;
@@ -43,6 +46,7 @@ class listDisplay {
   #subPanel;
   #addButton;
   #editButton;
+  #saveButton;
   #cancelButton;
   #newEntryDialog;
   #editTitleDialog;
@@ -55,7 +59,8 @@ class listDisplay {
     this.#header.id = this.#tagHeader + "Header";
     this.#addButton.id = this.#tagHeader + "AddButton";
     this.#listDisplay.id = this.#tagHeader + "ListDisplay";
-    this.#newEntryDialog.container.id = this.#tagHeader + "NewEntryDialog"
+    this.#newEntryDialog.container.id = this.#tagHeader + "NewEntryDialog";
+    this.#editTitleDialog.container.id = this.#tagHeader + "EditTitleDialog"
   };
   get header() { return this.#header };
   set header(newHeader) { this.#header = newHeader };
@@ -97,7 +102,6 @@ class listDisplay {
     this.#header.append(this.#addButton);
     this.header.style.gridTemplateColumns = "10fr repeat(2, 78px)";
     // change button to "submit" and add append function
-    this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
     this.#addButton.addEventListener("click", this.addEntry);
     this.#cancelButton.addEventListener("click", this.cancelEntry);
@@ -114,10 +118,8 @@ class listDisplay {
     );
     // add new entry to list
     this.#list.addEntry(newEntry);
-    this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-    this.#cancelButton.textContent = "edit";
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
@@ -125,7 +127,6 @@ class listDisplay {
     this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-    this.#cancelButton.textContent = "";
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
@@ -140,10 +141,8 @@ class listDisplay {
     this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
     this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
-    this.#addButton.textContent = "submit";
     this.#addButton.removeEventListener("click", this.renderNewListDialog);
     this.#addButton.addEventListener("click", this.addList);
-    this.#cancelButton.textContent = "cancel";
     this.#cancelButton.addEventListener("click", this.cancelList);
   }
   addList = () => {
@@ -151,18 +150,14 @@ class listDisplay {
     const newList = new toDoList();
     newList.title = this.#newEntryDialog.title.value;
     this.list.addEntry(newList);
-    this.#addButton.textContent = "+";
     this.#addButton.removeEventListener("click", this.addList);
     this.#addButton.addEventListener("click", this.renderNewListDialog);
-    this.#cancelButton.textContent = "";
     this.#cancelButton.removeEventListener("click", this.cancelList);
     this.render();
   }
   cancelList = () => {
-    this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addList);
     this.#addButton.addEventListener("click", this.renderNewListDialog);
-    this.#cancelButton.textContent = "";
     this.#cancelButton.removeEventListener("click", this.cancelList);
     this.render();
   }
@@ -175,11 +170,9 @@ class listDisplay {
     this.#editTitleDialog.title.value = entry.title;
     this.#editTitleDialog.title.placeholder = "new title";
     this.#header.append(this.#cancelButton);
-    this.#header.append(this.#addButton);
+    this.#header.append(this.#saveButton);
     this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
-    this.#addButton.textContent = "save";
-    this.#addButton.removeEventListener("click", this.renderNewListDialog);
-    this.#addButton.addEventListener("click", () => {this.updateListTitle(entry, parent)});
+    this.#saveButton.addEventListener("click", () => {this.updateListTitle(entry, parent)});
     this.#cancelButton.addEventListener("click", this.cancelListTitleUpdate);
   }
   updateListTitle = (entry, parent) => {
@@ -189,8 +182,7 @@ class listDisplay {
     parent.render();
   }
   cancelListTitleUpdate = () => {
-    this.#addButton.textContent = "+";
-    this.#addButton.removeEventListener("click", this.updateListTitle);
+    this.#addButton.removeEventListener("click", () => {this.updateListTitle()});
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#cancelButton.removeEventListener("click", this.cancelListTitleUpdate);
     this.render();
@@ -201,7 +193,6 @@ class listDisplay {
     this.#listDisplay.textContent = "";
     // put the header and list up
     this.#header.textContent = this.#list.title;
-    this.#addButton.textContent = "add";
     this.#parent.append(this.#header);
     this.#parent.append(this.#listDisplay);
     // build the new list
