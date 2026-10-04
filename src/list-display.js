@@ -166,26 +166,27 @@ class listDisplay {
     this.#cancelButton.removeEventListener("click", this.cancelList);
     this.render();
   }
-  renderEditTitleDialog = () => {
+  renderEditTitleDialog = (entry, parent) => {
     // similar to above, but rendering inputs instead of divs
-    alert(this.#header.textContent);
     this.#header.textContent = "";
     this.#editTitleDialog.textContent = "";
     this.#header.append(this.#editTitleDialog.container);
     this.#editTitleDialog.container.append(this.#editTitleDialog.title);
-    this.#editTitleDialog.title.value = this.#list.title;
+    this.#editTitleDialog.title.value = entry.title;
     this.#editTitleDialog.title.placeholder = "new title";
     this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
     this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
     this.#addButton.textContent = "save";
     this.#addButton.removeEventListener("click", this.renderNewListDialog);
-    this.#addButton.addEventListener("click", this.updateListTitle);
+    this.#addButton.addEventListener("click", () => {this.updateListTitle(entry, parent)});
     this.#cancelButton.addEventListener("click", this.cancelListTitleUpdate);
   }
-  updateListTitle = () => {
-    this.#list.title = this.#editTitleDialog.title.value;
+  updateListTitle = (entry, parent) => {
+    entry.title = this.#editTitleDialog.title.value;
+    parent.#list.updateStorage();
     this.cancelListTitleUpdate();
+    parent.render();
   }
   cancelListTitleUpdate = () => {
     this.#addButton.textContent = "+";
@@ -219,7 +220,7 @@ class listDisplay {
           // swap subpanel's current list with one from entry
           this.#childList.list = entry;
           this.#childList.#editButton.addEventListener("click", () => {
-            this.#childList.renderEditTitleDialog();
+            this.#childList.renderEditTitleDialog(entry, this);
           });
         });
         const removeButton = document.createElement("button")
