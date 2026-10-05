@@ -124,7 +124,6 @@ class listDisplay {
     this.render();
   }
   cancelEntry = () => {
-    this.#addButton.textContent = "add";
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
@@ -171,7 +170,6 @@ class listDisplay {
     this.#editTitleDialog.title.placeholder = "new title";
     this.#header.append(this.#cancelButton);
     this.#header.append(this.#saveButton);
-    this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
     this.#saveButton.addEventListener("click", () => {this.updateListTitle(entry, parent)});
     this.#cancelButton.addEventListener("click", this.cancelListTitleUpdate);
   }
@@ -198,7 +196,6 @@ class listDisplay {
     // build the new list
     if (this.#list.isProjectList == 1) {
       this.#header.append(this.#addButton);
-      this.#header.style.gridTemplateColumns = "4fr minmax(0, 48px)";
       this.#addButton.addEventListener("click", this.renderNewListDialog);
       this.#list.list.forEach((entry, index) => {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it

@@ -31,6 +31,7 @@ class entryDisplay {
     // edit attributes
     this.#entryCell.classList.add("entry");
     this.#cellTitle.classList.add("entryTitle");
+    this.#editDialog.container.id = "editEntryDialog";
     // add text
     this.#editDialog.priority.placeholder = "task priority";
     this.#editDialog.title.placeholder = "title";
@@ -38,7 +39,7 @@ class entryDisplay {
     this.#editDialog.added.placeholder = "date added";
     this.#editDialog.due.placeholder = "date due";
     this.#editDialog.status.placeholder = "status";
-    this.#cancelButton.textContent = "cancel";
+    this.#cancelButton.textContent = "X";
     this.#editButton.textContent = "edit";
     this.#updateButton.textContent = "save";
     this.#cellRemoveButton.textContent = "-";
@@ -120,12 +121,13 @@ class entryDisplay {
     // clear the entry
     this.#entryCell.textContent = "";
     // append elements
-    this.#entryCell.append(this.#editDialog.priority);
-    this.#entryCell.append(this.#editDialog.title);
-    this.#entryCell.append(this.#editDialog.desc);
-    this.#entryCell.append(this.#editDialog.added);
-    this.#entryCell.append(this.#editDialog.due);
-    this.#entryCell.append(this.#editDialog.status);
+    this.#editDialog.container.append(this.#editDialog.priority);
+    this.#editDialog.container.append(this.#editDialog.title);
+    this.#editDialog.container.append(this.#editDialog.desc);
+    this.#editDialog.container.append(this.#editDialog.added);
+    this.#editDialog.container.append(this.#editDialog.due);
+    this.#editDialog.container.append(this.#editDialog.status);
+    this.#entryCell.append(this.#editDialog.container);
     // add current contents of entry as default values for fields
     this.#editDialog.priority.value = this.#entry.priority;
     this.#editDialog.title.value = this.#entry.title;
