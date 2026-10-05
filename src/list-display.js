@@ -74,11 +74,30 @@ class listDisplay {
   get childList() { return this.#childList };
   set childList(newchildList) { this.#childList = newchildList };
   // functions
+  renderNewListDialog = () => {
+    // clear header and dialog
+    this.#header.textContent = "";
+    this.#newEntryDialog.textContent = "";
+    // append field
+    this.#header.append(this.#newEntryDialog.container);
+    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
+    // set field default values
+    this.#newEntryDialog.title.value = "";
+    this.#newEntryDialog.title.placeholder = "title";
+    // append buttons
+    this.#header.append(this.#cancelButton);
+    this.#header.append(this.#addButton);
+    // change style to fit two buttons
+    this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
+    // add listeners
+    this.#addButton.removeEventListener("click", this.renderNewListDialog);
+    this.#addButton.addEventListener("click", this.addList);
+    this.#cancelButton.addEventListener("click", this.cancelList);
+  }
   renderNewEntryDialog = () => {
-    // clear the header and dialog
+    // same as above, but with six fields this time
     this.#header.textContent = "";
     this.#newEntryDialog.container.textContent = "";
-    // append elements
     this.#header.append(this.#newEntryDialog.container);
     this.#newEntryDialog.container.append(this.#newEntryDialog.priority);
     this.#newEntryDialog.container.append(this.#newEntryDialog.title);
@@ -100,14 +119,24 @@ class listDisplay {
     this.#newEntryDialog.status.placeholder = "status";
     this.#header.append(this.#cancelButton);
     this.#header.append(this.#addButton);
-    this.header.style.gridTemplateColumns = "10fr repeat(2, 78px)";
-    // change button to "submit" and add append function
     this.#addButton.removeEventListener("click", this.renderNewEntryDialog);
     this.#addButton.addEventListener("click", this.addEntry);
     this.#cancelButton.addEventListener("click", this.cancelEntry);
   }
+  addList = () => {
+    // make new list, set its title
+    const newList = new toDoList();
+    newList.title = this.#newEntryDialog.title.value;
+    // add it to the list
+    this.list.addEntry(newList);
+    // add listeners
+    this.#addButton.removeEventListener("click", this.addList);
+    this.#addButton.addEventListener("click", this.renderNewListDialog);
+    this.#cancelButton.removeEventListener("click", this.cancelList);
+    this.render();
+  }
   addEntry = () => {
-    // make a new entry
+    // same as above, but with six attributes
     const newEntry = new toDoEntry(
       this.#newEntryDialog.priority.value,
       this.#newEntryDialog.title.value,
@@ -116,52 +145,14 @@ class listDisplay {
       this.#newEntryDialog.due.value,
       this.#newEntryDialog.status.value
     );
-    // add new entry to list
     this.#list.addEntry(newEntry);
     this.#addButton.removeEventListener("click", this.addEntry);
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#cancelButton.removeEventListener("click", this.cancelEntry);
     this.render();
   }
-  cancelEntry = () => {
-    this.#addButton.removeEventListener("click", this.addEntry);
-    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
-    this.#cancelButton.removeEventListener("click", this.cancelEntry);
-    this.render();
-  }
-  renderNewListDialog = () => {
-    // same as with rendering entries, just with one element instead of six
-    this.#header.textContent = "";
-    this.#newEntryDialog.textContent = "";
-    this.#header.append(this.#newEntryDialog.container);
-    this.#newEntryDialog.container.append(this.#newEntryDialog.title);
-    this.#newEntryDialog.title.value = "";
-    this.#newEntryDialog.title.placeholder = "title";
-    this.#header.append(this.#cancelButton);
-    this.#header.append(this.#addButton);
-    this.#header.style.gridTemplateColumns = "4fr repeat(2, minmax(1em, 48px))";
-    this.#addButton.removeEventListener("click", this.renderNewListDialog);
-    this.#addButton.addEventListener("click", this.addList);
-    this.#cancelButton.addEventListener("click", this.cancelList);
-  }
-  addList = () => {
-    // same as above but for lists
-    const newList = new toDoList();
-    newList.title = this.#newEntryDialog.title.value;
-    this.list.addEntry(newList);
-    this.#addButton.removeEventListener("click", this.addList);
-    this.#addButton.addEventListener("click", this.renderNewListDialog);
-    this.#cancelButton.removeEventListener("click", this.cancelList);
-    this.render();
-  }
-  cancelList = () => {
-    this.#addButton.removeEventListener("click", this.addList);
-    this.#addButton.addEventListener("click", this.renderNewListDialog);
-    this.#cancelButton.removeEventListener("click", this.cancelList);
-    this.render();
-  }
   renderEditTitleDialog = (entry, parent) => {
-    // similar to above, but rendering inputs instead of divs
+    // similar to above, but with inputs instead of divs
     this.#header.textContent = "";
     this.#editTitleDialog.textContent = "";
     this.#header.append(this.#editTitleDialog.container);
@@ -174,12 +165,30 @@ class listDisplay {
     this.#cancelButton.addEventListener("click", this.cancelListTitleUpdate);
   }
   updateListTitle = (entry, parent) => {
+    // set new title, then update storage
     entry.title = this.#editTitleDialog.title.value;
     parent.#list.updateStorage();
     this.cancelListTitleUpdate();
     parent.render();
   }
+  cancelList = () => {
+    // set style back to 1-button
+    this.#header.style.gridTemplateColumns = "4fr minmax(1em, 48px)";
+    // reset listeners, then render
+    this.#addButton.removeEventListener("click", this.addList);
+    this.#addButton.addEventListener("click", this.renderNewListDialog);
+    this.#cancelButton.removeEventListener("click", this.cancelList);
+    this.render();
+  }
+  cancelEntry = () => {
+    // guess what this does
+    this.#addButton.removeEventListener("click", this.addEntry);
+    this.#addButton.addEventListener("click", this.renderNewEntryDialog);
+    this.#cancelButton.removeEventListener("click", this.cancelEntry);
+    this.render();
+  }
   cancelListTitleUpdate = () => {
+    // wheeeee
     this.#addButton.removeEventListener("click", () => {this.updateListTitle()});
     this.#addButton.addEventListener("click", this.renderNewEntryDialog);
     this.#cancelButton.removeEventListener("click", this.cancelListTitleUpdate);

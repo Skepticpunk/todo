@@ -67,6 +67,8 @@ class entryDisplay {
       this.#parentList.delEntry(entryIndex);
       this.#entryCell.remove()
     })
+    // other variables
+    this.#entryIndex = entryIndex;
   };
   // data
   #elements = [];
@@ -87,6 +89,7 @@ class entryDisplay {
   #cancelButton;
   #editButton;
   #updateButton;
+  #entryIndex;
   // getters
   get entryCell() { return this.#entryCell };
   get cellPriority() { return this.#cellPriority };
@@ -146,6 +149,7 @@ class entryDisplay {
     this.#entry.added = this.#editDialog.added.value;
     this.#entry.due = this.#editDialog.due.value;
     this.#entry.status = this.#editDialog.status.value;
+    this.#parentList.updateEntry(this.#entryIndex, this.#entry);
     this.render();
   }
 };
