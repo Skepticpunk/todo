@@ -25,7 +25,7 @@ input {
   min-width:              0;
   border-radius:          0;
   border:                 0;
-  background:             var(--bg3);}
+  background:             var(--bg2);}
 button {
   border:                 0;
   border-radius:          0;
@@ -76,11 +76,16 @@ button:hover {
   margin:                 0;
   padding:                0;
   background-color:       var(--bg4); }
+.altInput {
+  background-color:       var(--bg4); }
 .entry {
   padding:                0 8px;
   flex:                   0 0 1.25em;
   display:                flex; 
   height:                 1.5em; }
+.altEntry {
+  background-color:       var(--bg2)
+}
 .entry > div {
   flex:                   1;
   overflow:               hidden;

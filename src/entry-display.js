@@ -30,6 +30,9 @@ class entryDisplay {
     this.#updateButton = document.createElement("button");
     // edit attributes
     this.#entryCell.classList.add("entry");
+    this.#editDialog.title.classList.add("altInput")
+    this.#editDialog.added.classList.add("altInput")
+    this.#editDialog.status.classList.add("altInput")
     this.#cellTitle.classList.add("entryTitle");
     this.#editDialog.container.id = "editEntryDialog";
     // add text

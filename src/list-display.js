@@ -73,6 +73,7 @@ class listDisplay {
   set subPanel(newSubPanel) { this.#subPanel = newSubPanel };
   get childList() { return this.#childList };
   set childList(newchildList) { this.#childList = newchildList };
+  get editButton() { return this.#editButton };
   // functions
   renderNewListDialog = () => {
     // clear header and dialog
@@ -216,7 +217,7 @@ class listDisplay {
         newEntry.addEventListener("click", () => {
           // swap subpanel's current list with one from entry
           this.#childList.list = entry;
-          this.#childList.#editButton.addEventListener("click", () => {
+          this.#childList.editButton.addEventListener("click", () => {
             this.#childList.renderEditTitleDialog(entry, this);
           });
         });
@@ -239,6 +240,9 @@ class listDisplay {
       this.#list.list.forEach((entry, index) => {
         // make new to-do entry, then append it
         const newEntry = new entryDisplay(entry, this.#subPanel, entry.desc, 1, this.#list, index);
+        if ((index + 1) % 2 == 0) {
+          newEntry.entryCell.classList.add("altEntry")
+        }
         this.#listDisplay.append(newEntry.entryCell);
         newEntry.render();
       });
