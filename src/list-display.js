@@ -211,8 +211,9 @@ class listDisplay {
         // make new list entry, put the entry title in the entry, add a click event listener, then append it
         const entryContainer = document.createElement("div");
         const newEntry = document.createElement("div");
-        entryContainer.className = "entry";
-        newEntry.className = this.#tagHeader + "Entry";
+        entryContainer.classList.add("entry");
+        if((index + 1) % 2 == 0) { entryContainer.classList.add("altList") }
+        newEntry.classList.add(this.#tagHeader + "Entry");
         newEntry.textContent = entry.title;
         newEntry.addEventListener("click", () => {
           // swap subpanel's current list with one from entry

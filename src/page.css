@@ -34,6 +34,7 @@ button:hover {
   background-color:       var(--bg5); }
 #projectList {
   background-color:       var(--bg); }
+
 #projectHeader {
   display:                grid; 
   grid-template-columns:  4fr minmax(0, 48px); }
@@ -84,8 +85,9 @@ button:hover {
   display:                flex; 
   height:                 1.5em; }
 .altEntry {
-  background-color:       var(--bg2)
-}
+  background-color:       var(--bg2); }
+.altList {
+  background-color:       var(--bg1); }
 .entry > div {
   flex:                   1;
   overflow:               hidden;
