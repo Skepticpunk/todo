@@ -2,7 +2,7 @@ body {
   display:               grid;
   grid-template-columns: 1fr 4fr;
   height:                100vh;
-  font-family:           "Oswald";
+  font-family:           "Iosevka Scene Condensed";
   /* default color scheme, check out ./themes/ for list of predefined schemes or to make your own */
   --fg:                  black;
   --fg1:                 #202020;
@@ -22,7 +22,10 @@ h1 {
 h2 {
   margin:                 8px 0 0 0; }
 input {
-  min-width:              0; }
+  min-width:              0;
+  border-radius:          0;
+  border:                 0;
+  background:             var(--bg3);}
 button {
   border:                 0;
   border-radius:          0;
@@ -43,7 +46,7 @@ button:hover {
   background-color:       var(--bg1); }
 #toDoEntries {
   display: grid;
-  grid-template-rows:     3.3em auto; }
+  grid-template-rows:     2.75em auto; }
 #toDoListHeader {
   display:                grid; 
   grid-template-columns:  4fr repeat(2, minmax(0px, 48px));
@@ -69,10 +72,10 @@ button:hover {
 #editEntryDialog {
   display:                grid; 
   grid-template-columns:  repeat(6, 1fr);
-  gap:                    6px;
-  margin:                 0 6px 0 0;
-  padding:                2px 0;
-  background-color:       var(--bg); }
+  gap:                    1px;
+  margin:                 0;
+  padding:                0;
+  background-color:       var(--bg4); }
 .entry {
   padding:                0 8px;
   flex:                   0 0 1.25em;
